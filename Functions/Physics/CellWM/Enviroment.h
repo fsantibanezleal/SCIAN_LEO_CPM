@@ -30,7 +30,7 @@ public:
 	int         _dataEVL_PosY,_dataEVL_currentLineStep,_dataEVL_LineStep,_dataEVL_LineWidth,_dataEVL_ChangeStepsEVLDist,_dataEVL_IncludedCampos;
 	float		_dataEVL_FactorEVL;
 
-	int			_dataEVL_actualStepDistEVL;
+	int			_dataEVL_StepDistEVL_Current;
 	point_3D	_minEnviroment;
 	point_3D	_maxEnviroment;
 	point_3D	_posMarginDEB;
@@ -49,7 +49,7 @@ public:
 	Enviroment();
 	~Enviroment();
 
-	void		Inicializar(void);
+	void		Initiate(void);
 	void		Update(void);
 };
 

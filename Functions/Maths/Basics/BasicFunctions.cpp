@@ -92,7 +92,7 @@ int* recoverySpiralDataFromImage(int** image, int dimX, int dimY, int numPixeles
 	// 2 : right
 	// 3 : up
 	// 4 : left
-	int direccion        = 1;
+	int direction        = 1;
 	int persistencia     = 1;
 	int stepsByDirection = 1;
 	int counterChangePer = 0;
@@ -104,19 +104,19 @@ int* recoverySpiralDataFromImage(int** image, int dimX, int dimY, int numPixeles
 		counterChangePer++;
 		for(int idxFill = 0;idxFill <persistencia ;idxFill++)
 		{
-			if(direccion == 1)
+			if(direction == 1)
 			{// Bajando
 				posX--;
 			}
-			if(direccion == 2)
+			if(direction == 2)
 			{// a la derecha
 				posY++;
 			}
-			if(direccion == 3)
+			if(direction == 3)
 			{// subiendo
 				posX++;
 			}
-			if(direccion == 4)
+			if(direction == 4)
 			{// izquierdo
 				posY--;
 			}
@@ -136,11 +136,11 @@ int* recoverySpiralDataFromImage(int** image, int dimX, int dimY, int numPixeles
 			}
 		}
 	
-		// Actualizar a siguiente direccion
-		direccion++;
-		if(direccion > 4)
+		// Actualizar a siguiente direction
+		direction++;
+		if(direction > 4)
 		{
-			direccion = 1;
+			direction = 1;
 		}
 		if(counterChangePer == 2)
 		{
@@ -370,33 +370,33 @@ void Igualar(point_3D &vValue,point_3D v2)
 	vValue.x = v2.x;vValue.y = v2.y;vValue.z = v2.z;
 };
 
-void Amplificar(point_3D &vValue ,float vAlfa )
+void Amplify(point_3D &vValue ,float vAlfa )
 {
 	vValue.x = vAlfa * vValue.x;
 	vValue.y = vAlfa * vValue.y;
 	vValue.z = vAlfa * vValue.z;
 };
 
-void Amplificar(point_3D &vValue,point_3D v2 ,float vAlfa)
+void Amplify(point_3D &vValue,point_3D v2 ,float vAlfa)
 {
 	vValue.x = vAlfa * v2.x;
 	vValue.y = vAlfa * v2.y;
 	vValue.z = vAlfa * v2.z;
 };
 
-void Amplificar(point_3D &vValue,float vAlfa,point_3D v2 )
+void Amplify(point_3D &vValue,float vAlfa,point_3D v2 )
 {
-	Amplificar(vValue,v2,vAlfa );
+	Amplify(vValue,v2,vAlfa );
 };
 
-void Suma(point_3D &vValue ,point_3D v1, point_3D v2)
+void Addition(point_3D &vValue ,point_3D v1, point_3D v2)
 {
    vValue.x=v1.x + v2.x;
    vValue.y=v1.y + v2.y;
    vValue.z=v1.z + v2.z;
 }; 
 
-void Resta(point_3D &vValue ,point_3D v1, point_3D v2)
+void Subtraction(point_3D &vValue ,point_3D v1, point_3D v2)
 {
    vValue.x=v1.x - v2.x;
    vValue.y=v1.y - v2.y;
@@ -412,17 +412,17 @@ void MultiplicacionPuntual(point_3D &vValue ,point_3D v1, point_3D v2)
 
 
 // COn retorno
-point_3D Suma(point_3D v1, point_3D v2)
+point_3D Addition(point_3D v1, point_3D v2)
 {
 	point_3D temp;
-	Suma(temp,v1,v2);
+	Addition(temp,v1,v2);
 	return temp;
 }; 
 
-point_3D Resta(point_3D v1, point_3D v2)
+point_3D Subtraction(point_3D v1, point_3D v2)
 {
 	point_3D temp;
-	Resta(temp,v1,v2);
+	Subtraction(temp,v1,v2);
 	return temp;
 }; 
 
@@ -473,9 +473,9 @@ float Dot(point_3D v1 ,point_3D v2)
 	return v1.x*v2.x + v1.y*v2.y +v1.z*v2.z; 
 };
 
-float DireccionByResta(point_3D &vPRayo ,point_3D vFin,point_3D vInicio)
+float DireccionBySubtraction(point_3D &vPRayo ,point_3D vFin,point_3D vInicio)
 {
-	Resta(vPRayo,vFin,vInicio);
+	Subtraction(vPRayo,vFin,vInicio);
 	Limpiar(vPRayo);
 	return NormalizeR(vPRayo);
 };
@@ -509,14 +509,14 @@ bool Perpendicular(point_3D &vPerpendicular, point_3D vVector) // perpendicular 
 
 void Ray(point_3D &vPRayo ,point_3D vInicio,point_3D vDireccion, float vAlfa)
 {
-	Amplificar(vPRayo,vAlfa,vDireccion);
-	Suma(vPRayo,vInicio,vPRayo);
+	Amplify(vPRayo,vAlfa,vDireccion);
+	Addition(vPRayo,vInicio,vPRayo);
 };
 
 void Ray(point_3D &vPRayo ,point_3D vInicio, float vAlfa, point_3D vDireccion)
 {
-	Amplificar(vPRayo,vAlfa,vDireccion);
-	Suma(vPRayo,vInicio,vPRayo);
+	Amplify(vPRayo,vAlfa,vDireccion);
+	Addition(vPRayo,vInicio,vPRayo);
 };
 
 float 	DistanceAPlano(point_3D vNormalT , point_3D vDirMov, point_3D vPuntoPlano,point_3D vPuntoInteres)
@@ -589,18 +589,18 @@ bool IsPointInTriangleS(point_3D vNormal,point_3D vPunto,point_3D vTriangulo[3])
 	float surfaceT,surfacePAB,surfacePAC,surfacePBC;
 	point_3D temp;
 
-	Resta(temp,vTriangulo[2],vTriangulo[1]);
+	Subtraction(temp,vTriangulo[2],vTriangulo[1]);
 	a = LengthVector(temp);
-	Resta(temp,vTriangulo[0],vTriangulo[2]);
+	Subtraction(temp,vTriangulo[0],vTriangulo[2]);
 	b = LengthVector(temp);
-	Resta(temp,vTriangulo[1],vTriangulo[0]);
+	Subtraction(temp,vTriangulo[1],vTriangulo[0]);
 	c = LengthVector(temp);
 
-	Resta(temp,vTriangulo[0],vPunto);
+	Subtraction(temp,vTriangulo[0],vPunto);
 	pA = LengthVector(temp);
-	Resta(temp,vTriangulo[1],vPunto);
+	Subtraction(temp,vTriangulo[1],vPunto);
 	pB = LengthVector(temp);
-	Resta(temp,vTriangulo[2],vPunto);
+	Subtraction(temp,vTriangulo[2],vPunto);
 	pC = LengthVector(temp);
 
 	semiPT		= (a + b + c)/2.0f;
@@ -623,24 +623,24 @@ bool IsPointInTriangleN(point_3D vNormal,point_3D vPunto,point_3D vTriangulo[3])
 {
 	point_3D dir10,dir21,dir02,temp;
 
-	DireccionByResta(temp,vTriangulo[1],vTriangulo[0]);
+	DireccionBySubtraction(temp,vTriangulo[1],vTriangulo[0]);
 	CrossNormalize(dir10,temp,vNormal);
-	DireccionByResta(temp,vTriangulo[2],vTriangulo[1]);
+	DireccionBySubtraction(temp,vTriangulo[2],vTriangulo[1]);
 	CrossNormalize(dir21,temp,vNormal);
-	DireccionByResta(temp,vTriangulo[0],vTriangulo[2]);
+	DireccionBySubtraction(temp,vTriangulo[0],vTriangulo[2]);
 	CrossNormalize(dir02,temp,vNormal);
 
 	Zero(temp);
-	Suma(temp,temp,vTriangulo[0]);
-	Suma(temp,temp,vTriangulo[1]);
-	Suma(temp,temp,vTriangulo[2]);
-	Amplificar(temp,(1.0f/3.0f));
+	Addition(temp,temp,vTriangulo[0]);
+	Addition(temp,temp,vTriangulo[1]);
+	Addition(temp,temp,vTriangulo[2]);
+	Amplify(temp,(1.0f/3.0f));
 
 	if(DistanceAPlanoN(dir10,vTriangulo[0],temp) < 0.0f) // Hcaer que las tres normales apunten al exterior del triangulo
 	{
-		Amplificar(dir10,-1.0f);
-		Amplificar(dir21,-1.0f);
-		Amplificar(dir02,-1.0f);
+		Amplify(dir10,-1.0f);
+		Amplify(dir21,-1.0f);
+		Amplify(dir02,-1.0f);
 	}
 
 	if( (DistanceAPlanoN(dir10,vTriangulo[0],vPunto) >= 0.0f)
@@ -661,17 +661,17 @@ bool IsPointInTriangleA(point_3D vNormal,point_3D vPunto,point_3D vTriangulo[3],
 	Zero(temp);
 	for(i = 0; i < 3; i++)
 	{
-		Suma(temp,temp,vTriangulo[i]);
+		Addition(temp,temp,vTriangulo[i]);
 	}
-	Amplificar(temp,(1.0f/3.0f)); // Baricentro
+	Amplify(temp,(1.0f/3.0f)); // Baricentro
 
 	// Expandir universo
 	for(i = 0; i < 3; i++)
 	{
-		alfa = DireccionByResta(dir,vTriangulo[i],temp);
+		alfa = DireccionBySubtraction(dir,vTriangulo[i],temp);
 		Ray(vTriangulo[i],temp,alfa * ampliacion,dir);
 	}
-	alfa = DireccionByResta(dir,vPunto,temp);
+	alfa = DireccionBySubtraction(dir,vPunto,temp);
 	Ray(vPunto,temp,alfa * ampliacion,dir);
 
 	switch(vTipoAnalisis)
@@ -699,27 +699,27 @@ bool IsPointInTriangleB(point_3D vNormal,point_3D vPunto,point_3D vTriangulo[3])
 	}
 
 	register unsigned i;
-	register float radioMax;
+	register float radiusMax;
 	point_3D temp;
 
 	Zero(temp);
 	for(i = 0; i < 3; i++)
 	{
-		Suma(temp,temp,vTriangulo[i]);
+		Addition(temp,temp,vTriangulo[i]);
 	}
-	Amplificar(temp,(1.0f/3.0f)); // Baricentro
+	Amplify(temp,(1.0f/3.0f)); // Baricentro
 
 	// Radio maximo
-	radioMax = 0.0f;
+	radiusMax = 0.0f;
 	for(i = 0; i < 3; i++)
 	{
-		if(Distance(temp,vTriangulo[i]) > radioMax)
+		if(Distance(temp,vTriangulo[i]) > radiusMax)
 		{
-			radioMax = Distance(temp,vTriangulo[i]);
+			radiusMax = Distance(temp,vTriangulo[i]);
 		}
 	}
 
-	if(Distance(vPunto,temp) > radioMax)
+	if(Distance(vPunto,temp) > radiusMax)
 	{
 		return false;
 	}

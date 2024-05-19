@@ -133,7 +133,7 @@ public:
 	void SetCamAt(float x,float y, float z){camAt.x=x;camAt.y=y;camAt.z=z;}
 	void SetCamViewXYZ(float x,float y, float z){camView.x = x;camView.y = y;camView.z = z;SetDependentParametersCamera();}
 	void GetCamViewXYZ(float *x,float *y, float *z){*x=camView.x-camAt.x;*y=camView.y-camAt.y;*z=camView.z-camAt.z;}
-	point_3D GetCamDirView(void){return Resta(camView,camAt);}
+	point_3D GetCamDirView(void){return Subtraction(camView,camAt);}
 	point_3D GetCamViewXYZ(void){return camView;}
 	point_3D GetCamViewCenter(void){return camAt;}
 	void GetCamAtXYZ(float *x,float *y, float *z){*x=camAt.x;*y=camAt.y;*z=camAt.z;}

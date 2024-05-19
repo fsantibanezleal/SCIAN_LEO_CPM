@@ -25,7 +25,7 @@ Enviroment::Enviroment()
 	_num_DFC_EVL_AdhesionPosterior	 = 0;
 	_limit_DFC_EVL_PostAdhesion = 11;
 	_limit_DFC_EVL_AntAdhesion = 7;
-	_dataEVL_actualStepDistEVL = 0;
+	_dataEVL_StepDistEVL_Current = 0;
 	_useEVLInteractionAdhesion = false;
 	_useDEBAttraction = false;
 	_useEVLInteraction= false;
@@ -77,7 +77,7 @@ Enviroment::~Enviroment()
 };
 
 
-void	Enviroment::Inicializar(void)
+void	Enviroment::Initiate(void)
 {
 
 };

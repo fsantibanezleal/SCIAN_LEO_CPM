@@ -76,15 +76,15 @@ void 	SetEqual(point_3D &vValue,float vChange);
 void 	SetFull(point_3D &vValue,float vChangeX,float vChangeY,float vChangeZ);
 void 	Limpiar(point_3D &vValue);
 void 	Igualar(point_3D &vValue,point_3D v2);
-void 	Amplificar(point_3D &vValue ,float vAlfa );
-void 	Amplificar(point_3D &vValue,point_3D v2 ,float vAlfa );
-void 	Amplificar(point_3D &vValue,float vAlfa,point_3D v2  );
-void 	Suma(point_3D &vValue ,point_3D v1, point_3D v2 );
-void 	Resta(point_3D &vValue ,point_3D v1, point_3D v2 );
+void 	Amplify(point_3D &vValue ,float vAlfa );
+void 	Amplify(point_3D &vValue,point_3D v2 ,float vAlfa );
+void 	Amplify(point_3D &vValue,float vAlfa,point_3D v2  );
+void 	Addition(point_3D &vValue ,point_3D v1, point_3D v2 );
+void 	Subtraction(point_3D &vValue ,point_3D v1, point_3D v2 );
 void	MultiplicacionPuntual(point_3D &vValue ,point_3D v1, point_3D v2);
 
-point_3D	Resta(point_3D v1, point_3D v2 );
-point_3D	Suma(point_3D v1, point_3D v2 );
+point_3D	Subtraction(point_3D v1, point_3D v2 );
+point_3D	Addition(point_3D v1, point_3D v2 );
 
 float 	Distance(point_3D v1 ,point_3D v2);
 
@@ -92,7 +92,7 @@ float	NormalizeR(point_3D &vValue);
 void 	Cross(point_3D &vValue ,point_3D v1, point_3D v2);
 float	CrossNormalize(point_3D &vValue ,point_3D v1, point_3D v2);
 float 	Dot(point_3D v1 ,point_3D v2);
-float 	DireccionByResta(point_3D &vPRayo ,point_3D vFin,point_3D vInicio);
+float 	DireccionBySubtraction(point_3D &vPRayo ,point_3D vFin,point_3D vInicio);
 bool	Perpendicular(point_3D &vPerpendicular, point_3D vVector);
 
 void 	Ray(point_3D &vPRayo ,point_3D vInicio,point_3D vDireccion, float vAlfa);

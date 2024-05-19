@@ -25,7 +25,7 @@ public:
 
 	polygon_2D		_polyMembrane;
 public:
-	bool			_hija,_perturbacionAzar,_friendAttraction,_liberarEstancado,_adhesionToEVL;
+	bool			_offSpring,_perturbationRandom,_friendAttraction,_freeIssue,_adhesionToEVL;
 	float			_ratioFriendAttraction;
 	int				_persistence,_StepsforChange;
 	

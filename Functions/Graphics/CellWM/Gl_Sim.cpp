@@ -61,7 +61,7 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 	if(vEnviroment->_busy) return;
 	register int i;
 	register float factorX,factorY,factorZ,deltaX,deltaY;
-	point_3D posicionDibujo,direccionDibujo;
+	point_3D posicionDibujo,directionDibujo;
 
 	factorX = float(m_Width_Windows_main)/vEnviroment->_dimX;
 	factorY = float(m_Height_Windows_main)/vEnviroment->_dimY;
@@ -82,7 +82,7 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 	{
 		if(vMatrix->_fActive)
 		{
-			if(vMatrix->_agentsWM_DFC[i]._hija)
+			if(vMatrix->_agentsWM_DFC[i]._offSpring)
 			{
 				SetMaterial(1);
 			}
@@ -93,7 +93,7 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 			//Igualar(posicionDibujo,vMatrix->_agentsWM_DFC[i]._pos);
 			posicionDibujo.x = 0;//factorX*(posicionDibujo.x + deltaX);
 			posicionDibujo.y = factorY*(deltaY - posicionDibujo.y);
-//			primitivaCirculo(posicionDibujo,vMatrix->_agentsWM_DFC[i]._radio,40.0f, 2, 1);
+//			primitivaCirculo(posicionDibujo,vMatrix->_agentsWM_DFC[i]._radius,40.0f, 2, 1);
 
 			if(vMatrix->_agentsWM_DFC[i]._adhesionToEVL)
 			{
@@ -104,11 +104,11 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 				SetMaterial(8);
 			}
 			//Igualar(posicionDibujo,vMatrix->_agentsWM_DFC[i]._pos);
-//			Igualar(direccionDibujo,vMatrix->_agentsWM_DFC[i]._velocidad);
-			NormalizeR(direccionDibujo);
-//			float miniRadio = 0.3f * vMatrix->_agentsWM_DFC[i]._radio;
-//			Amplificar(direccionDibujo,vMatrix->_agentsWM_DFC[i]._radio - 0.9f*miniRadio);
-			Suma(posicionDibujo,posicionDibujo,direccionDibujo);
+//			Igualar(directionDibujo,vMatrix->_agentsWM_DFC[i]._velocidad);
+			NormalizeR(directionDibujo);
+//			float miniRadio = 0.3f * vMatrix->_agentsWM_DFC[i]._radius;
+//			Amplify(directionDibujo,vMatrix->_agentsWM_DFC[i]._radius - 0.9f*miniRadio);
+			Addition(posicionDibujo,posicionDibujo,directionDibujo);
 
 			posicionDibujo.x = factorX*(posicionDibujo.x + deltaX);
 			posicionDibujo.y = factorY*(deltaY - posicionDibujo.y);
@@ -315,11 +315,11 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 					}
 					_numVectorParam3++;
 
-					_vectorParam3[int(_numVectorParam3)] = vMatrix->_porcentajeAttachmentAnterior[(vMatrix->_posPorAttActual<8)?vMatrix->_posPorAttActual:7];
+					_vectorParam3[int(_numVectorParam3)] = vMatrix->_rateAntAttachment[(vMatrix->_posRateAttachmentCurrent<8)?vMatrix->_posRateAttachmentCurrent:7];
 				}
 				else
 				{
-					_vectorParam3[int(_numVectorParam3)] = _vectorParam3[int(_numVectorParam3)] + vMatrix->_porcentajeAttachmentAnterior[(vMatrix->_posPorAttActual<8)?vMatrix->_posPorAttActual:7];
+					_vectorParam3[int(_numVectorParam3)] = _vectorParam3[int(_numVectorParam3)] + vMatrix->_rateAntAttachment[(vMatrix->_posRateAttachmentCurrent<8)?vMatrix->_posRateAttachmentCurrent:7];
 				}
 
 				_maxVectorParam3 = 1;
@@ -341,11 +341,11 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 					}
 					_numVectorParam4++;
 
-					_vectorParam4[int(_numVectorParam4)] = vMatrix->_porcentajeAttachmentPosterior[(vMatrix->_posPorAttActual<8)?vMatrix->_posPorAttActual:7];
+					_vectorParam4[int(_numVectorParam4)] = vMatrix->_ratePostAttachment[(vMatrix->_posRateAttachmentCurrent<8)?vMatrix->_posRateAttachmentCurrent:7];
 				}
 				else
 				{
-					_vectorParam4[int(_numVectorParam4)] = _vectorParam4[int(_numVectorParam4)] + vMatrix->_porcentajeAttachmentPosterior[(vMatrix->_posPorAttActual<8)?vMatrix->_posPorAttActual:7];
+					_vectorParam4[int(_numVectorParam4)] = _vectorParam4[int(_numVectorParam4)] + vMatrix->_ratePostAttachment[(vMatrix->_posRateAttachmentCurrent<8)?vMatrix->_posRateAttachmentCurrent:7];
 				}
 
 				_maxVectorParam4 = 1;

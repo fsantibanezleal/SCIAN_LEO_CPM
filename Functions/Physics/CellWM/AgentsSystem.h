@@ -25,18 +25,18 @@ public:
 	int			_numEVLAgents,_numDFCAgents,_numDEBAgents,_numDFCActiveAgents; 
 	int			_selectedAgente;
 	int			_tipoSelectedAgente; // 0 = migradoras... 1 = las de atras... 2= EVL
-	int			_posPorAttActual;
+	int			_posRateAttachmentCurrent;
 
-	float		_porcentajeAttachmentAnterior[9];
-	float		_porcentajeAttachmentPosterior[9];
+	float		_rateAntAttachment[9];
+	float		_ratePostAttachment[9];
 
 	CellWM		*_agentsWM_DFC;
 public:
 	AgentsSystem();
 	~AgentsSystem();
 
-	void	Inicializar(void); // azar
-	void	Inicializar(Enviroment* vEnviroment, int vNumDFCs, int vNumDEBs, int vNumEVLs); // sete0
+	void	Initiate(void); // azar
+	void	Initiate(Enviroment* vEnviroment, int vNumDFCs, int vNumDEBs, int vNumEVLs); // sete0
 	void	UpdateState(Enviroment* vEnviroment);
 	void	AddOffspring(Enviroment* vEnviroment);
 };

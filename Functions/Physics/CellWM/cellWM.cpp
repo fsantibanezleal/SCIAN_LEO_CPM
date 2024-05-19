@@ -98,15 +98,15 @@ void	CellWM::InitCell(point_2D vPos, float vRadio){
 	_paramV0			= 0.01f;
 
 	_adhesionToEVL	  = false;
-	_perturbacionAzar = false;
-	_liberarEstancado = false;
+	_perturbationRandom = false;
+	_freeIssue = false;
 	_friendAttraction = false;
 	_StepsforChange   = 10;
 	_ratioFriendAttraction = 1.0f;
 
 	_persistence	  = rand()%(_StepsforChange) + 1;
 
-	_hija			  = false;
+	_offSpring			  = false;
 
 	CreateContour();
 };
