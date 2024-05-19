@@ -88,7 +88,7 @@ void OGL::Crear(HWND vHwnd, int v)
 	m_ancho=m_alto=m_largo=50;
 	SetFull(m_origen,0,0,0);
 	Zero(center_box);
-	m_radius_centro=10;
+	m_radio_centro=10;
 
 	CamaraVentana=NULL;
 	TYPE_MODELS=GL_SMOOTH;
@@ -169,12 +169,12 @@ void OGL::InitOpenGL()
 	LightDiffuse[0]=1.0f;LightDiffuse[1]=1.0f;LightDiffuse[2]=1.0f;LightDiffuse[3]=1.0f;
 	LightSpecular[0]=1.0f;LightSpecular[1]=1.0f;LightSpecular[2]=1.0f;LightSpecular[3]=1.0f;
 
-	point_3D vector_direction;
-	//SetFull(vector_direction,16,16,11);
-	SetFull(vector_direction,0,0,10);
-	NormalizeR(vector_direction);
-	float radius = 100;
-	Amplify(pos_eye_camara,radius,vector_direction);
+	point_3D vector_direccion;
+	//SetFull(vector_direccion,16,16,11);
+	SetFull(vector_direccion,0,0,10);
+	NormalizeR(vector_direccion);
+	float radio = 100;
+	Amplificar(pos_eye_camara,radio,vector_direccion);
 	LightPosition[0]=pos_eye_camara.x;LightPosition[1]=pos_eye_camara.y;LightPosition[2]=pos_eye_camara.z;LightPosition[3]=1.0f;
 	
 	CamaraVentana = new GL_Camera(pos_eye_camara.x,pos_eye_camara.y,pos_eye_camara.z);
@@ -250,7 +250,7 @@ void OGL::SetLight(bool setluz)
 	{	
 		point_3D LUZP = CamaraVentana->GetCamDirView();
 		NormalizeR(LUZP);
-		Amplify(LUZP,LUZP,2000);
+		Amplificar(LUZP,LUZP,2000);
 		LightPosition[0]=LUZP.x;
 		LightPosition[1]=LUZP.y;
 		LightPosition[2]=LUZP.z;
@@ -350,13 +350,13 @@ void OGL::MouseLButtonUp(int x, int y)
 void OGL::ViewportCircular(float factor, int angulo)
 {
 	int vp[4];
-	float j,radius,radiusExt,delta,z;
+	float j,radio,radioExt,delta,z;
 	point_3D externoIni,externoFin,puntoIni,puntoFin,centro,temp;
 
 	factor = 0.4;
 	SetFull(centro,0.5* m_Width_Windows_main,0.5* m_Height_Windows_main,0);
-	radiusExt = 2.0 * ((m_Width_Windows_main > m_Height_Windows_main)? m_Width_Windows_main: m_Height_Windows_main);
-	radius = factor * ((m_Width_Windows_main < m_Height_Windows_main)? m_Width_Windows_main: m_Height_Windows_main);
+	radioExt = 2.0 * ((m_Width_Windows_main > m_Height_Windows_main)? m_Width_Windows_main: m_Height_Windows_main);
+	radio = factor * ((m_Width_Windows_main < m_Height_Windows_main)? m_Width_Windows_main: m_Height_Windows_main);
 	delta = 1.0;
 	z = 1000;
 
@@ -382,13 +382,13 @@ void OGL::ViewportCircular(float factor, int angulo)
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glDisable(GL_BLEND);
 
-	SetFull(puntoIni,centro.x + radius * cos(0.0f),centro.y + radius * sin(0.0f),z);
-	SetFull(externoIni,centro.x + radiusExt * cos(0.0f),centro.y + radiusExt * sin(0.0f),z);
+	SetFull(puntoIni,centro.x + radio * cos(0.0f),centro.y + radio * sin(0.0f),z);
+	SetFull(externoIni,centro.x + radioExt * cos(0.0f),centro.y + radioExt * sin(0.0f),z);
 
 	for(j = 0; j < 360; j += delta)
 	{
-		SetFull(puntoFin,centro.x + radius * cos((j+delta) * PI/180.0f),centro.y + radius * sin((j+delta) * PI/180.0f),z);
-		SetFull(externoFin,centro.x + radiusExt * cos((j+delta) * PI/180.0f),centro.y + radiusExt * sin((j+delta) * PI/180.0f),z);
+		SetFull(puntoFin,centro.x + radio * cos((j+delta) * PI/180.0f),centro.y + radio * sin((j+delta) * PI/180.0f),z);
+		SetFull(externoFin,centro.x + radioExt * cos((j+delta) * PI/180.0f),centro.y + radioExt * sin((j+delta) * PI/180.0f),z);
 
 		glBegin(GL_POLYGON);
 		glVertex3f(puntoIni.x,puntoIni.y,puntoIni.z);
@@ -410,21 +410,21 @@ void OGL::ViewportCircular(float factor, int angulo)
 	SetFull(U,0,1,0);
 	SetFull(V,1,0,0);
 
-	Amplify(temp,cos(angulo_r),V);
+	Amplificar(temp,cos(angulo_r),V);
 	Ray(Pa,temp,sin(angulo_r),U);
 	NormalizeR(Pa);
 
-	Amplify(temp,cos(angulo_r+angulo_2),V);
+	Amplificar(temp,cos(angulo_r+angulo_2),V);
 	Ray(Pb,temp,sin(angulo_r+angulo_2),U);
 	NormalizeR(Pb);
 
-	Amplify(temp,cos(angulo_r-angulo_2),V);
+	Amplificar(temp,cos(angulo_r-angulo_2),V);
 	Ray(Pc,temp,sin(angulo_r-angulo_2),U);
 	NormalizeR(Pc);
 
-	Ray(a,centro,(radius-radius*.1),Pa);
-	Ray(b,a,(radius*10000),Pb);
-	Ray(c,a,(radius*10000),Pc);
+	Ray(a,centro,(radio-radio*.1),Pa);
+	Ray(b,a,(radio*10000),Pb);
+	Ray(c,a,(radio*10000),Pc);
 
 	glBegin(GL_POLYGON);
 	glVertex3f(a.x,a.y,a.z);

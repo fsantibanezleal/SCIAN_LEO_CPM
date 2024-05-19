@@ -16,21 +16,21 @@ class Enviroment
 {
 private:
 public:
-	bool		_busy,_fActive,_bRunning,_useDEBAttraction,_useEVLInteraction,_useEVLInteractionAdhesion;
+	bool		_busy,_fActive,_fRunning,_useDEBAttraction,_useEVLInteraction,_useEVLInteractionAdhesion;
 
-	int			_StepsProliferationCurrent,_posProliferation,_numDFCActiveAgentsWanted,_stepsProliferacion;
-	float		_vProliferation[8];
+	int			_actualStepsProliferacion,_posProliferation,_numDFCActiveAgentsWanted,_stepsProliferacion;
+	float		_vectorProliferacion[8];
 
-	int			_dataEVL_quantityKind; // 0 == todo... 1 == seleccionadas
-	int			_dataEVL_FieldKind; // 0 == puntual... 1 == linea.... 2 == distribuido
-	int			_num_DFC_EVL_AdhesionPosterior,_num_DFC_EVL_AdhesionAnterior,_limit_DFC_EVL_AntAdhesion,_limit_DFC_EVL_PostAdhesion;
+	int			_dataEVL_tipoCantidad; // 0 == todo... 1 == seleccionadas
+	int			_dataEVL_tipoCampo; // 0 == puntual... 1 == linea.... 2 == distribuido
+	int			_num_DFC_EVL_AdhesionPosterior,_num_DFC_EVL_AdhesionAnterior,_limite_DFC_EVL_AdhesionAnterior,_limite_DFC_EVL_AdhesionPosterior;
 	int			_stepsMovDEB_margin,_actualStepsMovDEB_margin,_stepsMovEVL_margin,_actualStepsMovEVL_margin;
 
 
-	int         _dataEVL_PosY,_dataEVL_currentLineStep,_dataEVL_LineStep,_dataEVL_LineWidth,_dataEVL_ChangeStepsEVLDist,_dataEVL_IncludedCampos;
+	int         _dataEVL_PosY,_dataEVL_actualStepsLinea,_dataEVL_StepsLinea,_dataEVL_AnchoLinea,_dataEVL_StepsCambioEVLDist,_dataEVL_IncludedCampos;
 	float		_dataEVL_FactorEVL;
 
-	int			_dataEVL_StepDistEVL_Current;
+	int			_dataEVL_actualStepDistEVL;
 	point_3D	_minEnviroment;
 	point_3D	_maxEnviroment;
 	point_3D	_posMarginDEB;
@@ -49,7 +49,7 @@ public:
 	Enviroment();
 	~Enviroment();
 
-	void		Initiate(void);
+	void		Inicializar(void);
 	void		Update(void);
 };
 

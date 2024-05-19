@@ -47,7 +47,7 @@ protected:
 	int TYPE_MODELS;
 	bool m_show_obb;
 	bool m_show_axis;
-	float m_radius_centro;
+	float m_radio_centro;
 
 	int m_Width_Windows_main;
 	int m_Height_Windows_main;
@@ -103,7 +103,7 @@ public:
 		virtual void SetOrigenEyeCamara(int x,int y, int z){CamaraVentana->SetOrigenEye(x,y,z);}
 		virtual void SetOrigenCenterCamara(int x,int y, int z){CamaraVentana->SetOrigenCenter(x,y,z);}
 		virtual void SetCenterBox(point_3D c){center_box=c;CamaraVentana->SetCamAtXYZ(c.x,c.y,c.z);}
-		virtual void SetRadioCenterView(float r){m_radius_centro=r;}
+		virtual void SetRadioCenterView(float r){m_radio_centro=r;}
 		virtual	void ResetCenterCamara(void){CamaraVentana->SetCamAtXYZ(center_box.x,center_box.y,center_box.z);
 		CamaraVentana->SetCamViewXYZ(pos_eye_camara.x,pos_eye_camara.y,pos_eye_camara.z);}
 		void ViewportCircular(float factor=1.0, int angulo = 1);

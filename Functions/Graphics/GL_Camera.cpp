@@ -51,7 +51,7 @@ GL_Camera::GL_Camera(float positionX, float positionY, float positionZ)
 	
 	SetFull(camJ,0,1,0);
 	NormalizeR(camJ);
-	DireccionBySubtraction(camK,camAt,camView);
+	DireccionByResta(camK,camAt,camView);
 	CrossNormalize(camI,camJ,camK);
 
 	camProjection = CAM_PARALLEL;
@@ -76,7 +76,7 @@ void GL_Camera::SetCamera( float viewX, float viewY, float viewZ,
 	camUp.y = upY;
 	camUp.z = upZ;
 
-	Subtraction(camK,camAt,camView);
+	Resta(camK,camAt,camView);
 
 	SetDependentParametersCamera();
 }
@@ -146,7 +146,7 @@ void GL_Camera::SetGLCamera( void )
 
 		SetFull(camJ,P2s[0]-P1s[0],P2s[1]-P1s[1],P2s[2]-P1s[2]);
 		NormalizeR(camJ);
-		DireccionBySubtraction(camK,camAt,camView);
+		DireccionByResta(camK,camAt,camView);
 		CrossNormalize(camI,camK,camJ);
 	glPopMatrix();
 
@@ -199,10 +199,10 @@ void GL_Camera::SetGLAspectRatioCamera( void )
 void GL_Camera::AvanceFreeCamera( float step  )
 {
 	point_3D va;
-	Amplify(va,step,camK);
+	Amplificar(va,step,camK);
 	// Set V & A
-	Addition(camView,camView,va);
-	Addition(camAt,camAt,va);
+	Suma(camView,camView,va);
+	Suma(camAt,camAt,va);
 	
 	SetDependentParametersCamera();
 }
@@ -307,15 +307,15 @@ void GL_Camera::Andar(int x, int y)
 
 	if(delta_x!=0)
 	{
-		Amplify(temp,-delta_x,camI);
-		Addition(camView,camView,temp);
-		Addition(camAt,camAt,temp);
+		Amplificar(temp,-delta_x,camI);
+		Suma(camView,camView,temp);
+		Suma(camAt,camAt,temp);
 	}
 	if(delta_y!=0)
 	{
-		Amplify(temp,delta_y,camJ);
-		Addition(camView,camView,temp);
-		Addition(camAt,camAt,temp);
+		Amplificar(temp,delta_y,camJ);
+		Suma(camView,camView,temp);
+		Suma(camAt,camAt,temp);
 	}
 	//float rotacion_x, avance_y;
 	//avance_y = (float)(y - old_y) / 10;

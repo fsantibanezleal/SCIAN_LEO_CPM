@@ -184,7 +184,7 @@ void Gl_InitialState::DrawPoly(point_3D vCentro,float vRadio,polygon_2D _polyMem
 //			Igualar(posicionDibujo,vMatrix->_agentsWM_DFC[i]._pos);
 //			posicionDibujo.x = factorX*(posicionDibujo.x + deltaX);
 //			posicionDibujo.y = factorY*(deltaY - posicionDibujo.y);
-//			primitivaCirculo(posicionDibujo,vMatrix->_agentsWM_DFC[i]._radius,40.0f, 2, 1);
+//			primitivaCirculo(posicionDibujo,vMatrix->_agentsWM_DFC[i]._radio,40.0f, 2, 1);
 //		}
 //	}
 //

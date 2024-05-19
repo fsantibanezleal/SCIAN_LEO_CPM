@@ -15,7 +15,7 @@ using namespace std;
 class CellWM
 {
 public:
-	bool			_fBusy,_fActive,_bRunning;
+	bool			_fBusy,_fActive,_fRunning;
 
 	float			_radR0[10],_angleThetha0[10];
 	float			_paramA[10],_paramW[10],_paramGamma[10],_paramSigma[10],_paramV0;
@@ -25,7 +25,7 @@ public:
 
 	polygon_2D		_polyMembrane;
 public:
-	bool			_offSpring,_perturbationRandom,_friendAttraction,_freeIssue,_adhesionToEVL;
+	bool			_hija,_perturbacionAzar,_friendAttraction,_liberarEstancado,_adhesionToEVL;
 	float			_ratioFriendAttraction;
 	int				_persistence,_StepsforChange;
 	
@@ -36,8 +36,8 @@ public:
 	void		InitCell(point_2D vPos, float vRadio);
 
 	// Setters
-	bool		GetRunning(void){return _bRunning;};
-	void		SetRunning(bool vValue){_bRunning = vValue;};
+	bool		GetRunning(void){return _fRunning;};
+	void		SetRunning(bool vValue){_fRunning = vValue;};
 
 	bool		GetBusy(void){return _fBusy;};
 	void		SetBusy(bool vValue){_fBusy = vValue;};
@@ -67,7 +67,7 @@ public:
 
 					_fBusy			= false;
 					_fActive		= false;
-					_bRunning		= false;
+					_fRunning		= false;
 
 					_pos			= vValue._pos;
 					_vel			= vValue._vel;

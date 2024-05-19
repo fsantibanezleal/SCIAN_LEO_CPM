@@ -4,7 +4,7 @@ CellWM::CellWM()
 {
 	_fBusy			= false;
 	_fActive		= false;
-	_bRunning		= false;
+	_fRunning		= false;
 
 	_pos			= point_2D(0.0,0.0);
 	_vel			= point_2D(0.0,0.0);
@@ -40,7 +40,7 @@ CellWM::~CellWM() {
 void	CellWM::InitCell(void){
 	_fBusy			= false;
 	_fActive		= false;
-	_bRunning		= false;
+	_fRunning		= false;
 
 	_pos			= point_2D(0.0,0.0);
 	_vel			= point_2D(0.0,0.0);
@@ -69,7 +69,7 @@ void	CellWM::InitCell(void){
 void	CellWM::InitCell(point_2D vPos, float vRadio){
 	_fBusy			= false;
 	_fActive		= false;
-	_bRunning		= false;
+	_fRunning		= false;
 
 	_pos			= point_2D(vPos.x(),vPos.y());
 	_vel			= point_2D(0.0,0.0);
@@ -98,15 +98,15 @@ void	CellWM::InitCell(point_2D vPos, float vRadio){
 	_paramV0			= 0.01f;
 
 	_adhesionToEVL	  = false;
-	_perturbationRandom = false;
-	_freeIssue = false;
+	_perturbacionAzar = false;
+	_liberarEstancado = false;
 	_friendAttraction = false;
 	_StepsforChange   = 10;
 	_ratioFriendAttraction = 1.0f;
 
 	_persistence	  = rand()%(_StepsforChange) + 1;
 
-	_offSpring			  = false;
+	_hija			  = false;
 
 	CreateContour();
 };

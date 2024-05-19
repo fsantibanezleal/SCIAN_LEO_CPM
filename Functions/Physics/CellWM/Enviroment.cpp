@@ -2,18 +2,18 @@
 
 Enviroment::Enviroment()
 {
-	_StepsProliferationCurrent=0;
+	_actualStepsProliferacion=0;
 	_posProliferation = -1;
 	_numDFCActiveAgentsWanted = 10;
 	_stepsProliferacion    = 100;
-	_vProliferation[0]= 0.0f;
-	_vProliferation[1]= 0.0f;
-	_vProliferation[2]= 0.1f;
-	_vProliferation[3]= 0.0f;
-	_vProliferation[4]= 0.2f;
-	_vProliferation[5]= 0.0f;
-	_vProliferation[6]= 0.0f;
-	_vProliferation[7]= 0.0;
+	_vectorProliferacion[0]= 0.0f;
+	_vectorProliferacion[1]= 0.0f;
+	_vectorProliferacion[2]= 0.1f;
+	_vectorProliferacion[3]= 0.0f;
+	_vectorProliferacion[4]= 0.2f;
+	_vectorProliferacion[5]= 0.0f;
+	_vectorProliferacion[6]= 0.0f;
+	_vectorProliferacion[7]= 0.0;
 
 	_dataEVL_IncludedCampos		= 2;
 	_stepsMovDEB_margin			= 10;
@@ -23,23 +23,23 @@ Enviroment::Enviroment()
 
 	_num_DFC_EVL_AdhesionAnterior	 = 0;
 	_num_DFC_EVL_AdhesionPosterior	 = 0;
-	_limit_DFC_EVL_PostAdhesion = 11;
-	_limit_DFC_EVL_AntAdhesion = 7;
-	_dataEVL_StepDistEVL_Current = 0;
+	_limite_DFC_EVL_AdhesionPosterior = 11;
+	_limite_DFC_EVL_AdhesionAnterior = 7;
+	_dataEVL_actualStepDistEVL = 0;
 	_useEVLInteractionAdhesion = false;
 	_useDEBAttraction = false;
 	_useEVLInteraction= false;
 	_factorDFC_DEB_Action = 1.0f;
 	_dataEVL_FactorEVL	  = 1.0f;
 
-	_dataEVL_quantityKind	= 0; // 0 == todo... 1 == seleccionadas
-	_dataEVL_FieldKind		= 0; // 0 == puntual... 1 == linea.... 2 == distribuido
+	_dataEVL_tipoCantidad	= 0; // 0 == todo... 1 == seleccionadas
+	_dataEVL_tipoCampo		= 0; // 0 == puntual... 1 == linea.... 2 == distribuido
 
 	_dataEVL_PosY			= 500;
-	_dataEVL_LineStep		= 100;
-	_dataEVL_currentLineStep = 100;
-	_dataEVL_LineWidth		= 600;
-	_dataEVL_ChangeStepsEVLDist = 100;
+	_dataEVL_StepsLinea		= 100;
+	_dataEVL_actualStepsLinea = 100;
+	_dataEVL_AnchoLinea		= 600;
+	_dataEVL_StepsCambioEVLDist = 100;
 
 
 	float maximoTemp = 500;
@@ -77,7 +77,7 @@ Enviroment::~Enviroment()
 };
 
 
-void	Enviroment::Initiate(void)
+void	Enviroment::Inicializar(void)
 {
 
 };

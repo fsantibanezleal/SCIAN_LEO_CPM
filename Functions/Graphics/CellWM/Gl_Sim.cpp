@@ -61,7 +61,7 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 	if(vEnviroment->_busy) return;
 	register int i;
 	register float factorX,factorY,factorZ,deltaX,deltaY;
-	point_3D posicionDibujo,directionDibujo;
+	point_3D posicionDibujo,direccionDibujo;
 
 	factorX = float(m_Width_Windows_main)/vEnviroment->_dimX;
 	factorY = float(m_Height_Windows_main)/vEnviroment->_dimY;
@@ -82,7 +82,7 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 	{
 		if(vMatrix->_fActive)
 		{
-			if(vMatrix->_agentsWM_DFC[i]._offSpring)
+			if(vMatrix->_agentsWM_DFC[i]._hija)
 			{
 				SetMaterial(1);
 			}
@@ -93,7 +93,7 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 			//Igualar(posicionDibujo,vMatrix->_agentsWM_DFC[i]._pos);
 			posicionDibujo.x = 0;//factorX*(posicionDibujo.x + deltaX);
 			posicionDibujo.y = factorY*(deltaY - posicionDibujo.y);
-//			primitivaCirculo(posicionDibujo,vMatrix->_agentsWM_DFC[i]._radius,40.0f, 2, 1);
+//			primitivaCirculo(posicionDibujo,vMatrix->_agentsWM_DFC[i]._radio,40.0f, 2, 1);
 
 			if(vMatrix->_agentsWM_DFC[i]._adhesionToEVL)
 			{
@@ -104,11 +104,11 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 				SetMaterial(8);
 			}
 			//Igualar(posicionDibujo,vMatrix->_agentsWM_DFC[i]._pos);
-//			Igualar(directionDibujo,vMatrix->_agentsWM_DFC[i]._velocidad);
-			NormalizeR(directionDibujo);
-//			float miniRadio = 0.3f * vMatrix->_agentsWM_DFC[i]._radius;
-//			Amplify(directionDibujo,vMatrix->_agentsWM_DFC[i]._radius - 0.9f*miniRadio);
-			Addition(posicionDibujo,posicionDibujo,directionDibujo);
+//			Igualar(direccionDibujo,vMatrix->_agentsWM_DFC[i]._velocidad);
+			NormalizeR(direccionDibujo);
+//			float miniRadio = 0.3f * vMatrix->_agentsWM_DFC[i]._radio;
+//			Amplificar(direccionDibujo,vMatrix->_agentsWM_DFC[i]._radio - 0.9f*miniRadio);
+			Suma(posicionDibujo,posicionDibujo,direccionDibujo);
 
 			posicionDibujo.x = factorX*(posicionDibujo.x + deltaX);
 			posicionDibujo.y = factorY*(deltaY - posicionDibujo.y);
@@ -162,7 +162,7 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 	glEnd();
 
 
-	if(vEnviroment->_dataEVL_FieldKind == 0)
+	if(vEnviroment->_dataEVL_tipoCampo == 0)
 	{
 		SetMaterial(1);
 		glPointSize(10.0f);
@@ -176,7 +176,7 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 			glVertex3f(posicionDibujo.x,posicionDibujo.y,posicionDibujo.z);
 		glEnd();
 	}
-	if(vEnviroment->_dataEVL_FieldKind == 1)
+	if(vEnviroment->_dataEVL_tipoCampo == 1)
 	{
 		SetMaterial(1);
 		glPointSize(10.0f);
@@ -187,8 +187,8 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 			posicionDibujo.x = factorX * (posicionDibujo.x + deltaX);
 			posicionDibujo.y = factorY * (deltaY - posicionDibujo.y);
 			posicionDibujo.z = 100.0f;
-			glVertex3f(posicionDibujo.x - (float(vEnviroment->_dataEVL_LineWidth)/2.0f),posicionDibujo.y,posicionDibujo.z);
-			glVertex3f(posicionDibujo.x + (float(vEnviroment->_dataEVL_LineWidth)/2.0f),posicionDibujo.y,posicionDibujo.z);
+			glVertex3f(posicionDibujo.x - (float(vEnviroment->_dataEVL_AnchoLinea)/2.0f),posicionDibujo.y,posicionDibujo.z);
+			glVertex3f(posicionDibujo.x + (float(vEnviroment->_dataEVL_AnchoLinea)/2.0f),posicionDibujo.y,posicionDibujo.z);
 		glEnd();
 	}
 
@@ -247,7 +247,7 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 	alto  = alto  + 5;
 	float altura = superalto - alto;
 
-	if( vMatrix->_bRunning)
+	if( vMatrix->_fRunning)
 	{
 				glPointSize(50.0f);
 			/////////////////////////////////  Adhesion Margen posterior....... ancho linea
@@ -259,16 +259,16 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 						_vectorParam1[int(_numVectorParam1)] = _vectorParam1[int(_numVectorParam1)]/ float(_stepsContador+1);
 					}
 					_numVectorParam1++;
-					_vectorParam1[int(_numVectorParam1)] = vEnviroment->_dataEVL_LineWidth;
+					_vectorParam1[int(_numVectorParam1)] = vEnviroment->_dataEVL_AnchoLinea;
 				}
 				else
 				{
-					_vectorParam1[int(_numVectorParam1)] = _vectorParam1[int(_numVectorParam1)] + vEnviroment->_dataEVL_LineWidth;
+					_vectorParam1[int(_numVectorParam1)] = _vectorParam1[int(_numVectorParam1)] + vEnviroment->_dataEVL_AnchoLinea;
 				}
 
-				if(vEnviroment->_dataEVL_LineWidth > _maxVectorParam1)
+				if(vEnviroment->_dataEVL_AnchoLinea > _maxVectorParam1)
 				{
-					_maxVectorParam1 = vEnviroment->_dataEVL_LineWidth;
+					_maxVectorParam1 = vEnviroment->_dataEVL_AnchoLinea;
 				}
 				glBegin(GL_LINE_STRIP);
 					for(register double i = 0.0f; i < _numVectorParam1-1;i = i +1.0f)
@@ -315,11 +315,11 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 					}
 					_numVectorParam3++;
 
-					_vectorParam3[int(_numVectorParam3)] = vMatrix->_rateAntAttachment[(vMatrix->_posRateAttachmentCurrent<8)?vMatrix->_posRateAttachmentCurrent:7];
+					_vectorParam3[int(_numVectorParam3)] = vMatrix->_porcentajeAttachmentAnterior[(vMatrix->_posPorAttActual<8)?vMatrix->_posPorAttActual:7];
 				}
 				else
 				{
-					_vectorParam3[int(_numVectorParam3)] = _vectorParam3[int(_numVectorParam3)] + vMatrix->_rateAntAttachment[(vMatrix->_posRateAttachmentCurrent<8)?vMatrix->_posRateAttachmentCurrent:7];
+					_vectorParam3[int(_numVectorParam3)] = _vectorParam3[int(_numVectorParam3)] + vMatrix->_porcentajeAttachmentAnterior[(vMatrix->_posPorAttActual<8)?vMatrix->_posPorAttActual:7];
 				}
 
 				_maxVectorParam3 = 1;
@@ -341,11 +341,11 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 					}
 					_numVectorParam4++;
 
-					_vectorParam4[int(_numVectorParam4)] = vMatrix->_ratePostAttachment[(vMatrix->_posRateAttachmentCurrent<8)?vMatrix->_posRateAttachmentCurrent:7];
+					_vectorParam4[int(_numVectorParam4)] = vMatrix->_porcentajeAttachmentPosterior[(vMatrix->_posPorAttActual<8)?vMatrix->_posPorAttActual:7];
 				}
 				else
 				{
-					_vectorParam4[int(_numVectorParam4)] = _vectorParam4[int(_numVectorParam4)] + vMatrix->_ratePostAttachment[(vMatrix->_posRateAttachmentCurrent<8)?vMatrix->_posRateAttachmentCurrent:7];
+					_vectorParam4[int(_numVectorParam4)] = _vectorParam4[int(_numVectorParam4)] + vMatrix->_porcentajeAttachmentPosterior[(vMatrix->_posPorAttActual<8)?vMatrix->_posPorAttActual:7];
 				}
 
 				_maxVectorParam4 = 1;

@@ -3,31 +3,31 @@
 
 AgentsSystem::AgentsSystem()
 {
-	_rateAntAttachment[0] = 7.0f/21.0f;
-	_rateAntAttachment[1] = 8.0f/21.0f;
-	_rateAntAttachment[2] = 10.0f/22.0f;
-	_rateAntAttachment[3] = 10.0f/22.0f;
-	_rateAntAttachment[4] = 7.0f/24.0f;
-	_rateAntAttachment[5] = 6.0f/24.0f;
-	_rateAntAttachment[6] = 1.0f/32.0f;
-	_rateAntAttachment[7] = 1.0f/32.0f;
-	_rateAntAttachment[8] = 0.0f/32.0f;
+	_porcentajeAttachmentAnterior[0] = 7.0f/21.0f;
+	_porcentajeAttachmentAnterior[1] = 8.0f/21.0f;
+	_porcentajeAttachmentAnterior[2] = 10.0f/22.0f;
+	_porcentajeAttachmentAnterior[3] = 10.0f/22.0f;
+	_porcentajeAttachmentAnterior[4] = 7.0f/24.0f;
+	_porcentajeAttachmentAnterior[5] = 6.0f/24.0f;
+	_porcentajeAttachmentAnterior[6] = 1.0f/32.0f;
+	_porcentajeAttachmentAnterior[7] = 1.0f/32.0f;
+	_porcentajeAttachmentAnterior[8] = 0.0f/32.0f;
 
-	_ratePostAttachment[0] = 10.0f/21.0f;
-	_ratePostAttachment[1] = 9.0f/21.0f;
-	_ratePostAttachment[2] = 8.0f/22.0f;
-	_ratePostAttachment[3] = 8.0f/22.0f;
-	_ratePostAttachment[4] = 6.0f/24.0f;
-	_ratePostAttachment[5] = 7.0f/24.0f;
-	_ratePostAttachment[6] = 4.0f/32.0f;
-	_ratePostAttachment[7] = 4.0f/32.0f;
-	_ratePostAttachment[8] = 0.0f/32.0f;
-	_posRateAttachmentCurrent = 0;
+	_porcentajeAttachmentPosterior[0] = 10.0f/21.0f;
+	_porcentajeAttachmentPosterior[1] = 9.0f/21.0f;
+	_porcentajeAttachmentPosterior[2] = 8.0f/22.0f;
+	_porcentajeAttachmentPosterior[3] = 8.0f/22.0f;
+	_porcentajeAttachmentPosterior[4] = 6.0f/24.0f;
+	_porcentajeAttachmentPosterior[5] = 7.0f/24.0f;
+	_porcentajeAttachmentPosterior[6] = 4.0f/32.0f;
+	_porcentajeAttachmentPosterior[7] = 4.0f/32.0f;
+	_porcentajeAttachmentPosterior[8] = 0.0f/32.0f;
+	_posPorAttActual = 0;
 
 	_numEVLAgents = 0;
 	_numDFCActiveAgents = 0;
 	_numDEBAgents = 0;
-	_bRunning     = false;
+	_fRunning     = false;
 	srand((unsigned)time(NULL));
 	//_agentsWM_DFC = new Agente_DFC[_numDFCActiveAgents];
 };
@@ -35,11 +35,11 @@ AgentsSystem::~AgentsSystem()
 {
 
 };
-void	AgentsSystem::Initiate(void)
+void	AgentsSystem::Inicializar(void)
 {
 
 }; // azar
-void	AgentsSystem::Initiate(Enviroment* vEnviroment, int vNumDFCs, int vNumDEBs, int vNumEVLs)
+void	AgentsSystem::Inicializar(Enviroment* vEnviroment, int vNumDFCs, int vNumDEBs, int vNumEVLs)
 {
 	vEnviroment->_numDFCActiveAgentsWanted = vNumDFCs;
 	_numDFCAgents		= 1000;
@@ -47,7 +47,7 @@ void	AgentsSystem::Initiate(Enviroment* vEnviroment, int vNumDFCs, int vNumDEBs,
 	_numDEBAgents		= vNumDEBs;
 	_numEVLAgents		= vNumEVLs;
 
-	_bRunning           = false;
+	_fRunning           = false;
 	_agentsWM_DFC		= new CellWM[_numDFCAgents];
 
 	for(register int i = 0; i < _numDFCAgents; i++)
@@ -55,43 +55,43 @@ void	AgentsSystem::Initiate(Enviroment* vEnviroment, int vNumDFCs, int vNumDEBs,
 		_agentsWM_DFC[i].SetActive(false);
 	}
 
-	_posRateAttachmentCurrent = 0;
+	_posPorAttActual = 0;
 	vEnviroment->_num_DFC_EVL_AdhesionAnterior = 0;
 	vEnviroment->_num_DFC_EVL_AdhesionPosterior = 0;
-	vEnviroment->_dataEVL_StepDistEVL_Current = 0;
+	vEnviroment->_dataEVL_actualStepDistEVL = 0;
 	// Using boundaries for DFC
-	point_3D posDFC_Init,posDFC_End,posDFC_Current;
-	Igualar(posDFC_Init,vEnviroment->_minInitDFC);
-	//posDFC_Init.y = posDFC_Init.y + 0.05f*float(vEnviroment->_dimY);
-	Igualar(posDFC_End,vEnviroment->_maxInitDFC);
-	Igualar(posDFC_Current,posDFC_Init);
-	float radius = 10;
+	point_3D inicioDFC,finDFC,actualPos;
+	Igualar(inicioDFC,vEnviroment->_minInitDFC);
+	//inicioDFC.y = inicioDFC.y + 0.05f*float(vEnviroment->_dimY);
+	Igualar(finDFC,vEnviroment->_maxInitDFC);
+	Igualar(actualPos,inicioDFC);
+	float radio = 10;
 
-	posDFC_Current.x = posDFC_Init.x - radius;
-	posDFC_Current.y = posDFC_Init.y + radius;
+	actualPos.x = inicioDFC.x - radio;
+	actualPos.y = inicioDFC.y + radio;
 	float yMAX = 0.0f;
 	for(register int i = 0; i < vEnviroment->_numDFCActiveAgentsWanted; i++)
 	{
-		posDFC_Current.x = posDFC_Current.x + 2*radius;
+		actualPos.x = actualPos.x + 2*radio;
 		
-		if(posDFC_Current.x > posDFC_End.x)
+		if(actualPos.x > finDFC.x)
 		{
-			posDFC_Current.x = posDFC_Init.x + radius;
-			posDFC_Current.y = posDFC_Current.y + 2*radius;
-			_agentsWM_DFC[i].InitCell(point_2D(posDFC_Current.x,posDFC_Current.y),radius);
+			actualPos.x = inicioDFC.x + radio;
+			actualPos.y = actualPos.y + 2*radio;
+			_agentsWM_DFC[i].InitCell(point_2D(actualPos.x,actualPos.y),radio);
 			_agentsWM_DFC[i].SetActive(true);
 			_numDFCActiveAgents++;
 		}
 		else
 		{
-			_agentsWM_DFC[i].InitCell(point_2D(posDFC_Current.x,posDFC_Current.y),radius);
+			_agentsWM_DFC[i].InitCell(point_2D(actualPos.x,actualPos.y),radio);
 			_agentsWM_DFC[i].SetActive(true);
 
 			_numDFCActiveAgents++;
 		}
-		if(posDFC_Current.y > yMAX)
+		if(actualPos.y > yMAX)
 		{
-			yMAX = posDFC_Current.y;
+			yMAX = actualPos.y;
 		}
 	}
 
@@ -123,10 +123,10 @@ void	AgentsSystem::Initiate(Enviroment* vEnviroment, int vNumDFCs, int vNumDEBs,
 			}
 		}
 	}
-}; // To Set
-void	AgentsSystem::UpdateState(Enviroment* vEnviroment) {
+}; // sete0
+void	AgentsSystem::UpdateEstado(Enviroment* vEnviroment) {
 	register int i,j;
-	if(_bRunning)
+	if(_fRunning)
 	{
 		for(i = 0; i < _numDFCActiveAgents; i++)
 		{
@@ -139,26 +139,26 @@ void	AgentsSystem::UpdateState(Enviroment* vEnviroment) {
 
 		//if(vEnviroment->_useEVLInteraction)
 		//{
-		//	if( (vEnviroment->_dataEVL_FieldKind == 1) && (vEnviroment->_dataEVL_LineWidth > 20)  && (vEnviroment->_dataEVL_currentLineStep < 1))
+		//	if( (vEnviroment->_dataEVL_tipoCampo == 1) && (vEnviroment->_dataEVL_AnchoLinea > 20)  && (vEnviroment->_dataEVL_actualStepsLinea < 1))
 		//	{
-		//		vEnviroment->_dataEVL_LineWidth =vEnviroment->_dataEVL_LineWidth--;
-		//		if(vEnviroment->_dataEVL_LineWidth < 20)
+		//		vEnviroment->_dataEVL_AnchoLinea =vEnviroment->_dataEVL_AnchoLinea--;
+		//		if(vEnviroment->_dataEVL_AnchoLinea < 20)
 		//		{
-		//			vEnviroment->_dataEVL_LineWidth = 20;
+		//			vEnviroment->_dataEVL_AnchoLinea = 20;
 		//		}
-		//		vEnviroment->_dataEVL_currentLineStep = vEnviroment->_dataEVL_LineStep;
+		//		vEnviroment->_dataEVL_actualStepsLinea = vEnviroment->_dataEVL_StepsLinea;
 		//	}
-		//	vEnviroment->_dataEVL_currentLineStep--;
-		//	if(vEnviroment->_dataEVL_quantityKind == 1)
+		//	vEnviroment->_dataEVL_actualStepsLinea--;
+		//	if(vEnviroment->_dataEVL_tipoCantidad == 1)
 		//	{
-		//		if(vEnviroment->_dataEVL_StepDistEVL_Current < 1 && _posRateAttachmentCurrent <= 8)
+		//		if(vEnviroment->_dataEVL_actualStepDistEVL < 1 && _posPorAttActual <= 8)
 		//		{
-		//			int dummyLimit;
-		//			bool usingLimit;
+		//			int misericordia;
+		//			bool usingMisericordia;
 
-		//			float posYMin,posYMax,posYMean = 0.0f;
-		//			posYMin = 100000.0f;
-		//			posYMax = -100000.0f;
+		//			float minPosY,maxPosY,posYMedia = 0.0f;
+		//			minPosY = 100000.0f;
+		//			maxPosY = -100000.0f;
 
 		//			int numAnterior = 0;
 		//			int numPosterior = 0;
@@ -166,26 +166,26 @@ void	AgentsSystem::UpdateState(Enviroment* vEnviroment) {
 		//			{
 		//				if(_agentsWM_DFC[i].GetActive())
 		//				{
-		//					if(_agentsWM_DFC[i].GetPosY() <= posYMin)
+		//					if(_agentsWM_DFC[i].GetPosY() <= minPosY)
 		//					{
-		//						posYMin = _agentsWM_DFC[i].GetPosY();
+		//						minPosY = _agentsWM_DFC[i].GetPosY();
 		//					}
-		//					if(_agentsWM_DFC[i].GetPosY() >= posYMax)
+		//					if(_agentsWM_DFC[i].GetPosY() >= maxPosY)
 		//					{
-		//						posYMax = _agentsWM_DFC[i].GetPosY();
+		//						maxPosY = _agentsWM_DFC[i].GetPosY();
 		//					}
 		//				}
 		//			}
-		//			posYMean = 0.5f*(posYMin + posYMax);
+		//			posYMedia = 0.5f*(minPosY + maxPosY);
 		//			for(register int i = 0; i < _numDFCActiveAgents; i++)
 		//			{
 		//				if(_agentsWM_DFC[i].GetActive())
 		//				{
-		//					if(_agentsWM_DFC[i].GetPosY() <= posYMean)
+		//					if(_agentsWM_DFC[i].GetPosY() <= posYMedia)
 		//					{
 		//						numAnterior++;
 		//					}
-		//					if(_agentsWM_DFC[i].GetPosY() > posYMean)
+		//					if(_agentsWM_DFC[i].GetPosY() > posYMedia)
 		//					{
 		//						numPosterior++;
 		//					}
@@ -193,40 +193,40 @@ void	AgentsSystem::UpdateState(Enviroment* vEnviroment) {
 		//			}
 
 
-		//			vEnviroment->_limit_DFC_EVL_AntAdhesion =  (int) ceil((float)numAnterior*_rateAntAttachment[_posRateAttachmentCurrent]);
-		//			vEnviroment->_limit_DFC_EVL_PostAdhesion = (int) ceil((float)numPosterior*_ratePostAttachment[_posRateAttachmentCurrent]);
+		//			vEnviroment->_limite_DFC_EVL_AdhesionAnterior =  (int) ceil((float)numAnterior*_porcentajeAttachmentAnterior[_posPorAttActual]);
+		//			vEnviroment->_limite_DFC_EVL_AdhesionPosterior = (int) ceil((float)numPosterior*_porcentajeAttachmentPosterior[_posPorAttActual]);
 
-		//			if(vEnviroment->_num_DFC_EVL_AdhesionAnterior <= vEnviroment->_limit_DFC_EVL_AntAdhesion)
+		//			if(vEnviroment->_num_DFC_EVL_AdhesionAnterior <= vEnviroment->_limite_DFC_EVL_AdhesionAnterior)
 		//			{
-		//				/// To set Anterior
-		//				dummyLimit = 0;
+		//				/// Asignar Anterior
+		//				misericordia = 0;
 
-		//				usingLimit= true;
-		//				while(usingLimit && (vEnviroment->_num_DFC_EVL_AdhesionAnterior < vEnviroment->_limit_DFC_EVL_AntAdhesion))
+		//				usingMisericordia= true;
+		//				while(usingMisericordia && (vEnviroment->_num_DFC_EVL_AdhesionAnterior < vEnviroment->_limite_DFC_EVL_AdhesionAnterior))
 		//				{
 		//					for(register int i = 0; i < _numDFCActiveAgents; i++)
 		//					{
 		//						if(_agentsWM_DFC[i].GetActive())
 		//						{
-		//							if(!_agentsWM_DFC[i].GetAdhesionEVL() && (_agentsWM_DFC[i].GetPosY() <= posYMean))
+		//							if(!_agentsWM_DFC[i].GetAdhesionEVL() && (_agentsWM_DFC[i].GetPosY() <= posYMedia))
 		//							{
 		//								if(((rand()%(int)(2)) == 0))
 		//								{
 		//									_agentsWM_DFC[i].SetAdhesionEVL(true);
 		//									vEnviroment->_num_DFC_EVL_AdhesionAnterior++;
 		//								}
-		//								if(vEnviroment->_num_DFC_EVL_AdhesionAnterior >= vEnviroment->_limit_DFC_EVL_AntAdhesion)
+		//								if(vEnviroment->_num_DFC_EVL_AdhesionAnterior >= vEnviroment->_limite_DFC_EVL_AdhesionAnterior)
 		//								{
 		//									i = _numDFCActiveAgents;
 		//								}
 		//							}
 		//						}
 		//					}
-		//					if(dummyLimit >= 10000)
+		//					if(misericordia >= 10000)
 		//					{
-		//						usingLimit = false;
+		//						usingMisericordia = false;
 		//					}
-		//					dummyLimit++;
+		//					misericordia++;
 		//				}
 		//			}
 		//			else
@@ -237,7 +237,7 @@ void	AgentsSystem::UpdateState(Enviroment* vEnviroment) {
 		//					{
 		//						_agentsWM_DFC[i].SetAdhesionEVL(false);
 		//						vEnviroment->_num_DFC_EVL_AdhesionAnterior--;
-		//						if(vEnviroment->_num_DFC_EVL_AdhesionAnterior <= vEnviroment->_limit_DFC_EVL_AntAdhesion)
+		//						if(vEnviroment->_num_DFC_EVL_AdhesionAnterior <= vEnviroment->_limite_DFC_EVL_AdhesionAnterior)
 		//						{
 		//							i = _numDFCActiveAgents +2;
 		//						}
@@ -245,33 +245,33 @@ void	AgentsSystem::UpdateState(Enviroment* vEnviroment) {
 		//				}
 		//			}
 
-		//			if(vEnviroment->_num_DFC_EVL_AdhesionPosterior <= vEnviroment->_limit_DFC_EVL_PostAdhesion)
+		//			if(vEnviroment->_num_DFC_EVL_AdhesionPosterior <= vEnviroment->_limite_DFC_EVL_AdhesionPosterior)
 		//			{
 		//				////// el otro
-		//				dummyLimit = 0;
-		//				usingLimit= true;
-		//				while(usingLimit && (vEnviroment->_num_DFC_EVL_AdhesionPosterior < vEnviroment->_limit_DFC_EVL_PostAdhesion))
+		//				misericordia = 0;
+		//				usingMisericordia= true;
+		//				while(usingMisericordia && (vEnviroment->_num_DFC_EVL_AdhesionPosterior < vEnviroment->_limite_DFC_EVL_AdhesionPosterior))
 		//				{
 		//					for(register int i = 0; i < _numDFCActiveAgents; i++)
 		//					{
-		//						if(_agentsWM_DFC[i].GetActive() && (!_agentsWM_DFC[i].GetAdhesionEVL() && (_agentsWM_DFC[i].GetPosY() > posYMean)))
+		//						if(_agentsWM_DFC[i].GetActive() && (!_agentsWM_DFC[i].GetAdhesionEVL() && (_agentsWM_DFC[i].GetPosY() > posYMedia)))
 		//						{
 		//							if(((rand()%(int)(2)) == 0))
 		//							{
 		//								_agentsWM_DFC[i].SetAdhesionEVL(true);
 		//								vEnviroment->_num_DFC_EVL_AdhesionPosterior++;
 		//							}
-		//							if(vEnviroment->_num_DFC_EVL_AdhesionPosterior >= vEnviroment->_limit_DFC_EVL_PostAdhesion)
+		//							if(vEnviroment->_num_DFC_EVL_AdhesionPosterior >= vEnviroment->_limite_DFC_EVL_AdhesionPosterior)
 		//							{
 		//								i = _numDFCActiveAgents;
 		//							}
 		//						}
 		//					}
-		//					if(dummyLimit >= 10000)
+		//					if(misericordia >= 10000)
 		//					{
-		//						usingLimit = false;
+		//						usingMisericordia = false;
 		//					}
-		//					dummyLimit++;
+		//					misericordia++;
 		//				}
 		//			}
 		//			else
@@ -282,7 +282,7 @@ void	AgentsSystem::UpdateState(Enviroment* vEnviroment) {
 		//					{
 		//						_agentsWM_DFC[i].SetAdhesionEVL(false);
 		//						vEnviroment->_num_DFC_EVL_AdhesionPosterior--;
-		//						if(vEnviroment->_num_DFC_EVL_AdhesionPosterior <= vEnviroment->_limit_DFC_EVL_PostAdhesion)
+		//						if(vEnviroment->_num_DFC_EVL_AdhesionPosterior <= vEnviroment->_limite_DFC_EVL_AdhesionPosterior)
 		//						{
 		//							i = _numDFCActiveAgents +2;
 		//						}
@@ -291,12 +291,12 @@ void	AgentsSystem::UpdateState(Enviroment* vEnviroment) {
 		//			}
 
 		//			
-		//			vEnviroment->_dataEVL_StepDistEVL_Current =  vEnviroment->_dataEVL_ChangeStepsEVLDist;
-		//			_posRateAttachmentCurrent++;
-		//			if(_posRateAttachmentCurrent > 8) _posRateAttachmentCurrent = 8;
+		//			vEnviroment->_dataEVL_actualStepDistEVL =  vEnviroment->_dataEVL_StepsCambioEVLDist;
+		//			_posPorAttActual++;
+		//			if(_posPorAttActual > 8) _posPorAttActual = 8;
 		//		}
 		//		
-		//		vEnviroment->_dataEVL_StepDistEVL_Current--;
+		//		vEnviroment->_dataEVL_actualStepDistEVL--;
 		//	}
 		//}
 
@@ -305,7 +305,7 @@ void	AgentsSystem::UpdateState(Enviroment* vEnviroment) {
 
 		//// verificar si el arrastre del Enviroment afecto el sistema
 		//// primera iteracion para asignar los afectados por el borde superior
-		//register bool bInvalideState = true;
+		//register bool estadoInvalido = true;
 		//for(i = 0; i < _numDFCActiveAgents; i++)
 		//{
 		//	if(_agentsWM_DFC[i].GetActive() && (_agentsWM_DFC[i].GetPosY() < (vEnviroment->_posMarginDEB.y + _agentsWM_DFC[i].GetRad(0))))
@@ -314,10 +314,10 @@ void	AgentsSystem::UpdateState(Enviroment* vEnviroment) {
 		//	}
 		//}
 		//////////////// arreglar -... hasta validar---
-		//register float distance = 0.0f;
-		//while(bInvalideState)
+		//register float distancia = 0.0f;
+		//while(estadoInvalido)
 		//{
-		//	bInvalideState = false;
+		//	estadoInvalido = false;
 		//	for(i = 0; i < _numDFCActiveAgents; i++)
 		//	{
 		//		if(_agentsWM_DFC[i].GetActive())
@@ -329,10 +329,10 @@ void	AgentsSystem::UpdateState(Enviroment* vEnviroment) {
 		//					point_3D p3D_1,p3D_2;
 		//					SetFull(p3D_1,_agentsWM_DFC[i].GetPosX(),_agentsWM_DFC[i].GetPosY(), 0.0);
 		//					SetFull(p3D_2,_agentsWM_DFC[j].GetPosX(),_agentsWM_DFC[j].GetPosY(), 0.0);
-		//					distance = Distance(p3D_1,p3D_2);
-		//					if(distance < (_agentsWM_DFC[i].GetRad(0) +  _agentsWM_DFC[j].GetRad(0)))
+		//					distancia = Distancia(p3D_1,p3D_2);
+		//					if(distancia < (_agentsWM_DFC[i].GetRad(0) +  _agentsWM_DFC[j].GetRad(0)))
 		//					{
-		//						bInvalideState = true;
+		//						estadoInvalido = true;
 		//						if(_agentsWM_DFC[i].GetPosY() >= _agentsWM_DFC[j].GetPosY())
 		//						{
 		//							_agentsWM_DFC[i].SetPosY(_agentsWM_DFC[i].GetPosY() + 1);
@@ -359,10 +359,10 @@ void	AgentsSystem::UpdateState(Enviroment* vEnviroment) {
 		//	}
 		//}
 
-		//bInvalideState = true;
-		//while(bInvalideState)
+		//estadoInvalido = true;
+		//while(estadoInvalido)
 		//{
-		//	bInvalideState = false;
+		//	estadoInvalido = false;
 		//	for(i = 0; i < _numDFCActiveAgents; i++)
 		//	{
 		//		if(_agentsWM_DFC[i].GetActive())
@@ -374,10 +374,10 @@ void	AgentsSystem::UpdateState(Enviroment* vEnviroment) {
 		//					point_3D p3D_1,p3D_2;
 		//					SetFull(p3D_1,_agentsWM_DFC[i].GetPosX(),_agentsWM_DFC[i].GetPosY(), 0.0);
 		//					SetFull(p3D_2,_agentsWM_DFC[j].GetPosX(),_agentsWM_DFC[j].GetPosY(), 0.0);
-		//					distance = Distance(p3D_1,p3D_2);
-		//					if(distance < (_agentsWM_DFC[i].GetRad(0) +  _agentsWM_DFC[j].GetRad(0)))
+		//					distancia = Distancia(p3D_1,p3D_2);
+		//					if(distancia < (_agentsWM_DFC[i].GetRad(0) +  _agentsWM_DFC[j].GetRad(0)))
 		//					{
-		//						bInvalideState = true;
+		//						estadoInvalido = true;
 		//						if(_agentsWM_DFC[i].GetPosY() <= _agentsWM_DFC[j].GetPosY())
 		//						{
 		//							_agentsWM_DFC[i].SetPosY(_agentsWM_DFC[i].GetPosY() - 1);
@@ -393,7 +393,7 @@ void	AgentsSystem::UpdateState(Enviroment* vEnviroment) {
 		//	}
 		//}
 
-		//AddOffspring(vEnviroment);
+		//AgregarHijos(vEnviroment);
 
 
 		for(i = 0; i < _numDFCActiveAgents; i++)
@@ -411,110 +411,110 @@ void	AgentsSystem::UpdateState(Enviroment* vEnviroment) {
 };
 
 int deadTime = 0;
-void	AgentsSystem::AddOffspring(Enviroment* vEnviroment) {
-	if(vEnviroment->_StepsProliferationCurrent < 1 && vEnviroment->_posProliferation < 7)
+void	AgentsSystem::AgregarHijos(Enviroment* vEnviroment) {
+	if(vEnviroment->_actualStepsProliferacion < 1 && vEnviroment->_posProliferation < 7)
 	{
 		vEnviroment->_posProliferation++;
-		vEnviroment->_numDFCActiveAgentsWanted = (int) vEnviroment->_numDFCActiveAgentsWanted + (int) ceil(_numDFCActiveAgents*(vEnviroment->_vProliferation[vEnviroment->_posProliferation]));
+		vEnviroment->_numDFCActiveAgentsWanted = (int) vEnviroment->_numDFCActiveAgentsWanted + (int) ceil(_numDFCActiveAgents*(vEnviroment->_vectorProliferacion[vEnviroment->_posProliferation]));
 
-		vEnviroment->_StepsProliferationCurrent = vEnviroment->_stepsProliferacion;
+		vEnviroment->_actualStepsProliferacion = vEnviroment->_stepsProliferacion;
 	}
 
-	bool dummyLimit = true;
-	int  nTries = 0;
-	point_3D posMine;
+	bool misericordia = true;
+	int  intentos = 0;
+	point_3D miPosicion;
 	register int largo = (int) vEnviroment->_maxInitDFC.x - (int) vEnviroment->_minInitDFC.x;
-	register float distance;
+	register float distancia;
 
 	if(deadTime > 200)
 	{
 		deadTime = 0;
 	}
-	if((deadTime == 0) &&(_numDFCActiveAgents < vEnviroment->_numDFCActiveAgentsWanted) && dummyLimit)
+	if((deadTime == 0) &&(_numDFCActiveAgents < vEnviroment->_numDFCActiveAgentsWanted) && misericordia)
 	{
-		int limitLeft =   100000;//vEnviroment->_minInitDFC.x + (rand()%(int)(largo));
-		int limitRight   =   -100000;//vEnviroment->_maxInitDFC.x - _agentsWM_DFC[0].GetRad(0);
+		int limiteIzquierdo =   100000;//vEnviroment->_minInitDFC.x + (rand()%(int)(largo));
+		int limiteDerecho   =   -100000;//vEnviroment->_maxInitDFC.x - _agentsWM_DFC[0].GetRad(0);
 
 		for(register int k = 0; k < _numDFCActiveAgents; k++)
 		{
 			if(_agentsWM_DFC[k].GetActive())
 			{
-				if(_agentsWM_DFC[k].GetPosX() < limitLeft)
+				if(_agentsWM_DFC[k].GetPosX() < limiteIzquierdo)
 				{
-					limitLeft = (int) _agentsWM_DFC[k].GetPosX();
-					if(limitLeft < vEnviroment->_minEnviroment.x + _agentsWM_DFC[k].GetRad(0))
+					limiteIzquierdo = (int) _agentsWM_DFC[k].GetPosX();
+					if(limiteIzquierdo < vEnviroment->_minEnviroment.x + _agentsWM_DFC[k].GetRad(0))
 					{
-						limitLeft = (int) vEnviroment->_minEnviroment.x + (int) _agentsWM_DFC[k].GetRad(0);
+						limiteIzquierdo = (int) vEnviroment->_minEnviroment.x + (int) _agentsWM_DFC[k].GetRad(0);
 					}
 				}
-				if(_agentsWM_DFC[k].GetPosX()> limitRight)
+				if(_agentsWM_DFC[k].GetPosX()> limiteDerecho)
 				{
-					limitRight = (int) _agentsWM_DFC[k].GetPosX();
-					if(limitRight > vEnviroment->_maxEnviroment.x - _agentsWM_DFC[k].GetRad(0))
+					limiteDerecho = (int) _agentsWM_DFC[k].GetPosX();
+					if(limiteDerecho > vEnviroment->_maxEnviroment.x - _agentsWM_DFC[k].GetRad(0))
 					{
-						limitRight = (int) vEnviroment->_maxEnviroment.x - (int) _agentsWM_DFC[k].GetRad(0);
+						limiteDerecho = (int) vEnviroment->_maxEnviroment.x - (int) _agentsWM_DFC[k].GetRad(0);
 					}
 				}
 			}
 		}
-		float dimmm = 0.15f*(limitRight-limitLeft);
-		limitLeft = limitLeft +  (int) dimmm  ;//(rand()%(int)dimmm);
-		limitRight = limitRight     -  (int) dimmm  ;//(rand()%(int)dimmm);
+		float dimmm = 0.15f*(limiteDerecho-limiteIzquierdo);
+		limiteIzquierdo = limiteIzquierdo +  (int) dimmm  ;//(rand()%(int)dimmm);
+		limiteDerecho = limiteDerecho     -  (int) dimmm  ;//(rand()%(int)dimmm);
 
-		bool bValid = true;
-		bool bComeHere = false;
-		Zero(posMine);
+		bool soyValido = true;
+		bool entreaqui = false;
+		Zero(miPosicion);
 
-		int coordY_Init =   100000;//vEnviroment->_minInitDFC.x + (rand()%(int)(largo));
-		int coordY_End   =   -100000;//vEnviroment->_maxInitDFC.x - _agentsWM_DFC[0].GetRad(0);
+		int inicioY =   100000;//vEnviroment->_minInitDFC.x + (rand()%(int)(largo));
+		int finY   =   -100000;//vEnviroment->_maxInitDFC.x - _agentsWM_DFC[0].GetRad(0);
 
 		for(register int k = 0; k < _numDFCActiveAgents; k++)
 		{
 			if(_agentsWM_DFC[k].GetActive())
 			{
-				if(_agentsWM_DFC[k].GetPosY()< coordY_Init)
+				if(_agentsWM_DFC[k].GetPosY()< inicioY)
 				{
-					coordY_Init = (int) _agentsWM_DFC[k].GetPosY();
-					if(coordY_Init < vEnviroment->_posMarginDEB.y + _agentsWM_DFC[k].GetRad(0))
+					inicioY = (int) _agentsWM_DFC[k].GetPosY();
+					if(inicioY < vEnviroment->_posMarginDEB.y + _agentsWM_DFC[k].GetRad(0))
 					{
-						coordY_Init = (int) vEnviroment->_posMarginDEB.y + (int) _agentsWM_DFC[k].GetRad(0);
+						inicioY = (int) vEnviroment->_posMarginDEB.y + (int) _agentsWM_DFC[k].GetRad(0);
 					}
 				}
-				if(_agentsWM_DFC[k].GetPosY() > coordY_End)
+				if(_agentsWM_DFC[k].GetPosY() > finY)
 				{
-					coordY_End = (int) _agentsWM_DFC[k].GetPosY();
-					if(coordY_End > vEnviroment->_dataEVL_PosY - _agentsWM_DFC[k].GetRad(0))
+					finY = (int) _agentsWM_DFC[k].GetPosY();
+					if(finY > vEnviroment->_dataEVL_PosY - _agentsWM_DFC[k].GetRad(0))
 					{
-						coordY_End = (int) vEnviroment->_dataEVL_PosY - (int) _agentsWM_DFC[k].GetRad(0);
+						finY = (int) vEnviroment->_dataEVL_PosY - (int) _agentsWM_DFC[k].GetRad(0);
 					}
 				}
 			}
 		}
-		coordY_End = coordY_End - (int) (0.25f*(coordY_End-coordY_Init));
-		//coordY_Init = coordY_Init + (rand()%(int)((coordY_End-coordY_Init)/2));
-		for(register int i = limitLeft ; i < limitRight; i++)
+		finY = finY - (int) (0.25f*(finY-inicioY));
+		//inicioY = inicioY + (rand()%(int)((finY-inicioY)/2));
+		for(register int i = limiteIzquierdo ; i < limiteDerecho; i++)
 		{
-			for(register int j = coordY_Init; j < coordY_End; j++)
+			for(register int j = inicioY; j < finY; j++)
 			{
-				bValid = true;
-				posMine.x = float(i);
-				posMine.y = float(j);
-				posMine.z = 0.0f;
+				soyValido = true;
+				miPosicion.x = float(i);
+				miPosicion.y = float(j);
+				miPosicion.z = 0.0f;
 				for(register int k = 0; k < _numDFCActiveAgents; k++)
 				{
 					if(_agentsWM_DFC[k].GetActive())
 					{
-						bComeHere = true;
+						entreaqui = true;
 						point_3D p3D_1;
 						SetFull(p3D_1,_agentsWM_DFC[k].GetPosX(),_agentsWM_DFC[k].GetPosY(),0.0);
-						distance = Distance(posMine,p3D_1);
-						if(distance <= 2.0f*_agentsWM_DFC[k].GetRad(0))
+						distancia = Distancia(miPosicion,p3D_1);
+						if(distancia <= 2.0f*_agentsWM_DFC[k].GetRad(0))
 						{
-							bValid = false;
+							soyValido = false;
 						}
 					}
 				}
-				if(bValid)
+				if(soyValido)
 				{
 					i = 1000000;
 					j = 1000000;
@@ -522,55 +522,55 @@ void	AgentsSystem::AddOffspring(Enviroment* vEnviroment) {
 			}
 		}
 
-		if(bValid && bComeHere)
+		if(soyValido && entreaqui)
 		{
-			int distance_Min = 10000;
-			point_3D direction;
+			int minimaDistancia = 10000;
+			point_3D direccion;
 			for(register int k = 0; k < _numDFCActiveAgents; k++)
 			{
 				if(_agentsWM_DFC[k].GetActive())
 				{
 					point_3D p3D_1;
 					SetFull(p3D_1,_agentsWM_DFC[k].GetPosX(),_agentsWM_DFC[k].GetPosY(),0.0);
-					distance = Distance(posMine,p3D_1);
-					if(distance < distance_Min)
+					distancia = Distancia(miPosicion,p3D_1);
+					if(distancia < minimaDistancia)
 					{
-						distance_Min = (int) distance;
+						minimaDistancia = (int) distancia;
 
 						point_3D p3D_2;
 						SetFull(p3D_2,_agentsWM_DFC[k].GetPosX(),_agentsWM_DFC[k].GetPosY(),0.0);
-						Subtraction(direction,p3D_2,posMine);
-						NormalizeR(direction);
+						Resta(direccion,p3D_2,miPosicion);
+						NormalizeR(direccion);
 					}
 				}
 			}
 
-			if((distance_Min != 10000) && (distance_Min > 2*_agentsWM_DFC[0].GetRad(0)))
+			if((minimaDistancia != 10000) && (minimaDistancia > 2*_agentsWM_DFC[0].GetRad(0)))
 			{
-				distance = distance - 2*_agentsWM_DFC[0].GetRad(0);
-				Amplify(direction,distance,direction);
-				//Addition(posMine,posMine,direction);
+				distancia = distancia - 2*_agentsWM_DFC[0].GetRad(0);
+				Amplificar(direccion,distancia,direccion);
+				//Suma(miPosicion,miPosicion,direccion);
 			}
 			
 			point_2D p2D_1;
-			p2D_1.x(posMine.x);
-			p2D_1.y(posMine.y);
+			p2D_1.x(miPosicion.x);
+			p2D_1.y(miPosicion.y);
 
 			_agentsWM_DFC[_numDFCActiveAgents].InitCell(p2D_1,10);
-			_agentsWM_DFC[_numDFCActiveAgents]._offSpring				= true;
-			_agentsWM_DFC[_numDFCActiveAgents]._perturbationRandom		= _agentsWM_DFC[0]._perturbationRandom;
+			_agentsWM_DFC[_numDFCActiveAgents]._hija					= true;
+			_agentsWM_DFC[_numDFCActiveAgents]._perturbacionAzar		= _agentsWM_DFC[0]._perturbacionAzar;
 			_agentsWM_DFC[_numDFCActiveAgents]._friendAttraction		= _agentsWM_DFC[0]._friendAttraction;
-			_agentsWM_DFC[_numDFCActiveAgents]._freeIssue				= _agentsWM_DFC[0]._freeIssue;
+			_agentsWM_DFC[_numDFCActiveAgents]._liberarEstancado		= _agentsWM_DFC[0]._liberarEstancado;
 			_agentsWM_DFC[_numDFCActiveAgents]._adhesionToEVL			= false;
 			_agentsWM_DFC[_numDFCActiveAgents]._ratioFriendAttraction	= _agentsWM_DFC[0]._ratioFriendAttraction;
 
 			_numDFCActiveAgents++;
 		}
-		nTries++;
-		if(nTries >= 1)
+		intentos++;
+		if(intentos >= 1)
 		{
-			dummyLimit = false;
+			misericordia = false;
 		}
 	}
-	vEnviroment->_StepsProliferationCurrent--;
+	vEnviroment->_actualStepsProliferacion--;
 };
