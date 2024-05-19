@@ -15,7 +15,7 @@ using namespace std;
 class CellWM
 {
 public:
-	bool			_fBusy,_fActive,_fRunning;
+	bool			_fBusy,_fActive,_bRunning;
 
 	float			_radR0[10],_angleThetha0[10];
 	float			_paramA[10],_paramW[10],_paramGamma[10],_paramSigma[10],_paramV0;
@@ -36,8 +36,8 @@ public:
 	void		InitCell(point_2D vPos, float vRadio);
 
 	// Setters
-	bool		GetRunning(void){return _fRunning;};
-	void		SetRunning(bool vValue){_fRunning = vValue;};
+	bool		GetRunning(void){return _bRunning;};
+	void		SetRunning(bool vValue){_bRunning = vValue;};
 
 	bool		GetBusy(void){return _fBusy;};
 	void		SetBusy(bool vValue){_fBusy = vValue;};
@@ -67,7 +67,7 @@ public:
 
 					_fBusy			= false;
 					_fActive		= false;
-					_fRunning		= false;
+					_bRunning		= false;
 
 					_pos			= vValue._pos;
 					_vel			= vValue._vel;

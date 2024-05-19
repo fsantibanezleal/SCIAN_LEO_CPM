@@ -21,7 +21,7 @@ class AgentsSystem
 {
 private:
 public:
-	bool		_fRunning,_fActive;
+	bool		_bRunning,_fActive;
 	int			_numEVLAgents,_numDFCAgents,_numDEBAgents,_numDFCActiveAgents; 
 	int			_selectedAgente;
 	int			_tipoSelectedAgente; // 0 = migradoras... 1 = las de atras... 2= EVL
@@ -37,8 +37,8 @@ public:
 
 	void	Inicializar(void); // azar
 	void	Inicializar(Enviroment* vEnviroment, int vNumDFCs, int vNumDEBs, int vNumEVLs); // sete0
-	void	UpdateEstado(Enviroment* vEnviroment);
-	void	AgregarHijos(Enviroment* vEnviroment);
+	void	UpdateState(Enviroment* vEnviroment);
+	void	AddOffspring(Enviroment* vEnviroment);
 };
 
 #endif

@@ -428,7 +428,7 @@ point_3D Resta(point_3D v1, point_3D v2)
 
 // Othes
 
-float Distancia(point_3D v1 ,point_3D v2)
+float Distance(point_3D v1 ,point_3D v2)
 {
 	point_3D temp;
 	temp.x = v1.x - v2.x;
@@ -519,7 +519,7 @@ void Ray(point_3D &vPRayo ,point_3D vInicio, float vAlfa, point_3D vDireccion)
 	Suma(vPRayo,vInicio,vPRayo);
 };
 
-float 	DistanciaAPlano(point_3D vNormalT , point_3D vDirMov, point_3D vPuntoPlano,point_3D vPuntoInteres)
+float 	DistanceAPlano(point_3D vNormalT , point_3D vDirMov, point_3D vPuntoPlano,point_3D vPuntoInteres)
 {
 	// Ecuacion Plano Triangulo N*X+d=0
 	//d1 = - Dot(normalT,vTriangulo[0]);
@@ -530,7 +530,7 @@ float 	DistanciaAPlano(point_3D vNormalT , point_3D vDirMov, point_3D vPuntoPlan
 	return BIGGESTVALUE;
 };
 
-float 	DistanciaAPlanoN(point_3D vNormalT , point_3D vPuntoPlano,point_3D vPuntoInteres)
+float 	DistanceAPlanoN(point_3D vNormalT , point_3D vPuntoPlano,point_3D vPuntoInteres)
 {
 	// Ecuacion Plano Triangulo N*X+d=0
 	//d1 = - Dot(normalT,vTriangulo[0]);
@@ -636,16 +636,16 @@ bool IsPointInTriangleN(point_3D vNormal,point_3D vPunto,point_3D vTriangulo[3])
 	Suma(temp,temp,vTriangulo[2]);
 	Amplificar(temp,(1.0f/3.0f));
 
-	if(DistanciaAPlanoN(dir10,vTriangulo[0],temp) < 0.0f) // Hcaer que las tres normales apunten al exterior del triangulo
+	if(DistanceAPlanoN(dir10,vTriangulo[0],temp) < 0.0f) // Hcaer que las tres normales apunten al exterior del triangulo
 	{
 		Amplificar(dir10,-1.0f);
 		Amplificar(dir21,-1.0f);
 		Amplificar(dir02,-1.0f);
 	}
 
-	if( (DistanciaAPlanoN(dir10,vTriangulo[0],vPunto) >= 0.0f)
-		&& (DistanciaAPlanoN(dir21,vTriangulo[1],vPunto) >= 0.0f)
-		&& (DistanciaAPlanoN(dir02,vTriangulo[2],vPunto) >= 0.0f))
+	if( (DistanceAPlanoN(dir10,vTriangulo[0],vPunto) >= 0.0f)
+		&& (DistanceAPlanoN(dir21,vTriangulo[1],vPunto) >= 0.0f)
+		&& (DistanceAPlanoN(dir02,vTriangulo[2],vPunto) >= 0.0f))
 	{
 		return true;
 	}
@@ -693,7 +693,7 @@ bool IsPointInTriangleA(point_3D vNormal,point_3D vPunto,point_3D vTriangulo[3],
 
 bool IsPointInTriangleB(point_3D vNormal,point_3D vPunto,point_3D vTriangulo[3]) // Calculo Bizarro
 {
-	if( IsSmall(Distancia(vTriangulo[0],vPunto)) || IsSmall(Distancia(vTriangulo[1],vPunto)) || IsSmall(Distancia(vTriangulo[2],vPunto)))
+	if( IsSmall(Distance(vTriangulo[0],vPunto)) || IsSmall(Distance(vTriangulo[1],vPunto)) || IsSmall(Distance(vTriangulo[2],vPunto)))
 	{
 		return true;	
 	}
@@ -713,13 +713,13 @@ bool IsPointInTriangleB(point_3D vNormal,point_3D vPunto,point_3D vTriangulo[3])
 	radioMax = 0.0f;
 	for(i = 0; i < 3; i++)
 	{
-		if(Distancia(temp,vTriangulo[i]) > radioMax)
+		if(Distance(temp,vTriangulo[i]) > radioMax)
 		{
-			radioMax = Distancia(temp,vTriangulo[i]);
+			radioMax = Distance(temp,vTriangulo[i]);
 		}
 	}
 
-	if(Distancia(vPunto,temp) > radioMax)
+	if(Distance(vPunto,temp) > radioMax)
 	{
 		return false;
 	}

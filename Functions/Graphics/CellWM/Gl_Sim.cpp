@@ -162,7 +162,7 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 	glEnd();
 
 
-	if(vEnviroment->_dataEVL_tipoCampo == 0)
+	if(vEnviroment->_dataEVL_FieldKind == 0)
 	{
 		SetMaterial(1);
 		glPointSize(10.0f);
@@ -176,7 +176,7 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 			glVertex3f(posicionDibujo.x,posicionDibujo.y,posicionDibujo.z);
 		glEnd();
 	}
-	if(vEnviroment->_dataEVL_tipoCampo == 1)
+	if(vEnviroment->_dataEVL_FieldKind == 1)
 	{
 		SetMaterial(1);
 		glPointSize(10.0f);
@@ -187,8 +187,8 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 			posicionDibujo.x = factorX * (posicionDibujo.x + deltaX);
 			posicionDibujo.y = factorY * (deltaY - posicionDibujo.y);
 			posicionDibujo.z = 100.0f;
-			glVertex3f(posicionDibujo.x - (float(vEnviroment->_dataEVL_AnchoLinea)/2.0f),posicionDibujo.y,posicionDibujo.z);
-			glVertex3f(posicionDibujo.x + (float(vEnviroment->_dataEVL_AnchoLinea)/2.0f),posicionDibujo.y,posicionDibujo.z);
+			glVertex3f(posicionDibujo.x - (float(vEnviroment->_dataEVL_LineWidth)/2.0f),posicionDibujo.y,posicionDibujo.z);
+			glVertex3f(posicionDibujo.x + (float(vEnviroment->_dataEVL_LineWidth)/2.0f),posicionDibujo.y,posicionDibujo.z);
 		glEnd();
 	}
 
@@ -247,7 +247,7 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 	alto  = alto  + 5;
 	float altura = superalto - alto;
 
-	if( vMatrix->_fRunning)
+	if( vMatrix->_bRunning)
 	{
 				glPointSize(50.0f);
 			/////////////////////////////////  Adhesion Margen posterior....... ancho linea
@@ -259,16 +259,16 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 						_vectorParam1[int(_numVectorParam1)] = _vectorParam1[int(_numVectorParam1)]/ float(_stepsContador+1);
 					}
 					_numVectorParam1++;
-					_vectorParam1[int(_numVectorParam1)] = vEnviroment->_dataEVL_AnchoLinea;
+					_vectorParam1[int(_numVectorParam1)] = vEnviroment->_dataEVL_LineWidth;
 				}
 				else
 				{
-					_vectorParam1[int(_numVectorParam1)] = _vectorParam1[int(_numVectorParam1)] + vEnviroment->_dataEVL_AnchoLinea;
+					_vectorParam1[int(_numVectorParam1)] = _vectorParam1[int(_numVectorParam1)] + vEnviroment->_dataEVL_LineWidth;
 				}
 
-				if(vEnviroment->_dataEVL_AnchoLinea > _maxVectorParam1)
+				if(vEnviroment->_dataEVL_LineWidth > _maxVectorParam1)
 				{
-					_maxVectorParam1 = vEnviroment->_dataEVL_AnchoLinea;
+					_maxVectorParam1 = vEnviroment->_dataEVL_LineWidth;
 				}
 				glBegin(GL_LINE_STRIP);
 					for(register double i = 0.0f; i < _numVectorParam1-1;i = i +1.0f)

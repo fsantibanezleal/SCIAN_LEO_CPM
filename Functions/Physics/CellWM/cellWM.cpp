@@ -4,7 +4,7 @@ CellWM::CellWM()
 {
 	_fBusy			= false;
 	_fActive		= false;
-	_fRunning		= false;
+	_bRunning		= false;
 
 	_pos			= point_2D(0.0,0.0);
 	_vel			= point_2D(0.0,0.0);
@@ -40,7 +40,7 @@ CellWM::~CellWM() {
 void	CellWM::InitCell(void){
 	_fBusy			= false;
 	_fActive		= false;
-	_fRunning		= false;
+	_bRunning		= false;
 
 	_pos			= point_2D(0.0,0.0);
 	_vel			= point_2D(0.0,0.0);
@@ -69,7 +69,7 @@ void	CellWM::InitCell(void){
 void	CellWM::InitCell(point_2D vPos, float vRadio){
 	_fBusy			= false;
 	_fActive		= false;
-	_fRunning		= false;
+	_bRunning		= false;
 
 	_pos			= point_2D(vPos.x(),vPos.y());
 	_vel			= point_2D(0.0,0.0);

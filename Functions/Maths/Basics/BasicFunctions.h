@@ -86,7 +86,7 @@ void	MultiplicacionPuntual(point_3D &vValue ,point_3D v1, point_3D v2);
 point_3D	Resta(point_3D v1, point_3D v2 );
 point_3D	Suma(point_3D v1, point_3D v2 );
 
-float 	Distancia(point_3D v1 ,point_3D v2);
+float 	Distance(point_3D v1 ,point_3D v2);
 
 float	NormalizeR(point_3D &vValue);
 void 	Cross(point_3D &vValue ,point_3D v1, point_3D v2);
@@ -98,8 +98,8 @@ bool	Perpendicular(point_3D &vPerpendicular, point_3D vVector);
 void 	Ray(point_3D &vPRayo ,point_3D vInicio,point_3D vDireccion, float vAlfa);
 void 	Ray(point_3D &vPRayo ,point_3D vInicio,float vAlfa,point_3D vDireccion);
 
-float 	DistanciaAPlano(point_3D vNormalT , point_3D vDirMov, point_3D vPuntoPlano,point_3D vPuntoInteres);
-float 	DistanciaAPlanoN(point_3D vNormalT , point_3D vPuntoPlano,point_3D vPuntoInteres);
+float 	DistanceAPlano(point_3D vNormalT , point_3D vDirMov, point_3D vPuntoPlano,point_3D vPuntoInteres);
+float 	DistanceAPlanoN(point_3D vNormalT , point_3D vPuntoPlano,point_3D vPuntoInteres);
 
 bool 	IsPointInTriangle(point_3D vNormal,point_3D vPunto,point_3D vTriangulo[3]);
 bool	IsPointInTriangleS(point_3D vNormal,point_3D vPunto,point_3D vTriangulo[3]);
