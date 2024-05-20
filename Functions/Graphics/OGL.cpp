@@ -58,10 +58,10 @@ const GLfloat difusionDif[4] = {1.0f,1.0f,1.0f,1.0f};
 const GLfloat difusionSpe[4] = {0.0f,0.0f,0.0f,1.0f};
 GLfloat difusionShi = 1.0f;
 
-const GLfloat EnviromentAmb[4] = {1.0f,1.0f,1.0f,1.0f};
-const GLfloat EnviromentDif[4] = {0.0f,0.0f,0.0f,1.0f};
-const GLfloat EnviromentSpe[4] = {0.0f,0.0f,0.0f,1.0f};
-GLfloat EnviromentShi = 1.0f;
+const GLfloat EnvironmentSystemAmb[4] = {1.0f,1.0f,1.0f,1.0f};
+const GLfloat EnvironmentSystemDif[4] = {0.0f,0.0f,0.0f,1.0f};
+const GLfloat EnvironmentSystemSpe[4] = {0.0f,0.0f,0.0f,1.0f};
+GLfloat EnvironmentSystemShi = 1.0f;
 
 const GLfloat especularAmb[4] = {0.0f,0.0f,0.0f,1.0f};
 const GLfloat especularDif[4] = {0.0f,0.0f,0.0f,1.0f};
@@ -206,9 +206,9 @@ void OGL::InitOpenGL()
 	glEnable(GL_LIGHT1);	    //se activa la luz 0 que previamente se habia seteado
 
 	glEnable(GL_COLOR_MATERIAL);	//Se activa lo materiales de color
-	glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT_AND_DIFFUSE);  //Se desean de tipo Enviroment y difusión (tambien incluyen specular
-	glColorMaterial(GL_FRONT,GL_AMBIENT_AND_DIFFUSE);  //Se desean de tipo Enviroment y difusión (tambien incluyen specular
-	glColorMaterial(GL_BACK,GL_AMBIENT_AND_DIFFUSE);  //Se desean de tipo Enviroment y difusión (tambien incluyen specular
+	glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT_AND_DIFFUSE);  //Se desean de tipo EnvironmentSystem y difusión (tambien incluyen specular
+	glColorMaterial(GL_FRONT,GL_AMBIENT_AND_DIFFUSE);  //Se desean de tipo EnvironmentSystem y difusión (tambien incluyen specular
+	glColorMaterial(GL_BACK,GL_AMBIENT_AND_DIFFUSE);  //Se desean de tipo EnvironmentSystem y difusión (tambien incluyen specular
 
 	glEnable(GL_DEPTH_TEST);
 	glClearDepth(1.0f);								

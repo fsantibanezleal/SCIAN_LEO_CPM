@@ -56,19 +56,19 @@ void Gl_Sim::Resize(unsigned vDimVentanaX, unsigned vDimVentanaY)
 	glLoadIdentity();
 };
 
-void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsSystem* vMatrix)
+void Gl_Sim::Renderizar(bool vEstimarTriangulo, EnvironmentSystem* vEnvironmentSystem, AgentsSystem* vMatrix)
 {
-	if(vEnviroment->_busy) return;
+	if(vEnvironmentSystem->_busy) return;
 	register int i;
 	register float factorX,factorY,factorZ,deltaX,deltaY;
 	point_3D posicionDibujo,directionDibujo;
 
-	factorX = float(m_Width_Windows_main)/vEnviroment->_dimX;
-	factorY = float(m_Height_Windows_main)/vEnviroment->_dimY;
-	deltaX	= (factorX > 1.0f)? ((m_Width_Windows_main - vEnviroment->_dimX)/2.0f): 0.0f;
+	factorX = float(m_Width_Windows_main)/vEnvironmentSystem->_dimX;
+	factorY = float(m_Height_Windows_main)/vEnvironmentSystem->_dimY;
+	deltaX	= (factorX > 1.0f)? ((m_Width_Windows_main - vEnvironmentSystem->_dimX)/2.0f): 0.0f;
 
-	deltaY	= (factorY > 1.0f)? ((m_Height_Windows_main - vEnviroment->_dimY)/2.0f): 0.0f;
-	deltaY  = vEnviroment->_dimY + deltaY;
+	deltaY	= (factorY > 1.0f)? ((m_Height_Windows_main - vEnvironmentSystem->_dimY)/2.0f): 0.0f;
+	deltaY  = vEnvironmentSystem->_dimY + deltaY;
  
 	factorX = (factorX > 1.0f)? 1.0f :factorX;
 	factorY = (factorY > 1.0f)? 1.0f :factorY;
@@ -122,27 +122,27 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 	glPolygonMode(GL_FRONT_AND_BACK ,GL_LINE);
 	glBegin(GL_POLYGON);
 
-		SetFull(posicionDibujo,deltaX + vEnviroment->_minEnviroment.x,vEnviroment->_minEnviroment.y,vEnviroment->_minEnviroment.z);
+		SetFull(posicionDibujo,deltaX + vEnvironmentSystem->_minEnvironmentSystem.x,vEnvironmentSystem->_minEnvironmentSystem.y,vEnvironmentSystem->_minEnvironmentSystem.z);
 		posicionDibujo.x = factorX * posicionDibujo.x;
 		posicionDibujo.y = factorY * (deltaY - posicionDibujo.y);
 		glVertex3f(posicionDibujo.x,posicionDibujo.y,posicionDibujo.z);
 
-		SetFull(posicionDibujo,deltaX + vEnviroment->_maxEnviroment.x,vEnviroment->_minEnviroment.y,vEnviroment->_minEnviroment.z);
+		SetFull(posicionDibujo,deltaX + vEnvironmentSystem->_maxEnvironmentSystem.x,vEnvironmentSystem->_minEnvironmentSystem.y,vEnvironmentSystem->_minEnvironmentSystem.z);
 		posicionDibujo.x = factorX * posicionDibujo.x;
 		posicionDibujo.y = factorY * (deltaY - posicionDibujo.y);
 		glVertex3f(posicionDibujo.x,posicionDibujo.y,posicionDibujo.z);
 
-		SetFull(posicionDibujo,deltaX + vEnviroment->_maxEnviroment.x,vEnviroment->_maxEnviroment.y,vEnviroment->_minEnviroment.z);
+		SetFull(posicionDibujo,deltaX + vEnvironmentSystem->_maxEnvironmentSystem.x,vEnvironmentSystem->_maxEnvironmentSystem.y,vEnvironmentSystem->_minEnvironmentSystem.z);
 		posicionDibujo.x = factorX * posicionDibujo.x;
 		posicionDibujo.y = factorY * (deltaY - posicionDibujo.y);
 		glVertex3f(posicionDibujo.x,posicionDibujo.y,posicionDibujo.z);
 
-		SetFull(posicionDibujo,deltaX + vEnviroment->_minEnviroment.x,vEnviroment->_maxEnviroment.y,vEnviroment->_minEnviroment.z);
+		SetFull(posicionDibujo,deltaX + vEnvironmentSystem->_minEnvironmentSystem.x,vEnvironmentSystem->_maxEnvironmentSystem.y,vEnvironmentSystem->_minEnvironmentSystem.z);
 		posicionDibujo.x = factorX * posicionDibujo.x;
 		posicionDibujo.y = factorY * (deltaY - posicionDibujo.y);
 		glVertex3f(posicionDibujo.x,posicionDibujo.y,posicionDibujo.z);
 		
-		//glVertex3f(deltaX + vEnviroment->_minEnviroment..x,vEnviroment->_minEnviroment..y,vEnviroment->_minEnviroment..z);
+		//glVertex3f(deltaX + vEnvironmentSystem->_minEnvironmentSystem..x,vEnvironmentSystem->_minEnvironmentSystem..y,vEnvironmentSystem->_minEnvironmentSystem..z);
 
 	glEnd();
 
@@ -150,45 +150,45 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 	glPointSize(3.0f);
 	glPolygonMode(GL_FRONT_AND_BACK ,GL_LINE);
 	glBegin(GL_LINES);
-		SetFull(posicionDibujo,deltaX + vEnviroment->_minEnviroment.x,vEnviroment->_posMarginDEB.y,vEnviroment->_minEnviroment.z);
+		SetFull(posicionDibujo,deltaX + vEnvironmentSystem->_minEnvironmentSystem.x,vEnvironmentSystem->_posMarginDEB.y,vEnvironmentSystem->_minEnvironmentSystem.z);
 		posicionDibujo.x = factorX * posicionDibujo.x;
 		posicionDibujo.y = factorY * (deltaY - posicionDibujo.y);
 		glVertex3f(posicionDibujo.x,posicionDibujo.y,posicionDibujo.z);
 
-		SetFull(posicionDibujo,deltaX + vEnviroment->_maxEnviroment.x,vEnviroment->_posMarginDEB.y,vEnviroment->_minEnviroment.z);
+		SetFull(posicionDibujo,deltaX + vEnvironmentSystem->_maxEnvironmentSystem.x,vEnvironmentSystem->_posMarginDEB.y,vEnvironmentSystem->_minEnvironmentSystem.z);
 		posicionDibujo.x = factorX * posicionDibujo.x;
 		posicionDibujo.y = factorY * (deltaY - posicionDibujo.y);
 		glVertex3f(posicionDibujo.x,posicionDibujo.y,posicionDibujo.z);
 	glEnd();
 
 
-	if(vEnviroment->_dataEVL_FieldKind == 0)
+	if(vEnvironmentSystem->_dataEVL_FieldKind == 0)
 	{
 		SetMaterial(1);
 		glPointSize(10.0f);
 		glBegin(GL_POINTS);
 			Zero(posicionDibujo);
-			posicionDibujo.x = float(vEnviroment->_dimX) / 2.0f;
-			posicionDibujo.y = vEnviroment->_dataEVL_PosY;
+			posicionDibujo.x = float(vEnvironmentSystem->_dimX) / 2.0f;
+			posicionDibujo.y = vEnvironmentSystem->_dataEVL_PosY;
 			posicionDibujo.x = factorX * (posicionDibujo.x + deltaX);
 			posicionDibujo.y = factorY * (deltaY - posicionDibujo.y);
 			posicionDibujo.z = 100.0f;
 			glVertex3f(posicionDibujo.x,posicionDibujo.y,posicionDibujo.z);
 		glEnd();
 	}
-	if(vEnviroment->_dataEVL_FieldKind == 1)
+	if(vEnvironmentSystem->_dataEVL_FieldKind == 1)
 	{
 		SetMaterial(1);
 		glPointSize(10.0f);
 		glBegin(GL_LINES);
 			Zero(posicionDibujo);
-			posicionDibujo.x = float(vEnviroment->_dimX) / 2.0f;
-			posicionDibujo.y = vEnviroment->_dataEVL_PosY;
+			posicionDibujo.x = float(vEnvironmentSystem->_dimX) / 2.0f;
+			posicionDibujo.y = vEnvironmentSystem->_dataEVL_PosY;
 			posicionDibujo.x = factorX * (posicionDibujo.x + deltaX);
 			posicionDibujo.y = factorY * (deltaY - posicionDibujo.y);
 			posicionDibujo.z = 100.0f;
-			glVertex3f(posicionDibujo.x - (float(vEnviroment->_dataEVL_LineWidth)/2.0f),posicionDibujo.y,posicionDibujo.z);
-			glVertex3f(posicionDibujo.x + (float(vEnviroment->_dataEVL_LineWidth)/2.0f),posicionDibujo.y,posicionDibujo.z);
+			glVertex3f(posicionDibujo.x - (float(vEnvironmentSystem->_dataEVL_LineWidth)/2.0f),posicionDibujo.y,posicionDibujo.z);
+			glVertex3f(posicionDibujo.x + (float(vEnvironmentSystem->_dataEVL_LineWidth)/2.0f),posicionDibujo.y,posicionDibujo.z);
 		glEnd();
 	}
 
@@ -212,7 +212,7 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 		SetFull(posicionDibujo,ancho,superalto,-100.0f);
 		glVertex3f(posicionDibujo.x,posicionDibujo.y,posicionDibujo.z);
 		
-		//glVertex3f(deltaX + vEnviroment->_minEnviroment..x,vEnviroment->_minEnviroment..y,vEnviroment->_minEnviroment..z);
+		//glVertex3f(deltaX + vEnvironmentSystem->_minEnvironmentSystem..x,vEnvironmentSystem->_minEnvironmentSystem..y,vEnvironmentSystem->_minEnvironmentSystem..z);
 
 	glEnd();
 
@@ -259,16 +259,16 @@ void Gl_Sim::Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsS
 						_vectorParam1[int(_numVectorParam1)] = _vectorParam1[int(_numVectorParam1)]/ float(_stepsContador+1);
 					}
 					_numVectorParam1++;
-					_vectorParam1[int(_numVectorParam1)] = vEnviroment->_dataEVL_LineWidth;
+					_vectorParam1[int(_numVectorParam1)] = vEnvironmentSystem->_dataEVL_LineWidth;
 				}
 				else
 				{
-					_vectorParam1[int(_numVectorParam1)] = _vectorParam1[int(_numVectorParam1)] + vEnviroment->_dataEVL_LineWidth;
+					_vectorParam1[int(_numVectorParam1)] = _vectorParam1[int(_numVectorParam1)] + vEnvironmentSystem->_dataEVL_LineWidth;
 				}
 
-				if(vEnviroment->_dataEVL_LineWidth > _maxVectorParam1)
+				if(vEnvironmentSystem->_dataEVL_LineWidth > _maxVectorParam1)
 				{
-					_maxVectorParam1 = vEnviroment->_dataEVL_LineWidth;
+					_maxVectorParam1 = vEnvironmentSystem->_dataEVL_LineWidth;
 				}
 				glBegin(GL_LINE_STRIP);
 					for(register double i = 0.0f; i < _numVectorParam1-1;i = i +1.0f)

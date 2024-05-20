@@ -78,7 +78,7 @@
     <ClCompile Include="Functions\Physics\CellWM\cellWM.cpp">
       <Filter>Archivos de código fuente\Physics\CellWM</Filter>
     </ClCompile>
-    <ClCompile Include="Functions\Physics\CellWM\Enviroment.cpp">
+    <ClCompile Include="Functions\Physics\CellWM\EnviromentSystem.cpp">
       <Filter>Archivos de código fuente\Physics\CellWM</Filter>
     </ClCompile>
   </ItemGroup>
@@ -116,7 +116,7 @@
     <ClInclude Include="Functions\Physics\CellWM\cellWM.h">
       <Filter>Archivos de encabezado\Physics\CellWM</Filter>
     </ClInclude>
-    <ClInclude Include="Functions\Physics\CellWM\Enviroment.h">
+    <ClInclude Include="Functions\Physics\CellWM\EnvironmentSystem.h">
       <Filter>Archivos de encabezado\Physics\CellWM</Filter>
     </ClInclude>
   </ItemGroup>
