@@ -1,10 +1,7 @@
 #pragma once
 
-//#include "AgentsSystem.h"
-//#include "Enviroment.h"
-
 #include "AgentsSystem.h"
-//#include "Enviroment.h"
+#include "EnvironmentSystem.h"
 
 using namespace System;
 using namespace System::ComponentModel;
@@ -28,6 +25,9 @@ namespace AplicacionCD2Cells {
 	public ref class MainWindow : public System::Windows::Forms::Form
 	{
 	private: System::Windows::Forms::Form ^_windowLauncher;
+	public:	AgentsSystem		*_theMatrixAgents_Static;
+	public:	EnvironmentSystem	*_theMatrixEnvironmentSystem;
+
 	public:
 		MainWindow(void)
 		{
@@ -67,6 +67,9 @@ namespace AplicacionCD2Cells {
 	private: System::Windows::Forms::TabControl^  tcOptions;
 	private: System::Windows::Forms::TabPage^  tpOptions1;
 	private: System::Windows::Forms::TabPage^  tpOptions2;
+	private: System::ComponentModel::BackgroundWorker^  bwControl;
+	private: System::ComponentModel::BackgroundWorker^  bwDraw;
+
 
 	private:
 		/// <summary>
@@ -91,6 +94,8 @@ namespace AplicacionCD2Cells {
 			this->tcOptions = (gcnew System::Windows::Forms::TabControl());
 			this->tpOptions1 = (gcnew System::Windows::Forms::TabPage());
 			this->tpOptions2 = (gcnew System::Windows::Forms::TabPage());
+			this->bwControl = (gcnew System::ComponentModel::BackgroundWorker());
+			this->bwDraw = (gcnew System::ComponentModel::BackgroundWorker());
 			this->menuMain->SuspendLayout();
 			this->tlpMain->SuspendLayout();
 			this->tcGraphics->SuspendLayout();
@@ -103,14 +108,14 @@ namespace AplicacionCD2Cells {
 			this->menuMain->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) {this->fileToolStripMenuItem});
 			this->menuMain->Location = System::Drawing::Point(0, 0);
 			this->menuMain->Name = L"menuMain";
-			this->menuMain->Size = System::Drawing::Size(1664, 24);
+			this->menuMain->Size = System::Drawing::Size(1358, 24);
 			this->menuMain->TabIndex = 0;
 			this->menuMain->Text = L"Main Menu";
 			// 
 			// fileToolStripMenuItem
 			// 
 			this->fileToolStripMenuItem->Name = L"fileToolStripMenuItem";
-			this->fileToolStripMenuItem->Size = System::Drawing::Size(37, 20);
+			this->fileToolStripMenuItem->Size = System::Drawing::Size(35, 20);
 			this->fileToolStripMenuItem->Text = L"File";
 			// 
 			// tlpMain
@@ -154,9 +159,9 @@ namespace AplicacionCD2Cells {
 			// panelSingleMode
 			// 
 			this->panelSingleMode->BackColor = System::Drawing::Color::Silver;
-			this->panelSingleMode->Location = System::Drawing::Point(210, 0);
+			this->panelSingleMode->Location = System::Drawing::Point(175, 0);
 			this->panelSingleMode->Name = L"panelSingleMode";
-			this->panelSingleMode->Size = System::Drawing::Size(950, 950);
+			this->panelSingleMode->Size = System::Drawing::Size(650, 650);
 			this->panelSingleMode->TabIndex = 0;
 			// 
 			// tpGraphs2
@@ -164,7 +169,7 @@ namespace AplicacionCD2Cells {
 			this->tpGraphs2->Location = System::Drawing::Point(4, 22);
 			this->tpGraphs2->Name = L"tpGraphs2";
 			this->tpGraphs2->Padding = System::Windows::Forms::Padding(3);
-			this->tpGraphs2->Size = System::Drawing::Size(1462, 902);
+			this->tpGraphs2->Size = System::Drawing::Size(1298, 928);
 			this->tpGraphs2->TabIndex = 1;
 			this->tpGraphs2->Text = L"Dual Mode";
 			this->tpGraphs2->UseVisualStyleBackColor = true;
@@ -195,16 +200,20 @@ namespace AplicacionCD2Cells {
 			this->tpOptions2->Location = System::Drawing::Point(4, 22);
 			this->tpOptions2->Name = L"tpOptions2";
 			this->tpOptions2->Padding = System::Windows::Forms::Padding(3);
-			this->tpOptions2->Size = System::Drawing::Size(150, 928);
+			this->tpOptions2->Size = System::Drawing::Size(314, 928);
 			this->tpOptions2->TabIndex = 1;
 			this->tpOptions2->Text = L"More";
 			this->tpOptions2->UseVisualStyleBackColor = true;
+			// 
+			// bwDraw
+			// 
+			this->bwDraw->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &MainWindow::bwDraw_DoWork);
 			// 
 			// MainWindow
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1664, 1011);
+			this->ClientSize = System::Drawing::Size(1358, 703);
 			this->Controls->Add(this->tlpMain);
 			this->Controls->Add(this->menuMain);
 			this->MainMenuStrip = this->menuMain;
@@ -213,6 +222,7 @@ namespace AplicacionCD2Cells {
 			this->Text = L"MainWindow";
 			this->WindowState = System::Windows::Forms::FormWindowState::Maximized;
 			this->FormClosed += gcnew System::Windows::Forms::FormClosedEventHandler(this, &MainWindow::MainWindow_FormClosed);
+			this->Load += gcnew System::EventHandler(this, &MainWindow::MainWindow_Load);
 			this->menuMain->ResumeLayout(false);
 			this->menuMain->PerformLayout();
 			this->tlpMain->ResumeLayout(false);
@@ -225,5 +235,7 @@ namespace AplicacionCD2Cells {
 		}
 #pragma endregion
 	private: System::Void MainWindow_FormClosed(System::Object^  sender, System::Windows::Forms::FormClosedEventArgs^  e);
-	};
+	private: System::Void MainWindow_Load(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void bwDraw_DoWork(System::Object^  sender, System::ComponentModel::DoWorkEventArgs^  e);
+};
 }

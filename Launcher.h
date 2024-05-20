@@ -27,7 +27,7 @@ namespace AplicacionCD2Cells {
 	private: System::Windows::Forms::ProgressBar^	progressBarIni;
 	private: System::Windows::Forms::Button^		button1;
 
-	public: Mutex		^mutexOGL, ^mutexDatos;
+	public: Mutex		^mutexOGL;
 	public: MainWindow	^_mainWindow;
 
 	public:
@@ -124,7 +124,6 @@ namespace AplicacionCD2Cells {
 	private: System::Void Launcher_Load(System::Object^  sender, System::EventArgs^  e)
 			 {
 				 mutexOGL	=	gcnew Mutex;
-				 mutexDatos	=	gcnew Mutex;
 				 pictureBoxIni->ImageLocation = "Multimedia/b600157m-350_tcm18-60383.jpg";
 				 pictureBoxIni->SizeMode = PictureBoxSizeMode::Zoom;
 			 }
