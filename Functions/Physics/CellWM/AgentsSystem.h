@@ -13,7 +13,7 @@
 
 #include "cellWM.h"
 
-#include "Enviroment.h"
+#include "EnvironmentSystem.h"
 
 using namespace std;
 
@@ -36,9 +36,9 @@ public:
 	~AgentsSystem();
 
 	void	Initiate(void); // azar
-	void	Initiate(Enviroment* vEnviroment, int vNumDFCs, int vNumDEBs, int vNumEVLs); // sete0
-	void	UpdateState(Enviroment* vEnviroment);
-	void	AddOffspring(Enviroment* vEnviroment);
+	void	Initiate(EnvironmentSystem* vEnvironmentSystem, int vNumDFCs, int vNumDEBs, int vNumEVLs); // sete0
+	void	UpdateState(EnvironmentSystem* vEnvironmentSystem);
+	void	AddOffspring(EnvironmentSystem* vEnvironmentSystem);
 };
 
 #endif

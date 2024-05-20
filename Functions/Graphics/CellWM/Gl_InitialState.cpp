@@ -31,19 +31,19 @@ void Gl_InitialState::Resize(unsigned vDimVentanaX, unsigned vDimVentanaY)
 };
 
 
-void Gl_InitialState::Renderizar(Enviroment* vEnviroment, AgentsSystem* vMatrix)
+void Gl_InitialState::Renderizar(EnvironmentSystem* vEnvironmentSystem, AgentsSystem* vMatrix)
 {
-	if(vEnviroment->_busy) return;
+	if(vEnvironmentSystem->_busy) return;
 	register int i;
 	register float factorX,factorY,factorZ,deltaX,deltaY;
 	point_3D posicionDibujo;
 
-	factorX = float(m_Width_Windows_main)/vEnviroment->_dimX;
-	factorY = float(m_Height_Windows_main)/vEnviroment->_dimY;
-	deltaX	= (factorX > 1.0f)? ((m_Width_Windows_main - vEnviroment->_dimX)/2.0f): 0.0f;
+	factorX = float(m_Width_Windows_main)/vEnvironmentSystem->_dimX;
+	factorY = float(m_Height_Windows_main)/vEnvironmentSystem->_dimY;
+	deltaX	= (factorX > 1.0f)? ((m_Width_Windows_main - vEnvironmentSystem->_dimX)/2.0f): 0.0f;
 
-	deltaY	= (factorY > 1.0f)? ((m_Height_Windows_main - vEnviroment->_dimY)/2.0f): 0.0f;
-	deltaY  = vEnviroment->_dimY + deltaY;
+	deltaY	= (factorY > 1.0f)? ((m_Height_Windows_main - vEnvironmentSystem->_dimY)/2.0f): 0.0f;
+	deltaY  = vEnvironmentSystem->_dimY + deltaY;
  
 	factorX = (factorX > 1.0f)? 1.0f :factorX;
 	factorY = (factorY > 1.0f)? 1.0f :factorY;
@@ -76,27 +76,27 @@ void Gl_InitialState::Renderizar(Enviroment* vEnviroment, AgentsSystem* vMatrix)
 	glPointSize(3.0f);
 	glPolygonMode(GL_FRONT_AND_BACK ,GL_LINE);
 	glBegin(GL_POLYGON);
-		SetFull(posicionDibujo,deltaX + vEnviroment->_minEnviroment.x,vEnviroment->_minEnviroment.y,vEnviroment->_minEnviroment.z);
+		SetFull(posicionDibujo,deltaX + vEnvironmentSystem->_minEnvironmentSystem.x,vEnvironmentSystem->_minEnvironmentSystem.y,vEnvironmentSystem->_minEnvironmentSystem.z);
 		posicionDibujo.x = factorX * posicionDibujo.x;
 		posicionDibujo.y = factorY * (deltaY - posicionDibujo.y);
 		glVertex3f(posicionDibujo.x,posicionDibujo.y,posicionDibujo.z);
 
-		SetFull(posicionDibujo,deltaX + vEnviroment->_maxEnviroment.x,vEnviroment->_minEnviroment.y,vEnviroment->_minEnviroment.z);
+		SetFull(posicionDibujo,deltaX + vEnvironmentSystem->_maxEnvironmentSystem.x,vEnvironmentSystem->_minEnvironmentSystem.y,vEnvironmentSystem->_minEnvironmentSystem.z);
 		posicionDibujo.x = factorX * posicionDibujo.x;
 		posicionDibujo.y = factorY * (deltaY - posicionDibujo.y);
 		glVertex3f(posicionDibujo.x,posicionDibujo.y,posicionDibujo.z);
 
-		SetFull(posicionDibujo,deltaX + vEnviroment->_maxEnviroment.x,vEnviroment->_maxEnviroment.y,vEnviroment->_minEnviroment.z);
+		SetFull(posicionDibujo,deltaX + vEnvironmentSystem->_maxEnvironmentSystem.x,vEnvironmentSystem->_maxEnvironmentSystem.y,vEnvironmentSystem->_minEnvironmentSystem.z);
 		posicionDibujo.x = factorX * posicionDibujo.x;
 		posicionDibujo.y = factorY * (deltaY - posicionDibujo.y);
 		glVertex3f(posicionDibujo.x,posicionDibujo.y,posicionDibujo.z);
 
-		SetFull(posicionDibujo,deltaX + vEnviroment->_minEnviroment.x,vEnviroment->_maxEnviroment.y,vEnviroment->_minEnviroment.z);
+		SetFull(posicionDibujo,deltaX + vEnvironmentSystem->_minEnvironmentSystem.x,vEnvironmentSystem->_maxEnvironmentSystem.y,vEnvironmentSystem->_minEnvironmentSystem.z);
 		posicionDibujo.x = factorX * posicionDibujo.x;
 		posicionDibujo.y = factorY * (deltaY - posicionDibujo.y);
 		glVertex3f(posicionDibujo.x,posicionDibujo.y,posicionDibujo.z);
 		
-		//glVertex3f(deltaX + vEnviroment->_minEnviroment..x,vEnviroment->_minEnviroment..y,vEnviroment->_minEnviroment..z);
+		//glVertex3f(deltaX + vEnvironmentSystem->_minEnvironmentSystem..x,vEnvironmentSystem->_minEnvironmentSystem..y,vEnvironmentSystem->_minEnvironmentSystem..z);
 
 	glEnd();
 
@@ -155,19 +155,19 @@ void Gl_InitialState::DrawPoly(point_3D vCentro,float vRadio,polygon_2D _polyMem
 
 };
 
-//void Gl_InitialState::Renderizar(Enviroment* vEnviroment, AgentsSystem* vMatrix)
+//void Gl_InitialState::Renderizar(EnvironmentSystem* vEnvironmentSystem, AgentsSystem* vMatrix)
 //{
-//	if(vEnviroment->_busy) return;
+//	if(vEnvironmentSystem->_busy) return;
 //	register int i;
 //	register float factorX,factorY,factorZ,deltaX,deltaY;
 //	point_3D posicionDibujo;
 //
-//	factorX = float(m_Width_Windows_main)/vEnviroment->_dimX;
-//	factorY = float(m_Height_Windows_main)/vEnviroment->_dimY;
-//	deltaX	= (factorX > 1.0f)? ((m_Width_Windows_main - vEnviroment->_dimX)/2.0f): 0.0f;
+//	factorX = float(m_Width_Windows_main)/vEnvironmentSystem->_dimX;
+//	factorY = float(m_Height_Windows_main)/vEnvironmentSystem->_dimY;
+//	deltaX	= (factorX > 1.0f)? ((m_Width_Windows_main - vEnvironmentSystem->_dimX)/2.0f): 0.0f;
 //
-//	deltaY	= (factorY > 1.0f)? ((m_Height_Windows_main - vEnviroment->_dimY)/2.0f): 0.0f;
-//	deltaY  = vEnviroment->_dimY + deltaY;
+//	deltaY	= (factorY > 1.0f)? ((m_Height_Windows_main - vEnvironmentSystem->_dimY)/2.0f): 0.0f;
+//	deltaY  = vEnvironmentSystem->_dimY + deltaY;
 // 
 //	factorX = (factorX > 1.0f)? 1.0f :factorX;
 //	factorY = (factorY > 1.0f)? 1.0f :factorY;
@@ -192,27 +192,27 @@ void Gl_InitialState::DrawPoly(point_3D vCentro,float vRadio,polygon_2D _polyMem
 //	glPointSize(3.0f);
 //	glPolygonMode(GL_FRONT_AND_BACK ,GL_LINE);
 //	glBegin(GL_POLYGON);
-//		SetFull(posicionDibujo,deltaX + vEnviroment->_minEnviroment.x,vEnviroment->_minEnviroment.y,vEnviroment->_minEnviroment.z);
+//		SetFull(posicionDibujo,deltaX + vEnvironmentSystem->_minEnvironmentSystem.x,vEnvironmentSystem->_minEnvironmentSystem.y,vEnvironmentSystem->_minEnvironmentSystem.z);
 //		posicionDibujo.x = factorX * posicionDibujo.x;
 //		posicionDibujo.y = factorY * (deltaY - posicionDibujo.y);
 //		glVertex3f(posicionDibujo.x,posicionDibujo.y,posicionDibujo.z);
 //
-//		SetFull(posicionDibujo,deltaX + vEnviroment->_maxEnviroment.x,vEnviroment->_minEnviroment.y,vEnviroment->_minEnviroment.z);
+//		SetFull(posicionDibujo,deltaX + vEnvironmentSystem->_maxEnvironmentSystem.x,vEnvironmentSystem->_minEnvironmentSystem.y,vEnvironmentSystem->_minEnvironmentSystem.z);
 //		posicionDibujo.x = factorX * posicionDibujo.x;
 //		posicionDibujo.y = factorY * (deltaY - posicionDibujo.y);
 //		glVertex3f(posicionDibujo.x,posicionDibujo.y,posicionDibujo.z);
 //
-//		SetFull(posicionDibujo,deltaX + vEnviroment->_maxEnviroment.x,vEnviroment->_maxEnviroment.y,vEnviroment->_minEnviroment.z);
+//		SetFull(posicionDibujo,deltaX + vEnvironmentSystem->_maxEnvironmentSystem.x,vEnvironmentSystem->_maxEnvironmentSystem.y,vEnvironmentSystem->_minEnvironmentSystem.z);
 //		posicionDibujo.x = factorX * posicionDibujo.x;
 //		posicionDibujo.y = factorY * (deltaY - posicionDibujo.y);
 //		glVertex3f(posicionDibujo.x,posicionDibujo.y,posicionDibujo.z);
 //
-//		SetFull(posicionDibujo,deltaX + vEnviroment->_minEnviroment.x,vEnviroment->_maxEnviroment.y,vEnviroment->_minEnviroment.z);
+//		SetFull(posicionDibujo,deltaX + vEnvironmentSystem->_minEnvironmentSystem.x,vEnvironmentSystem->_maxEnvironmentSystem.y,vEnvironmentSystem->_minEnvironmentSystem.z);
 //		posicionDibujo.x = factorX * posicionDibujo.x;
 //		posicionDibujo.y = factorY * (deltaY - posicionDibujo.y);
 //		glVertex3f(posicionDibujo.x,posicionDibujo.y,posicionDibujo.z);
 //		
-//		//glVertex3f(deltaX + vEnviroment->_minEnviroment..x,vEnviroment->_minEnviroment..y,vEnviroment->_minEnviroment..z);
+//		//glVertex3f(deltaX + vEnvironmentSystem->_minEnvironmentSystem..x,vEnvironmentSystem->_minEnvironmentSystem..y,vEnvironmentSystem->_minEnvironmentSystem..z);
 //
 //	glEnd();
 //

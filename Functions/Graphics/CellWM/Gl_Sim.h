@@ -2,7 +2,7 @@
 #include "OGL.h"
 
 #include "AgentsSystem.h"
-#include "Enviroment.h"
+#include "EnvironmentSystem.h"
 
 class Gl_Sim  : public OGL
 {
@@ -40,5 +40,5 @@ public:
 	Gl_Sim (void);
 	~Gl_Sim (void);
 	void Resize(unsigned vDimVentanaX, unsigned vDimVentanaY);
-	void Renderizar(bool vEstimarTriangulo, Enviroment* vEnviroment, AgentsSystem* vMatrix);
+	void Renderizar(bool vEstimarTriangulo, EnvironmentSystem* vEnvironmentSystem, AgentsSystem* vMatrix);
 };
