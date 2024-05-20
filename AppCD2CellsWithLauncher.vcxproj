@@ -171,7 +171,9 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL</AdditionalIncludeDirectories>
     </ClCompile>
-    <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="MainWindow.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\hmoraga\Documents\Visual Studio 2012\Projects\AppCollDet_Cells_0.0.6\AppCD2CellsWithLauncher\Functions\Physics;C:\Users\hmoraga\Documents\Visual Studio 2012\Projects\AppCollDet_Cells_0.0.6\AppCD2CellsWithLauncher\Functions\Physics\CellWM;C:\Users\hmoraga\Documents\Visual Studio 2012\Projects\AppCollDet_Cells_0.0.6\AppCD2CellsWithLauncher\Functions\Maths\Basics;C:\Users\hmoraga\Documents\Visual Studio 2012\Projects\AppCollDet_Cells_0.0.6\AppCD2CellsWithLauncher\Functions\Maths;C:\Users\hmoraga\Documents\Visual Studio 2012\Projects\AppCollDet_Cells_0.0.6\AppCD2CellsWithLauncher\Functions\Graphics\GL;C:\Users\hmoraga\Documents\Visual Studio 2012\Projects\AppCollDet_Cells_0.0.6\AppCD2CellsWithLauncher\Functions\Graphics\CellWM;C:\Users\hmoraga\Documents\Visual Studio 2012\Projects\AppCollDet_Cells_0.0.6\AppCD2CellsWithLauncher\Functions\Graphics;C:\Users\hmoraga\Documents\Visual Studio 2012\Projects\AppCollDet_Cells_0.0.6\AppCD2CellsWithLauncher\Functions;D:\Apps\Boost\boost_1_56_0;include</AdditionalIncludeDirectories>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Functions\Graphics\CellWM\Gl_InitialState.h" />
