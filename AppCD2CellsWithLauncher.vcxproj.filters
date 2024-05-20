@@ -120,4 +120,9 @@
       <Filter>Archivos de encabezado\Physics\CellWM</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MainWindow.resx">
+      <Filter>Archivos de recursos</Filter>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>
