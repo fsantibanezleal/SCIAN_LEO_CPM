@@ -31,6 +31,18 @@
     <Filter Include="Archivos de encabezado\Physics">
       <UniqueIdentifier>{2091772b-25b8-4f67-9871-d97f22802456}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de código fuente\Graphics\CellWM">
+      <UniqueIdentifier>{05c579d2-e8f4-48f7-8cd9-41da469d9505}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Graphics\CellWM">
+      <UniqueIdentifier>{4ba41be4-6b20-45d3-bc7f-550793ed900c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Physics\CellWM">
+      <UniqueIdentifier>{dcca5e4f-19c9-4942-91e4-b184baa52b9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\Physics\CellWM">
+      <UniqueIdentifier>{e2b254af-62d7-4f0c-9f1e-6517620f9759}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Launcher.cpp">
@@ -45,29 +57,29 @@
     <ClCompile Include="Functions\Graphics\OGL.cpp">
       <Filter>Archivos de código fuente\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Functions\Graphics\Gl_InitialState.cpp">
-      <Filter>Archivos de código fuente\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Functions\Graphics\Gl_Sim.cpp">
-      <Filter>Archivos de código fuente\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Functions\BasicComplex.cpp">
+    <ClCompile Include="Functions\Maths\Basics\BasicComplex.cpp">
       <Filter>Archivos de código fuente\Maths</Filter>
     </ClCompile>
-    <ClCompile Include="Functions\BasicFunctions.cpp">
+    <ClCompile Include="Functions\Maths\Basics\BasicFunctions.cpp">
       <Filter>Archivos de código fuente\Maths</Filter>
     </ClCompile>
-    <ClCompile Include="Functions\BasicStructures.cpp">
+    <ClCompile Include="Functions\Maths\Basics\BasicStructures.cpp">
       <Filter>Archivos de código fuente\Maths</Filter>
     </ClCompile>
-    <ClCompile Include="Functions\AgentsSystem.cpp">
-      <Filter>Archivos de código fuente\Physics</Filter>
+    <ClCompile Include="Functions\Graphics\CellWM\Gl_InitialState.cpp">
+      <Filter>Archivos de código fuente\Graphics\CellWM</Filter>
     </ClCompile>
-    <ClCompile Include="Functions\cellWM.cpp">
-      <Filter>Archivos de código fuente\Physics</Filter>
+    <ClCompile Include="Functions\Graphics\CellWM\Gl_Sim.cpp">
+      <Filter>Archivos de código fuente\Graphics\CellWM</Filter>
     </ClCompile>
-    <ClCompile Include="Functions\EnviromentSystem.cpp">
-      <Filter>Archivos de código fuente\Physics</Filter>
+    <ClCompile Include="Functions\Physics\CellWM\AgentsSystem.cpp">
+      <Filter>Archivos de código fuente\Physics\CellWM</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions\Physics\CellWM\cellWM.cpp">
+      <Filter>Archivos de código fuente\Physics\CellWM</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions\Physics\CellWM\EnviromentSystem.cpp">
+      <Filter>Archivos de código fuente\Physics\CellWM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -83,29 +95,29 @@
     <ClInclude Include="Functions\Graphics\OGL.h">
       <Filter>Archivos de encabezado\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Functions\Graphics\Gl_InitialState.h">
-      <Filter>Archivos de encabezado\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Functions\Graphics\Gl_Sim.h">
-      <Filter>Archivos de encabezado\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Functions\BasicComplex.h">
+    <ClInclude Include="Functions\Maths\Basics\BasicComplex.h">
       <Filter>Archivos de encabezado\Maths</Filter>
     </ClInclude>
-    <ClInclude Include="Functions\BasicFunctions.h">
+    <ClInclude Include="Functions\Maths\Basics\BasicFunctions.h">
       <Filter>Archivos de encabezado\Maths</Filter>
     </ClInclude>
-    <ClInclude Include="Functions\BasicStructures.h">
+    <ClInclude Include="Functions\Maths\Basics\BasicStructures.h">
       <Filter>Archivos de encabezado\Maths</Filter>
     </ClInclude>
-    <ClInclude Include="Functions\AgentsSystem.h">
-      <Filter>Archivos de encabezado\Physics</Filter>
+    <ClInclude Include="Functions\Graphics\CellWM\Gl_InitialState.h">
+      <Filter>Archivos de encabezado\Graphics\CellWM</Filter>
     </ClInclude>
-    <ClInclude Include="Functions\cellWM.h">
-      <Filter>Archivos de encabezado\Physics</Filter>
+    <ClInclude Include="Functions\Graphics\CellWM\Gl_Sim.h">
+      <Filter>Archivos de encabezado\Graphics\CellWM</Filter>
     </ClInclude>
-    <ClInclude Include="Functions\EnvironmentSystem.h">
-      <Filter>Archivos de encabezado\Physics</Filter>
+    <ClInclude Include="Functions\Physics\CellWM\AgentsSystem.h">
+      <Filter>Archivos de encabezado\Physics\CellWM</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Physics\CellWM\cellWM.h">
+      <Filter>Archivos de encabezado\Physics\CellWM</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Physics\CellWM\EnvironmentSystem.h">
+      <Filter>Archivos de encabezado\Physics\CellWM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

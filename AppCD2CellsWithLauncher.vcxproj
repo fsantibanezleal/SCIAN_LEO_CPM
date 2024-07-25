@@ -71,22 +71,28 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\Apps\Boost\boost_1_56_0;include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\Apps\Boost\boost_1_56_0;include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>D:\Apps\Boost\boost_1_56_0;include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>D:\Apps\Boost\boost_1_56_0;include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;GLUT_BUILDING_LIB;_CRT_SECURE_NO_WARNINGS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Apps\Boost\boost_1_56_0;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Apps\Boost\boost_1_56_0;include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories>
+      </AdditionalUsingDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -104,7 +110,9 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;GLUT_BUILDING_LIB;_CRT_SECURE_NO_WARNINGS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Apps\Boost\boost_1_56_0;include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Apps\Boost\boost_1_56_0;include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories>
+      </AdditionalUsingDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -121,7 +129,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;GLUT_BUILDING_LIB;_CRT_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Apps\Boost\boost_1_56_0;include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Apps\Boost\boost_1_56_0;include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories>
+      </AdditionalUsingDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -136,7 +146,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;GLUT_BUILDING_LIB;_CRT_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Apps\Boost\boost_1_56_0;include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Apps\Boost\boost_1_56_0;include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories>
+      </AdditionalUsingDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -155,16 +167,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Functions\AgentsSystem.cpp" />
-    <ClCompile Include="Functions\BasicComplex.cpp" />
-    <ClCompile Include="Functions\BasicFunctions.cpp" />
-    <ClCompile Include="Functions\BasicStructures.cpp" />
-    <ClCompile Include="Functions\cellWM.cpp" />
-    <ClCompile Include="Functions\EnviromentSystem.cpp" />
+    <ClCompile Include="Functions\Graphics\CellWM\Gl_InitialState.cpp" />
+    <ClCompile Include="Functions\Graphics\CellWM\Gl_Sim.cpp" />
     <ClCompile Include="Functions\Graphics\GL_Camera.cpp" />
-    <ClCompile Include="Functions\Graphics\Gl_InitialState.cpp" />
-    <ClCompile Include="Functions\Graphics\Gl_Sim.cpp" />
     <ClCompile Include="Functions\Graphics\OGL.cpp" />
+    <ClCompile Include="Functions\Maths\Basics\BasicComplex.cpp" />
+    <ClCompile Include="Functions\Maths\Basics\BasicFunctions.cpp" />
+    <ClCompile Include="Functions\Maths\Basics\BasicStructures.cpp" />
+    <ClCompile Include="Functions\Physics\CellWM\AgentsSystem.cpp" />
+    <ClCompile Include="Functions\Physics\CellWM\cellWM.cpp" />
+    <ClCompile Include="Functions\Physics\CellWM\EnviromentSystem.cpp" />
     <ClCompile Include="Launcher.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL</AdditionalIncludeDirectories>
@@ -174,16 +186,16 @@
     <ClCompile Include="MainWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Functions\AgentsSystem.h" />
-    <ClInclude Include="Functions\BasicComplex.h" />
-    <ClInclude Include="Functions\BasicFunctions.h" />
-    <ClInclude Include="Functions\BasicStructures.h" />
-    <ClInclude Include="Functions\cellWM.h" />
-    <ClInclude Include="Functions\EnvironmentSystem.h" />
+    <ClInclude Include="Functions\Graphics\CellWM\Gl_InitialState.h" />
+    <ClInclude Include="Functions\Graphics\CellWM\Gl_Sim.h" />
     <ClInclude Include="Functions\Graphics\GL_Camera.h" />
-    <ClInclude Include="Functions\Graphics\Gl_InitialState.h" />
-    <ClInclude Include="Functions\Graphics\Gl_Sim.h" />
     <ClInclude Include="Functions\Graphics\OGL.h" />
+    <ClInclude Include="Functions\Maths\Basics\BasicComplex.h" />
+    <ClInclude Include="Functions\Maths\Basics\BasicFunctions.h" />
+    <ClInclude Include="Functions\Maths\Basics\BasicStructures.h" />
+    <ClInclude Include="Functions\Physics\CellWM\AgentsSystem.h" />
+    <ClInclude Include="Functions\Physics\CellWM\cellWM.h" />
+    <ClInclude Include="Functions\Physics\CellWM\EnvironmentSystem.h" />
     <ClInclude Include="Launcher.h">
       <FileType>CppForm</FileType>
     </ClInclude>

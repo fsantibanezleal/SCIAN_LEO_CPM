@@ -27,6 +27,11 @@ namespace AplicacionCD2Cells {
 	private: System::Windows::Forms::Form ^_windowLauncher;
 	public:	AgentsSystem		*_theMatrixAgents_Static;
 	public:	EnvironmentSystem	*_theMatrixEnvironmentSystem;
+	private: System::Windows::Forms::Button^  bStopSim;
+	public: 
+	private: System::Windows::Forms::Button^  bSartSim;
+	public:	int					_numDFCs;
+
 
 	public:
 		MainWindow(void)
@@ -96,11 +101,14 @@ namespace AplicacionCD2Cells {
 			this->tpOptions2 = (gcnew System::Windows::Forms::TabPage());
 			this->bwControl = (gcnew System::ComponentModel::BackgroundWorker());
 			this->bwDraw = (gcnew System::ComponentModel::BackgroundWorker());
+			this->bSartSim = (gcnew System::Windows::Forms::Button());
+			this->bStopSim = (gcnew System::Windows::Forms::Button());
 			this->menuMain->SuspendLayout();
 			this->tlpMain->SuspendLayout();
 			this->tcGraphics->SuspendLayout();
 			this->tpGraphs1->SuspendLayout();
 			this->tcOptions->SuspendLayout();
+			this->tpOptions1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// menuMain
@@ -115,7 +123,7 @@ namespace AplicacionCD2Cells {
 			// fileToolStripMenuItem
 			// 
 			this->fileToolStripMenuItem->Name = L"fileToolStripMenuItem";
-			this->fileToolStripMenuItem->Size = System::Drawing::Size(35, 20);
+			this->fileToolStripMenuItem->Size = System::Drawing::Size(37, 20);
 			this->fileToolStripMenuItem->Text = L"File";
 			// 
 			// tlpMain
@@ -187,6 +195,8 @@ namespace AplicacionCD2Cells {
 			// 
 			// tpOptions1
 			// 
+			this->tpOptions1->Controls->Add(this->bStopSim);
+			this->tpOptions1->Controls->Add(this->bSartSim);
 			this->tpOptions1->Location = System::Drawing::Point(4, 22);
 			this->tpOptions1->Name = L"tpOptions1";
 			this->tpOptions1->Padding = System::Windows::Forms::Padding(3);
@@ -205,9 +215,33 @@ namespace AplicacionCD2Cells {
 			this->tpOptions2->Text = L"More";
 			this->tpOptions2->UseVisualStyleBackColor = true;
 			// 
+			// bwControl
+			// 
+			this->bwControl->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &MainWindow::bwControl_DoWork);
+			// 
 			// bwDraw
 			// 
 			this->bwDraw->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &MainWindow::bwDraw_DoWork);
+			// 
+			// bSartSim
+			// 
+			this->bSartSim->Location = System::Drawing::Point(28, 32);
+			this->bSartSim->Name = L"bSartSim";
+			this->bSartSim->Size = System::Drawing::Size(108, 23);
+			this->bSartSim->TabIndex = 0;
+			this->bSartSim->Text = L"Start Simulation";
+			this->bSartSim->UseVisualStyleBackColor = true;
+			this->bSartSim->Click += gcnew System::EventHandler(this, &MainWindow::bSartSim_Click);
+			// 
+			// bStopSim
+			// 
+			this->bStopSim->Location = System::Drawing::Point(170, 32);
+			this->bStopSim->Name = L"bStopSim";
+			this->bStopSim->Size = System::Drawing::Size(108, 23);
+			this->bStopSim->TabIndex = 1;
+			this->bStopSim->Text = L"Stop Simulation";
+			this->bStopSim->UseVisualStyleBackColor = true;
+			this->bStopSim->Click += gcnew System::EventHandler(this, &MainWindow::bStopSim_Click);
 			// 
 			// MainWindow
 			// 
@@ -229,6 +263,7 @@ namespace AplicacionCD2Cells {
 			this->tcGraphics->ResumeLayout(false);
 			this->tpGraphs1->ResumeLayout(false);
 			this->tcOptions->ResumeLayout(false);
+			this->tpOptions1->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -237,5 +272,8 @@ namespace AplicacionCD2Cells {
 	private: System::Void MainWindow_FormClosed(System::Object^  sender, System::Windows::Forms::FormClosedEventArgs^  e);
 	private: System::Void MainWindow_Load(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void bwDraw_DoWork(System::Object^  sender, System::ComponentModel::DoWorkEventArgs^  e);
+	private: System::Void bwControl_DoWork(System::Object^  sender, System::ComponentModel::DoWorkEventArgs^  e);
+	private: System::Void bSartSim_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void bStopSim_Click(System::Object^  sender, System::EventArgs^  e);
 };
 }
