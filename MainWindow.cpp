@@ -15,6 +15,7 @@ System::Void MainWindow::MainWindow_FormClosed(System::Object^  sender, System::
 }
 
 System::Void MainWindow::MainWindow_Load(System::Object^  sender, System::EventArgs^  e) {
+	_numDFCs = 25;
 	if(((Launcher ^)_windowLauncher)->mutexOGL->WaitOne()) // No realmente necesario.. aun no empiezan a correr las otras hebras
 	{
 		wglMakeCurrent (NULL, NULL);
@@ -42,4 +43,28 @@ System::Void MainWindow::bwDraw_DoWork(System::Object^  sender, System::Componen
 			((Launcher ^)_windowLauncher)->mutexOGL->ReleaseMutex();
 		}
 	}	
+}
+
+System::Void MainWindow::bwControl_DoWork(System::Object^  sender, System::ComponentModel::DoWorkEventArgs^  e){
+	_theMatrixAgents_Static		= new AgentsSystem(); // FIXME ...
+	_theMatrixEnvironmentSystem	= new EnvironmentSystem();
+
+	//_theMatrixEnvironmentSystem->Initiate();
+	_theMatrixAgents_Static->Initiate(_theMatrixEnvironmentSystem,  _numDFCs, 0, 0);
+
+	bwDraw->RunWorkerAsync();
+	while(!bwControl->CancellationPending)
+	{
+		_theMatrixAgents_Static->UpdateState(_theMatrixEnvironmentSystem);
+
+		//Sleep((float)(numericDeadTime->Value)*1000.0f); // FIXME SET RIGHT DEAD TIME
+		Sleep((float)(2)*1000.0f); // FIXME SET RIGHT DEAD TIME
+	}
+}
+
+System::Void MainWindow::bSartSim_Click(System::Object^  sender, System::EventArgs^  e){
+	_theMatrixAgents_Static->_bRunning = true;
+}
+System::Void MainWindow::bStopSim_Click(System::Object^  sender, System::EventArgs^  e){
+	_theMatrixAgents_Static->_bRunning = false;
 }
