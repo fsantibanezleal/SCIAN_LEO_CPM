@@ -51,8 +51,8 @@ void	CellWM::InitCell(void){
 		_angleThetha0[i]	= 0;
 		_radR0[i]			= 0;
 					
-		_paramA[i]			= 1.5f;
-		_paramW[i]			= 0.5f;
+		_paramA[i]			= 2.5f;
+		_paramW[i]			= 1.5f;
 		_paramGamma[i]		= 1.0f;
 		_paramSigma[i]		= 1.0f;
 	}
@@ -81,32 +81,32 @@ void	CellWM::InitCell(point_2D vPos, float vRadio){
 		_angleThetha0[i]	= 0.0f;
 		_radR0[i]			= vRadio/2;
 					
-		_paramA[i]			= 0.0f;
-		_paramW[i]			= 1.5f;
+		_paramA[i]			= 3.0f;
+		_paramW[i]			= 2.5f;
 		_paramGamma[i]		= 0.5f;
 		_paramSigma[i]		= 0.5f;
 	}
-	_angleThetha0[0]	= PI/2.0f + 0.1f;
+	_angleThetha0[0]		= PI/2.0f + 0.1f;
 	//_angleThetha0[1]	= PI/2.0f - 0.1f;
 
-	_paramA[0]			= vRadio/2;
+	_paramA[0]				= vRadio/2;
 	//_paramA[1]			= vRadio/2;
 
-	_paramGamma[0]		= 1.0f;
-	_paramSigma[0]		= 1.0f;
+	_paramGamma[0]			= 1.0f;
+	_paramSigma[0]			= 1.0f;
 
-	_paramV0			= 0.01f;
+	_paramV0				= 0.01f;
 
-	_adhesionToEVL	  = false;
-	_perturbationRandom = false;
-	_freeIssue = false;
-	_friendAttraction = false;
-	_StepsforChange   = 10;
-	_ratioFriendAttraction = 1.0f;
+	_adhesionToEVL			= false;
+	_perturbationRandom		= false;
+	_freeIssue				= false;
+	_friendAttraction		= false;
+	_StepsforChange			= 10;
+	_ratioFriendAttraction	= 1.0f;
 
-	_persistence	  = rand()%(_StepsforChange) + 1;
+	_persistence			= rand()%(_StepsforChange) + 1;
 
-	_offSpring			  = false;
+	_offSpring				= false;
 
 	CreateContour();
 };
