@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Archivos de código fuente">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Archivos de encabezado">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Archivos de recursos">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Archivos de código fuente\Physics">
+      <UniqueIdentifier>{3c0c2319-dc48-41e0-b491-c8d43ce86914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\Graphics">
+      <UniqueIdentifier>{0e1d8717-828a-4b31-a9d4-2d4d574b7168}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\Maths">
+      <UniqueIdentifier>{661dc96e-4efd-4a63-9a46-589cf432be17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Maths">
+      <UniqueIdentifier>{4ef2676b-420e-47fe-8938-94495da9c418}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Graphics">
+      <UniqueIdentifier>{9148ff86-9931-4eb4-a319-4ebbc705f5b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Physics">
+      <UniqueIdentifier>{2091772b-25b8-4f67-9871-d97f22802456}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\Graphics\CellWM">
+      <UniqueIdentifier>{05c579d2-e8f4-48f7-8cd9-41da469d9505}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Graphics\CellWM">
+      <UniqueIdentifier>{4ba41be4-6b20-45d3-bc7f-550793ed900c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Physics\CellWM">
+      <UniqueIdentifier>{dcca5e4f-19c9-4942-91e4-b184baa52b9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\Physics\CellWM">
+      <UniqueIdentifier>{e2b254af-62d7-4f0c-9f1e-6517620f9759}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Launcher.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="MainWindow.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions\Graphics\GL_Camera.cpp">
+      <Filter>Archivos de código fuente\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions\Graphics\OGL.cpp">
+      <Filter>Archivos de código fuente\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions\Maths\Basics\BasicComplex.cpp">
+      <Filter>Archivos de código fuente\Maths</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions\Maths\Basics\BasicFunctions.cpp">
+      <Filter>Archivos de código fuente\Maths</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions\Maths\Basics\BasicStructures.cpp">
+      <Filter>Archivos de código fuente\Maths</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions\Graphics\CellWM\Gl_InitialState.cpp">
+      <Filter>Archivos de código fuente\Graphics\CellWM</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions\Graphics\CellWM\Gl_Sim.cpp">
+      <Filter>Archivos de código fuente\Graphics\CellWM</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions\Physics\CellWM\AgentsSystem.cpp">
+      <Filter>Archivos de código fuente\Physics\CellWM</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions\Physics\CellWM\cellWM.cpp">
+      <Filter>Archivos de código fuente\Physics\CellWM</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions\Physics\CellWM\Enviroment.cpp">
+      <Filter>Archivos de código fuente\Physics\CellWM</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Launcher.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="MainWindow.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Graphics\GL_Camera.h">
+      <Filter>Archivos de encabezado\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Graphics\OGL.h">
+      <Filter>Archivos de encabezado\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Maths\Basics\BasicComplex.h">
+      <Filter>Archivos de encabezado\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Maths\Basics\BasicFunctions.h">
+      <Filter>Archivos de encabezado\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Maths\Basics\BasicStructures.h">
+      <Filter>Archivos de encabezado\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Graphics\CellWM\Gl_InitialState.h">
+      <Filter>Archivos de encabezado\Graphics\CellWM</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Graphics\CellWM\Gl_Sim.h">
+      <Filter>Archivos de encabezado\Graphics\CellWM</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Physics\CellWM\AgentsSystem.h">
+      <Filter>Archivos de encabezado\Physics\CellWM</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Physics\CellWM\cellWM.h">
+      <Filter>Archivos de encabezado\Physics\CellWM</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Physics\CellWM\Enviroment.h">
+      <Filter>Archivos de encabezado\Physics\CellWM</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

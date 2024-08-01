@@ -1,0 +1,25 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>AplicacionCD2CellsWithLauncher</Name>
+    <Description>La magia de la programacion</Description>
+    <ProjectType>VC</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>AplicacionCD2CellsWithLauncher</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <Icon>__TemplateIcon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="AplicacionCD2Cells.vcxproj" File="AplicacionCD2Cells.vcxproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="false" TargetFileName="$projectname$.vcxproj.filters">AplicacionCD2Cells.vcxproj.filters</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Launcher.cpp">Launcher.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="VentanaPrincipal.cpp">VentanaPrincipal.cpp</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Launcher.h">Launcher.h</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="VentanaPrincipal.h">VentanaPrincipal.h</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>
