@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Ventanas">
+      <UniqueIdentifier>{6f182cb4-18f7-4fed-bc25-a8b50c8138ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Fisica">
+      <UniqueIdentifier>{0589758f-a8df-4288-ba0a-3561c2a2f612}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Fisica\ModeloI">
+      <UniqueIdentifier>{be53a4c7-4c04-492b-9334-5f570621ba0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Haptica">
+      <UniqueIdentifier>{c98ccfbc-0c54-4528-b240-735a0b21dba1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Grafica">
+      <UniqueIdentifier>{e75d3f7e-e921-42a6-a2de-30921bfdc0cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Grafica\ModeloI">
+      <UniqueIdentifier>{b2dd95d3-43ab-4785-baa6-f0347fd2da3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Math">
+      <UniqueIdentifier>{1d1a3dc1-9646-404d-8ffa-35236cbff389}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Fisica">
+      <UniqueIdentifier>{b7c9ca7f-e42b-435f-83b3-3a92ebd87392}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Fisica\ModeloI">
+      <UniqueIdentifier>{2a2c0bc2-c285-42d7-8db3-18fc9c5e76c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Grafica">
+      <UniqueIdentifier>{ef2ccb79-fd57-41a5-affc-f0194e253465}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Grafica\ModeloI">
+      <UniqueIdentifier>{ee1542bb-4b59-4e5d-84c8-efca420c8295}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Haptica">
+      <UniqueIdentifier>{bd0d1078-0175-49de-9a29-964b527f378d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Math">
+      <UniqueIdentifier>{6693d403-1810-46e5-87a9-78150f797b77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Fisica\CellWM">
+      <UniqueIdentifier>{824087b7-e8b4-461f-a200-ea7a6ac149a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Fisica\CellWM">
+      <UniqueIdentifier>{a5328712-71e0-4f5a-9c3e-5e66abcabe87}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DinHot.cpp">
+      <Filter>Source Files\Ventanas</Filter>
+    </ClCompile>
+    <ClCompile Include="SistemaControl.cpp">
+      <Filter>Source Files\Ventanas</Filter>
+    </ClCompile>
+    <ClCompile Include="Biblioteca\Fisica\ModeloI\Agente.cpp">
+      <Filter>Source Files\Fisica\ModeloI</Filter>
+    </ClCompile>
+    <ClCompile Include="Biblioteca\Fisica\ModeloI\Agente_DEB.cpp">
+      <Filter>Source Files\Fisica\ModeloI</Filter>
+    </ClCompile>
+    <ClCompile Include="Biblioteca\Fisica\ModeloI\Agente_DFC.cpp">
+      <Filter>Source Files\Fisica\ModeloI</Filter>
+    </ClCompile>
+    <ClCompile Include="Biblioteca\Fisica\ModeloI\Agente_EVL.cpp">
+      <Filter>Source Files\Fisica\ModeloI</Filter>
+    </ClCompile>
+    <ClCompile Include="Biblioteca\Fisica\ModeloI\Ambiente.cpp">
+      <Filter>Source Files\Fisica\ModeloI</Filter>
+    </ClCompile>
+    <ClCompile Include="Biblioteca\Fisica\ModeloI\Sistema_Agentes.cpp">
+      <Filter>Source Files\Fisica\ModeloI</Filter>
+    </ClCompile>
+    <ClCompile Include="Biblioteca\Grafica\GL_Camara.cpp">
+      <Filter>Source Files\Grafica</Filter>
+    </ClCompile>
+    <ClCompile Include="Biblioteca\Grafica\OGL.cpp">
+      <Filter>Source Files\Grafica</Filter>
+    </ClCompile>
+    <ClCompile Include="Biblioteca\Grafica\ModeloI\Gl_EstadoInicial.cpp">
+      <Filter>Source Files\Grafica\ModeloI</Filter>
+    </ClCompile>
+    <ClCompile Include="Biblioteca\Grafica\ModeloI\Gl_Simulacion.cpp">
+      <Filter>Source Files\Grafica\ModeloI</Filter>
+    </ClCompile>
+    <ClCompile Include="Biblioteca\Matematicas\Basico\BasicComplex.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Biblioteca\Matematicas\Basico\BasicFunctions.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Biblioteca\Matematicas\Basico\BasicStructures.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="AssemblyInfo.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Biblioteca\Fisica\CellWM\AgentsSystem.cpp">
+      <Filter>Source Files\Fisica\CellWM</Filter>
+    </ClCompile>
+    <ClCompile Include="Biblioteca\Fisica\CellWM\cellWM.cpp">
+      <Filter>Source Files\Fisica\CellWM</Filter>
+    </ClCompile>
+    <ClCompile Include="Biblioteca\Fisica\CellWM\Enviroment.cpp">
+      <Filter>Source Files\Fisica\CellWM</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Principal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SistemaControl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Biblioteca\Fisica\ModeloI\Agente.h">
+      <Filter>Header Files\Fisica\ModeloI</Filter>
+    </ClInclude>
+    <ClInclude Include="Biblioteca\Fisica\ModeloI\Agente_DEB.h">
+      <Filter>Header Files\Fisica\ModeloI</Filter>
+    </ClInclude>
+    <ClInclude Include="Biblioteca\Fisica\ModeloI\Agente_DFC.h">
+      <Filter>Header Files\Fisica\ModeloI</Filter>
+    </ClInclude>
+    <ClInclude Include="Biblioteca\Fisica\ModeloI\Agente_EVL.h">
+      <Filter>Header Files\Fisica\ModeloI</Filter>
+    </ClInclude>
+    <ClInclude Include="Biblioteca\Fisica\ModeloI\Ambiente.h">
+      <Filter>Header Files\Fisica\ModeloI</Filter>
+    </ClInclude>
+    <ClInclude Include="Biblioteca\Fisica\ModeloI\Sistema_Agentes.h">
+      <Filter>Header Files\Fisica\ModeloI</Filter>
+    </ClInclude>
+    <ClInclude Include="Biblioteca\Grafica\GL_Camara.h">
+      <Filter>Header Files\Grafica</Filter>
+    </ClInclude>
+    <ClInclude Include="Biblioteca\Grafica\OGL.h">
+      <Filter>Header Files\Grafica</Filter>
+    </ClInclude>
+    <ClInclude Include="Biblioteca\Grafica\ModeloI\Gl_EstadoInicial.h">
+      <Filter>Header Files\Grafica\ModeloI</Filter>
+    </ClInclude>
+    <ClInclude Include="Biblioteca\Grafica\ModeloI\Gl_Simulacion.h">
+      <Filter>Header Files\Grafica\ModeloI</Filter>
+    </ClInclude>
+    <ClInclude Include="Biblioteca\Matematicas\Basico\BasicComplex.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Biblioteca\Matematicas\Basico\BasicFunctions.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Biblioteca\Matematicas\Basico\BasicStructures.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Biblioteca\Fisica\CellWM\AgentsSystem.h">
+      <Filter>Header Files\Fisica\CellWM</Filter>
+    </ClInclude>
+    <ClInclude Include="Biblioteca\Fisica\CellWM\cellWM.h">
+      <Filter>Header Files\Fisica\CellWM</Filter>
+    </ClInclude>
+    <ClInclude Include="Biblioteca\Fisica\CellWM\Enviroment.h">
+      <Filter>Header Files\Fisica\CellWM</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="app.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Principal.resX">
+      <Filter>Resource Files</Filter>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SistemaControl.resx">
+      <Filter>Resource Files</Filter>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>
