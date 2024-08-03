@@ -939,21 +939,25 @@ double	InvertGenericLU(int n,double **vResult, double **vMatriz)
 
 bool isSegmentsIntersected(point_2D vX_Init, point_2D vX_End, point_2D vY_Init, point_2D vY_End,float *t,float*u) {
 	// iM REQUIRE t
-	point_2D CmP(vY_Init.x() - vX_Init.x(), vY_Init.y() - vX_Init.y());
-	point_2D r(vX_End.x() - vX_Init.x(), vX_End.y() - vX_Init.y());
-	point_2D s(vY_End.x() - vY_Init.x(), vY_End.y() - vY_Init.y());
+	point_2D CmP, r, s;
+	CmP.x = vY_Init.x - vX_Init.x;
+	CmP.y = vY_Init.y - vX_Init.y;
+	r.x   = vX_End.x - vX_Init.x;
+	r.y   = vX_End.y - vX_Init.y;
+	s.x   = vY_End.x - vY_Init.x;
+	s.y   = vY_End.y - vY_Init.y;
  
-	float CmPxr		= CmP.x() * r.y() - CmP.y() * r.x();
-	float CmPxs		= CmP.x() * s.y() - CmP.y() * s.x();
-	float rxs		= r.x() * s.y() - r.y() * s.x();
+	float CmPxr		= CmP.x * r.y - CmP.y * r.x;
+	float CmPxs		= CmP.x * s.y - CmP.y * s.x;
+	float rxs		= r.x * s.y - r.y * s.x;
 
 	*t = 1.0f;
 	*u = 1.0f;
 	if (CmPxr == 0.0f) {
 	// Lines are collinear, and so intersect if they have any overlap
 		return false;
-		return ((vY_Init.x() - vX_Init.x() < 0.0f) != (vY_Init.x() - vX_End.x() < 0.0f))
-			|| ((vY_Init.y() - vX_Init.y() < 0.0f) != (vY_Init.y() - vX_End.y() < 0.0f));
+		return ((vY_Init.x - vX_Init.x < 0.0f) != (vY_Init.x - vX_End.x < 0.0f))
+			|| ((vY_Init.y - vX_Init.y < 0.0f) != (vY_Init.y - vX_End.y < 0.0f));
 	}
  
 	if (rxs == 0.0f)
