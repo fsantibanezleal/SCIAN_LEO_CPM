@@ -15,6 +15,6 @@ public:
 	void Resize(unsigned vDimVentanaX, unsigned vDimVentanaY);
 	//void Renderizar(EnvironmentSystem* vEnvironmentSystem, AgentsSystem* vMatrix);
 	void Renderizar(EnvironmentSystem* vEnvironmentSystem, AgentsSystem* vMatrix);
-	void DrawPoly(point_3D vCentro,float vRadio,polygon_2D _polyMembrane,float vPasos, int vTipo, int vSizePoint,float factorX,float factorY,float deltaX,float deltaY);
+	void DrawPoly(point_3D vCentro,float vRadio,point_2D* _polyMembrane,int vNumPoints, float vPasos, int vTipo, int vSizePoint,float factorX,float factorY,float deltaX,float deltaY);
 
 };

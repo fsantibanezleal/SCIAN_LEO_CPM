@@ -61,7 +61,7 @@ void Gl_InitialState::Renderizar(EnvironmentSystem* vEnvironmentSystem, AgentsSy
 			Igualar(posicionDibujo,p1);
 
 			SetMaterial(2);
-			DrawPoly(posicionDibujo,vMatrix->_agentsWM_DFC[i].GetRad(0),vMatrix->_agentsWM_DFC[i].GetPoly(),40.0f, 1, 1,factorX,factorY,deltaX,deltaY);
+			DrawPoly(posicionDibujo,vMatrix->_agentsWM_DFC[i].GetRad(0),vMatrix->_agentsWM_DFC[i].GetPoly(),vMatrix->_agentsWM_DFC[i].GetNumNodesContour(),40.0f, 1, 1,factorX,factorY,deltaX,deltaY);
 
 			SetMaterial(1);
 			posicionDibujo.x = factorX*(posicionDibujo.x + deltaX);
@@ -109,8 +109,10 @@ void Gl_InitialState::Renderizar(EnvironmentSystem* vEnvironmentSystem, AgentsSy
 	SwapBuffers(hdc);
 };
 
-void Gl_InitialState::DrawPoly(point_3D vCentro,float vRadio,polygon_2D _polyMembrane,float vPasos, int vTipo, int vSizePoint,float factorX,float factorY,float deltaX,float deltaY)
+void Gl_InitialState::DrawPoly(point_3D vCentro,float vRadio,point_2D* _polyMembrane,int vNumPoints,float vPasos, int vTipo, int vSizePoint,float factorX,float factorY,float deltaX,float deltaY)
 {
+	register int idxP;
+	point_2D pp;
 	point_3D posicionDibujo;
 
 	glPointSize(vSizePoint);
@@ -130,10 +132,11 @@ void Gl_InitialState::DrawPoly(point_3D vCentro,float vRadio,polygon_2D _polyMem
 	
 		glPushMatrix();
 			glBegin(GL_POLYGON);
-				BOOST_FOREACH(point_2D const& pp, _polyMembrane.outer()) {
-
-					posicionDibujo.x = factorX*(pp.x() + deltaX);
-					posicionDibujo.y = factorY*(deltaY - pp.y());
+				for( idxP =0; idxP < vNumPoints; idxP++) {
+					pp.x               = _polyMembrane[idxP].x;
+					pp.y               = _polyMembrane[idxP].y;
+					posicionDibujo.x = factorX*(pp.x + deltaX);
+					posicionDibujo.y = factorY*(deltaY - pp.y);
 		
 					glVertex3f(posicionDibujo.x,posicionDibujo.y,0.0);
 		
