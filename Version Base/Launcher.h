@@ -70,10 +70,10 @@ namespace AplicacionCD2Cells {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->pictureBoxIni1 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBoxIni1 = (gcnew System::Windows::Forms::PictureBox);
 			this->progressBarIni = (gcnew System::Windows::Forms::ProgressBar());
 			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->pictureBoxIni2 = (gcnew System::Windows::Forms::PictureBox());
+			this->pictureBoxIni2 = (gcnew System::Windows::Forms::PictureBox);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBoxIni1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBoxIni2))->BeginInit();
 			this->SuspendLayout();

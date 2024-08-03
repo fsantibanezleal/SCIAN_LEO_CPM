@@ -71,26 +71,26 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Apps\Boost\boost_1_56_0;include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Apps\Boost\boost_1_56_0;include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>D:\Apps\Boost\boost_1_56_0;include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>D:\Apps\Boost\boost_1_56_0;include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;GLUT_BUILDING_LIB;_CRT_SECURE_NO_WARNINGS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Apps\Boost\boost_1_56_0;include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>
       </AdditionalUsingDirectories>
     </ClCompile>
@@ -110,7 +110,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;GLUT_BUILDING_LIB;_CRT_SECURE_NO_WARNINGS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Apps\Boost\boost_1_56_0;include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>
       </AdditionalUsingDirectories>
     </ClCompile>
@@ -129,7 +129,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;GLUT_BUILDING_LIB;_CRT_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Apps\Boost\boost_1_56_0;include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>
       </AdditionalUsingDirectories>
     </ClCompile>
@@ -146,7 +146,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;GLUT_BUILDING_LIB;_CRT_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\Apps\Boost\boost_1_56_0;include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL;.\Functions\Graphics\CellWM;.\Functions\Maths;.\Functions\Maths\Basics;.\Functions\Physics;.\Functions\Physics\CellWM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>
       </AdditionalUsingDirectories>
     </ClCompile>

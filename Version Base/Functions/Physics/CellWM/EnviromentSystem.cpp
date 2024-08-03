@@ -52,7 +52,7 @@ EnvironmentSystem::EnvironmentSystem()
 	_dimZ	= int(_maxEnvironmentSystem.z - _minEnvironmentSystem.z);
 
 	int dfcTemp = int(maximoTemp / 4);
-	SetFull(_minInitDFC,float(dfcTemp),0.0f,0.0f);
+	SetFull(_minInitDFC,float(dfcTemp),100.0f,0.0f);
 	SetFull(_maxInitDFC,3.0f*float(dfcTemp),maximoTemp/2,0.0f);
 
 	SetFull(_color,0,0,0);

@@ -23,7 +23,7 @@ public:
 
 	int				_nCont,_index,_paramNumFilo;
 
-	polygon_2D		_polyMembrane;
+	point_2D		*_polyMembrane;
 public:
 	bool			_offSpring,_perturbationRandom,_friendAttraction,_freeIssue,_adhesionToEVL;
 	float			_ratioFriendAttraction;
@@ -51,16 +51,16 @@ public:
 	void		SetAdhesionEVL(bool vValue){_adhesionToEVL = vValue;};
 	
 	point_2D	GetPos(void){return _pos;};
-	float		GetPosX(void){return _pos.x();};
-	float		GetPosY(void){return _pos.y();};
-	void		SetPos(point_2D vValue){_pos = point_2D(vValue.x(),vValue.y());};
-	void		SetPosX(float vValue){_pos.x(vValue);};
-	void		SetPosY(float vValue){_pos.y(vValue);};
+	float		GetPosX(void){return _pos.x;};
+	float		GetPosY(void){return _pos.y;};
+	void		SetPos(point_2D vValue){_pos.x = vValue.x;_pos.y = vValue.y;};
+	void		SetPosX(float vValue){_pos.x = vValue;};
+	void		SetPosY(float vValue){_pos.y = vValue;};
 
 	float		GetRad(int index){return _radR0[index];};
 	void		SetRad(float vValue,int index){_radR0[index] = vValue;};
 
-	polygon_2D	GetPoly(void){return _polyMembrane;};
+	point_2D*	GetPoly(void){return _polyMembrane;};
 
 	CellWM&     CellWM::operator=(const CellWM &vValue) {
 					if (this == &vValue) return *this;  
