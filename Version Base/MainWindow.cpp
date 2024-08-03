@@ -58,7 +58,7 @@ System::Void MainWindow::bwControl_DoWork(System::Object^  sender, System::Compo
 		_theMatrixAgents_Static->UpdateState(_theMatrixEnvironmentSystem);
 
 		//Sleep((float)(numericDeadTime->Value)*1000.0f); // FIXME SET RIGHT DEAD TIME
-		Sleep((float)(2)*1000.0f); // FIXME SET RIGHT DEAD TIME
+		Sleep((float)(2)*100.0f); // FIXME SET RIGHT DEAD TIME
 	}
 }
 

@@ -41,6 +41,7 @@ void	AgentsSystem::Initiate(void)
 }; // azar
 void	AgentsSystem::Initiate(EnvironmentSystem* vEnvironmentSystem, int vNumDFCs, int vNumDEBs, int vNumEVLs)
 {
+	point_2D dummyP;
 	vEnvironmentSystem->_numDFCActiveAgentsWanted = vNumDFCs;
 	_numDFCAgents		= 1000;
 	_numDFCActiveAgents	= 0;
@@ -78,13 +79,17 @@ void	AgentsSystem::Initiate(EnvironmentSystem* vEnvironmentSystem, int vNumDFCs,
 		{
 			posDFC_Current.x = posDFC_Init.x + radius;
 			posDFC_Current.y = posDFC_Current.y + 2*radius;
-			_agentsWM_DFC[i].InitCell(point_2D(posDFC_Current.x,posDFC_Current.y),radius);
+			dummyP.x = posDFC_Current.x;
+			dummyP.y = posDFC_Current.y;
+			_agentsWM_DFC[i].InitCell(dummyP,radius);
 			_agentsWM_DFC[i].SetActive(true);
 			_numDFCActiveAgents++;
 		}
 		else
 		{
-			_agentsWM_DFC[i].InitCell(point_2D(posDFC_Current.x,posDFC_Current.y),radius);
+			dummyP.x = posDFC_Current.x;
+			dummyP.y = posDFC_Current.y;
+			_agentsWM_DFC[i].InitCell(dummyP,radius);
 			_agentsWM_DFC[i].SetActive(true);
 
 			_numDFCActiveAgents++;
@@ -553,8 +558,8 @@ void	AgentsSystem::AddOffspring(EnvironmentSystem* vEnvironmentSystem) {
 			}
 			
 			point_2D p2D_1;
-			p2D_1.x(posMine.x);
-			p2D_1.y(posMine.y);
+			p2D_1.x = posMine.x;
+			p2D_1.y = posMine.y;
 
 			_agentsWM_DFC[_numDFCActiveAgents].InitCell(p2D_1,10);
 			_agentsWM_DFC[_numDFCActiveAgents]._offSpring				= true;

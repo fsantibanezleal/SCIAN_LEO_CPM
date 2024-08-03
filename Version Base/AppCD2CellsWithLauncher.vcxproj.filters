@@ -124,5 +124,8 @@
     <EmbeddedResource Include="MainWindow.resx">
       <Filter>Archivos de recursos</Filter>
     </EmbeddedResource>
+    <EmbeddedResource Include="Launcher.resx">
+      <Filter>Archivos de recursos</Filter>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
