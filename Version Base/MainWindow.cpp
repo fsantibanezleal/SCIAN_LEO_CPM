@@ -68,3 +68,51 @@ System::Void MainWindow::bSartSim_Click(System::Object^  sender, System::EventAr
 System::Void MainWindow::bStopSim_Click(System::Object^  sender, System::EventArgs^  e){
 	_theMatrixAgents_Static->_bRunning = false;
 }
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////// MANAGE OPTIONS FROM GUIDE ////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////// Main Updater
+System::Void MainWindow::bUpdateSettings_Click(System::Object^  sender, System::EventArgs^  e){
+
+};
+//////////////////////// Work Space
+System::Void MainWindow::nUD_WS_W_ValueChanged(System::Object^  sender, System::EventArgs^  e){
+	(float) nUD_WS_W->Value;
+};
+System::Void MainWindow::nUD_WS_H_ValueChanged(System::Object^  sender, System::EventArgs^  e){
+	(float) nUD_WS_H->Value;
+};
+System::Void MainWindow::nUD_WS_MigEVL_ValueChanged(System::Object^  sender, System::EventArgs^  e){
+
+};
+System::Void MainWindow::numericUpDown2_ValueChanged(System::Object^  sender, System::EventArgs^  e){
+
+};
+
+//////////////////////// DFCs Group
+System::Void MainWindow::nUD_MarginGap_ValueChanged(System::Object^  sender, System::EventArgs^  e){
+	(float) nUD_MarginGap->Value;
+};
+System::Void MainWindow::nUD_InitialDFCsW_ValueChanged(System::Object^  sender, System::EventArgs^  e){
+	(float) nUD_InitialDFCsW->Value;
+};
+System::Void MainWindow::nUD_InitialDFCsH_ValueChanged(System::Object^  sender, System::EventArgs^  e){
+	(float) nUD_InitialDFCsH->Value;
+};
+System::Void MainWindow::nUD_InitialDFCsGap_ValueChanged(System::Object^  sender, System::EventArgs^  e){
+	(float) nUD_InitialDFCsGap->Value;
+};
+System::Void MainWindow::nUD_InitialNumDFCs_ValueChanged(System::Object^  sender, System::EventArgs^  e){
+	(int) nUD_InitialNumDFCs->Value;
+};
+
+//////////////////////// DFCs Individual
+System::Void MainWindow::nUD_DFCRadius_ValueChanged(System::Object^  sender, System::EventArgs^  e){
+	(float) nUD_DFCRadius->Value;
+};
+System::Void MainWindow::nUD_DFC_AdhesionDist_ValueChanged(System::Object^  sender, System::EventArgs^  e){
+	(float) nUD_DFC_AdhesionDist->Value;
+};
