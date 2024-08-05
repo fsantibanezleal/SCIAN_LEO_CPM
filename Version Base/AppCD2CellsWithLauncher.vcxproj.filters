@@ -78,7 +78,7 @@
     <ClCompile Include="Functions\Physics\CellWM\cellWM.cpp">
       <Filter>Archivos de código fuente\Physics\CellWM</Filter>
     </ClCompile>
-    <ClCompile Include="Functions\Physics\CellWM\EnviromentSystem.cpp">
+    <ClCompile Include="Functions\Physics\CellWM\EnvironmentSystem.cpp">
       <Filter>Archivos de código fuente\Physics\CellWM</Filter>
     </ClCompile>
   </ItemGroup>
