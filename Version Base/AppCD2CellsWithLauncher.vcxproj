@@ -176,7 +176,7 @@
     <ClCompile Include="Functions\Maths\Basics\BasicStructures.cpp" />
     <ClCompile Include="Functions\Physics\CellWM\AgentsSystem.cpp" />
     <ClCompile Include="Functions\Physics\CellWM\cellWM.cpp" />
-    <ClCompile Include="Functions\Physics\CellWM\EnviromentSystem.cpp" />
+    <ClCompile Include="Functions\Physics\CellWM\EnvironmentSystem.cpp" />
     <ClCompile Include="Launcher.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">include;.\Functions;.\Functions\Graphics;.\Functions\Graphics\GL</AdditionalIncludeDirectories>

@@ -10,46 +10,32 @@
 #include <time.h>
 #include <windows.h>
 
-using namespace std;
+#define NUMSTAGES 5
 
+using namespace std;
 class EnvironmentSystem
 {
 private:
 public:
-	bool		_busy,_fActive,_bRunning,_useDEBAttraction,_useEVLInteraction,_useEVLInteractionAdhesion;
+	bool		_busy,_fActive,_bRunning ,_bShowInitialRect, _bShowMargin_EVL,_bShowMargin_DEB;
 
-	int			_StepsProliferationCurrent,_posProliferation,_numDFCActiveAgentsWanted,_stepsProliferacion;
-	float		_vProliferation[8];
+	float		_gapMargin,_posMarginDEB, _posMarginEVL, _numItbyMin;
+	point_3D	_dimWS, _dimDFCs;
+	point_3D	_minEnvironmentSystem, _maxEnvironmentSystem;
+	point_3D	_minInitDFC, _maxInitDFC;
 
-	int			_dataEVL_quantityKind; // 0 == todo... 1 == seleccionadas
-	int			_dataEVL_FieldKind; // 0 == puntual... 1 == linea.... 2 == distribuido
-	int			_num_DFC_EVL_AdhesionPosterior,_num_DFC_EVL_AdhesionAnterior,_limit_DFC_EVL_AntAdhesion,_limit_DFC_EVL_PostAdhesion;
-	int			_stepsMovDEB_margin,_actualStepsMovDEB_margin,_stepsMovEVL_margin,_actualStepsMovEVL_margin;
+	float		_velMarginEVL;
+	int			_stateEVL;
+	float       _dataEVL_PosRef[NUMSTAGES];
+	float       _dataEVL_RatioAttach[NUMSTAGES];
+	float       _dataEVL_RatioRing[NUMSTAGES];
 
-
-	int         _dataEVL_PosY,_dataEVL_currentLineStep,_dataEVL_LineStep,_dataEVL_LineWidth,_dataEVL_ChangeStepsEVLDist,_dataEVL_IncludedCampos;
-	float		_dataEVL_FactorEVL;
-
-	int			_dataEVL_StepDistEVL_Current;
-	point_3D	_minEnvironmentSystem;
-	point_3D	_maxEnvironmentSystem;
-	point_3D	_posMarginDEB;
-
-	point_3D	_minInitDFC;
-	point_3D	_maxInitDFC;
-
-	point_3D	_color;
-
-	int			_dimX,_dimY,_dimZ;
-	int			**_tipoNodoInGrid;
-	int			**_numNodoInGrid;
-
-	float		_factorDFC_DEB_Action;
 public:
 	EnvironmentSystem();
 	~EnvironmentSystem();
 
 	void		Initiate(void);
+	void		Reinitiate(void);
 	void		Update(void);
 };
 

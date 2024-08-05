@@ -57,13 +57,11 @@ namespace AplicacionCD2Cells {
 	private: System::Windows::Forms::NumericUpDown^  nUD_DFC_AdhesionDist;
 	private: System::Windows::Forms::CheckBox^  cbProliferation;
 	private: System::Windows::Forms::CheckBox^  cbStochasticMov;
-	private: System::Windows::Forms::NumericUpDown^  numericUpDown2;
+	private: System::Windows::Forms::NumericUpDown^  nUD_SpeedEVL;
+
 	private: System::Windows::Forms::Label^  nUD_WS_SpeedEVL;
 	private: System::Windows::Forms::NumericUpDown^  nUD_WS_MigEVL;
 	private: System::Windows::Forms::Label^  label6;
-
-	public:	int					_numDFCs;
-
 
 	public:
 		MainWindow(void)
@@ -81,7 +79,6 @@ namespace AplicacionCD2Cells {
 			//TODO: Add the constructor code here
 			//
 		}
-
 	protected:
 		/// <summary>
 		/// Limpiar los recursos que se estén utilizando.
@@ -149,6 +146,10 @@ namespace AplicacionCD2Cells {
 			this->labelDFCR = (gcnew System::Windows::Forms::Label());
 			this->nUD_DFCRadius = (gcnew System::Windows::Forms::NumericUpDown());
 			this->gbSettingsWS = (gcnew System::Windows::Forms::GroupBox());
+			this->nUD_SpeedEVL = (gcnew System::Windows::Forms::NumericUpDown());
+			this->nUD_WS_SpeedEVL = (gcnew System::Windows::Forms::Label());
+			this->nUD_WS_MigEVL = (gcnew System::Windows::Forms::NumericUpDown());
+			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->nUD_WS_H = (gcnew System::Windows::Forms::NumericUpDown());
 			this->labelWSH = (gcnew System::Windows::Forms::Label());
 			this->nUD_WS_W = (gcnew System::Windows::Forms::NumericUpDown());
@@ -159,10 +160,6 @@ namespace AplicacionCD2Cells {
 			this->tpOptions2 = (gcnew System::Windows::Forms::TabPage());
 			this->bwControl = (gcnew System::ComponentModel::BackgroundWorker());
 			this->bwDraw = (gcnew System::ComponentModel::BackgroundWorker());
-			this->nUD_WS_MigEVL = (gcnew System::Windows::Forms::NumericUpDown());
-			this->label6 = (gcnew System::Windows::Forms::Label());
-			this->numericUpDown2 = (gcnew System::Windows::Forms::NumericUpDown());
-			this->nUD_WS_SpeedEVL = (gcnew System::Windows::Forms::Label());
 			this->menuMain->SuspendLayout();
 			this->tlpMain->SuspendLayout();
 			this->tcGraphics->SuspendLayout();
@@ -179,10 +176,10 @@ namespace AplicacionCD2Cells {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->nUD_DFC_AdhesionDist))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->nUD_DFCRadius))->BeginInit();
 			this->gbSettingsWS->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->nUD_SpeedEVL))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->nUD_WS_MigEVL))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->nUD_WS_H))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->nUD_WS_W))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->nUD_WS_MigEVL))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown2))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// menuMain
@@ -443,6 +440,7 @@ namespace AplicacionCD2Cells {
 			// cbProliferation
 			// 
 			this->cbProliferation->AutoSize = true;
+			this->cbProliferation->Enabled = false;
 			this->cbProliferation->Location = System::Drawing::Point(21, 117);
 			this->cbProliferation->Name = L"cbProliferation";
 			this->cbProliferation->Size = System::Drawing::Size(81, 17);
@@ -453,8 +451,6 @@ namespace AplicacionCD2Cells {
 			// cbStochasticMov
 			// 
 			this->cbStochasticMov->AutoSize = true;
-			this->cbStochasticMov->Checked = true;
-			this->cbStochasticMov->CheckState = System::Windows::Forms::CheckState::Checked;
 			this->cbStochasticMov->Location = System::Drawing::Point(163, 117);
 			this->cbStochasticMov->Name = L"cbStochasticMov";
 			this->cbStochasticMov->Size = System::Drawing::Size(129, 17);
@@ -484,7 +480,7 @@ namespace AplicacionCD2Cells {
 			// 
 			// gbSettingsWS
 			// 
-			this->gbSettingsWS->Controls->Add(this->numericUpDown2);
+			this->gbSettingsWS->Controls->Add(this->nUD_SpeedEVL);
 			this->gbSettingsWS->Controls->Add(this->nUD_WS_SpeedEVL);
 			this->gbSettingsWS->Controls->Add(this->nUD_WS_MigEVL);
 			this->gbSettingsWS->Controls->Add(this->label6);
@@ -498,6 +494,47 @@ namespace AplicacionCD2Cells {
 			this->gbSettingsWS->TabIndex = 5;
 			this->gbSettingsWS->TabStop = false;
 			this->gbSettingsWS->Text = L"Setting Work Space";
+			// 
+			// nUD_SpeedEVL
+			// 
+			this->nUD_SpeedEVL->DecimalPlaces = 1;
+			this->nUD_SpeedEVL->Location = System::Drawing::Point(163, 123);
+			this->nUD_SpeedEVL->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 65536});
+			this->nUD_SpeedEVL->Name = L"nUD_SpeedEVL";
+			this->nUD_SpeedEVL->Size = System::Drawing::Size(108, 20);
+			this->nUD_SpeedEVL->TabIndex = 9;
+			this->nUD_SpeedEVL->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {15, 0, 0, 65536});
+			this->nUD_SpeedEVL->ValueChanged += gcnew System::EventHandler(this, &MainWindow::nUD_SpeedEVL_ValueChanged);
+			// 
+			// nUD_WS_SpeedEVL
+			// 
+			this->nUD_WS_SpeedEVL->AutoSize = true;
+			this->nUD_WS_SpeedEVL->Location = System::Drawing::Point(18, 123);
+			this->nUD_WS_SpeedEVL->Name = L"nUD_WS_SpeedEVL";
+			this->nUD_WS_SpeedEVL->Size = System::Drawing::Size(140, 13);
+			this->nUD_WS_SpeedEVL->TabIndex = 10;
+			this->nUD_WS_SpeedEVL->Text = L"Speed EVL Margin (um/min)";
+			// 
+			// nUD_WS_MigEVL
+			// 
+			this->nUD_WS_MigEVL->DecimalPlaces = 1;
+			this->nUD_WS_MigEVL->Location = System::Drawing::Point(163, 96);
+			this->nUD_WS_MigEVL->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1000, 0, 0, 0});
+			this->nUD_WS_MigEVL->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 65536});
+			this->nUD_WS_MigEVL->Name = L"nUD_WS_MigEVL";
+			this->nUD_WS_MigEVL->Size = System::Drawing::Size(108, 20);
+			this->nUD_WS_MigEVL->TabIndex = 7;
+			this->nUD_WS_MigEVL->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {350, 0, 0, 0});
+			this->nUD_WS_MigEVL->ValueChanged += gcnew System::EventHandler(this, &MainWindow::nUD_WS_MigEVL_ValueChanged);
+			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->Location = System::Drawing::Point(18, 96);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(131, 13);
+			this->label6->TabIndex = 8;
+			this->label6->Text = L"Migration EVL Margin (um)";
 			// 
 			// nUD_WS_H
 			// 
@@ -589,47 +626,6 @@ namespace AplicacionCD2Cells {
 			// 
 			this->bwDraw->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &MainWindow::bwDraw_DoWork);
 			// 
-			// nUD_WS_MigEVL
-			// 
-			this->nUD_WS_MigEVL->DecimalPlaces = 1;
-			this->nUD_WS_MigEVL->Location = System::Drawing::Point(163, 96);
-			this->nUD_WS_MigEVL->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1000, 0, 0, 0});
-			this->nUD_WS_MigEVL->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 65536});
-			this->nUD_WS_MigEVL->Name = L"nUD_WS_MigEVL";
-			this->nUD_WS_MigEVL->Size = System::Drawing::Size(108, 20);
-			this->nUD_WS_MigEVL->TabIndex = 7;
-			this->nUD_WS_MigEVL->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {350, 0, 0, 0});
-			this->nUD_WS_MigEVL->ValueChanged += gcnew System::EventHandler(this, &MainWindow::nUD_WS_MigEVL_ValueChanged);
-			// 
-			// label6
-			// 
-			this->label6->AutoSize = true;
-			this->label6->Location = System::Drawing::Point(18, 96);
-			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(131, 13);
-			this->label6->TabIndex = 8;
-			this->label6->Text = L"Migration EVL Margin (um)";
-			// 
-			// numericUpDown2
-			// 
-			this->numericUpDown2->DecimalPlaces = 1;
-			this->numericUpDown2->Location = System::Drawing::Point(163, 123);
-			this->numericUpDown2->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 65536});
-			this->numericUpDown2->Name = L"numericUpDown2";
-			this->numericUpDown2->Size = System::Drawing::Size(108, 20);
-			this->numericUpDown2->TabIndex = 9;
-			this->numericUpDown2->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {15, 0, 0, 65536});
-			this->numericUpDown2->ValueChanged += gcnew System::EventHandler(this, &MainWindow::numericUpDown2_ValueChanged);
-			// 
-			// nUD_WS_SpeedEVL
-			// 
-			this->nUD_WS_SpeedEVL->AutoSize = true;
-			this->nUD_WS_SpeedEVL->Location = System::Drawing::Point(18, 123);
-			this->nUD_WS_SpeedEVL->Name = L"nUD_WS_SpeedEVL";
-			this->nUD_WS_SpeedEVL->Size = System::Drawing::Size(140, 13);
-			this->nUD_WS_SpeedEVL->TabIndex = 10;
-			this->nUD_WS_SpeedEVL->Text = L"Speed EVL Margin (um/min)";
-			// 
 			// MainWindow
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -664,10 +660,10 @@ namespace AplicacionCD2Cells {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->nUD_DFCRadius))->EndInit();
 			this->gbSettingsWS->ResumeLayout(false);
 			this->gbSettingsWS->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->nUD_SpeedEVL))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->nUD_WS_MigEVL))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->nUD_WS_H))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->nUD_WS_W))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->nUD_WS_MigEVL))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->numericUpDown2))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -685,7 +681,7 @@ namespace AplicacionCD2Cells {
 	private: System::Void nUD_WS_W_ValueChanged(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void nUD_WS_H_ValueChanged(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void nUD_WS_MigEVL_ValueChanged(System::Object^  sender, System::EventArgs^  e);
-	private: System::Void numericUpDown2_ValueChanged(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void nUD_SpeedEVL_ValueChanged(System::Object^  sender, System::EventArgs^  e);
 
     // DFCs Group
 	private: System::Void nUD_MarginGap_ValueChanged(System::Object^  sender, System::EventArgs^  e);

@@ -14,6 +14,7 @@
 #include "cellWM.h"
 
 #include "EnvironmentSystem.h"
+#define  FULLDFCS 1000
 
 using namespace std;
 
@@ -21,22 +22,19 @@ class AgentsSystem
 {
 private:
 public:
-	bool		_bRunning,_fActive;
-	int			_numEVLAgents,_numDFCAgents,_numDEBAgents,_numDFCActiveAgents; 
+	bool		_bRunning,_fActive,_useAttachment,_useAdhesion;
+	int			_numDFCAgents,_numDFCActiveAgents; 
 	int			_selectedAgente;
-	int			_tipoSelectedAgente; // 0 = migradoras... 1 = las de atras... 2= EVL
-	int			_posRateAttachmentCurrent;
 
-	float		_rateAntAttachment[9];
-	float		_ratePostAttachment[9];
+	float       _radius;
 
 	CellWM		*_agentsWM_DFC;
 public:
 	AgentsSystem();
 	~AgentsSystem();
 
-	void	Initiate(void); // azar
-	void	Initiate(EnvironmentSystem* vEnvironmentSystem, int vNumDFCs, int vNumDEBs, int vNumEVLs); // sete0
+	void	Initiate(void); // random
+	void	Initiate(EnvironmentSystem* vEnvironmentSystem); // setter
 	void	UpdateState(EnvironmentSystem* vEnvironmentSystem);
 	void	AddOffspring(EnvironmentSystem* vEnvironmentSystem);
 };

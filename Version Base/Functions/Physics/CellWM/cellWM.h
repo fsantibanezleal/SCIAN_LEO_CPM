@@ -10,24 +10,25 @@
 #include <time.h>
 #include <windows.h>
 
+#define MAXFILO 10
+
 using namespace std;
 
 class CellWM
 {
 public:
-	bool			_fBusy,_fActive,_bRunning;
+	bool			_bActive;
 
-	float			_radR0[10],_angleThetha0[10];
-	float			_paramA[10],_paramW[10],_paramGamma[10],_paramSigma[10],_paramV0;
+	float			_radR0,_angleThetha0[MAXFILO];
+	float			_paramA[MAXFILO],_paramW[MAXFILO],_paramGamma[MAXFILO],_paramSigma[MAXFILO],_paramV0;
 	point_2D		_pos,_vel;
 
 	int				_nCont,_index,_paramNumFilo;
 
 	point_2D		*_polyMembrane;
 public:
-	bool			_offSpring,_perturbationRandom,_friendAttraction,_freeIssue,_adhesionToEVL;
-	float			_ratioFriendAttraction;
-	int				_persistence,_StepsforChange;
+	bool			_bOffSpring,_bStochasticMov,_bDFCsInteraction,_bEVL_Interaction;
+	float			_adhesionDistance;
 	
 	CellWM();
 	~CellWM();
@@ -36,19 +37,13 @@ public:
 	void		InitCell(point_2D vPos, float vRadio);
 
 	// Setters
-	bool		GetRunning(void){return _bRunning;};
-	void		SetRunning(bool vValue){_bRunning = vValue;};
-
-	bool		GetBusy(void){return _fBusy;};
-	void		SetBusy(bool vValue){_fBusy = vValue;};
-
 	int			GetNumNodesContour(void){return _nCont;};
 	
-	bool		GetActive(void){return _fActive;};
-	void		SetActive(bool vValue){_fActive = vValue;};
+	bool		GetActive(void){return _bActive;};
+	void		SetActive(bool vValue){_bActive = vValue;};
 
-	bool		GetAdhesionEVL(void){return _adhesionToEVL;};
-	void		SetAdhesionEVL(bool vValue){_adhesionToEVL = vValue;};
+	bool		GetEVL_Interaction(void){return _bEVL_Interaction;};
+	void		SetEVL_Interaction(bool vValue){_bEVL_Interaction = vValue;};
 	
 	point_2D	GetPos(void){return _pos;};
 	float		GetPosX(void){return _pos.x;};
@@ -57,24 +52,22 @@ public:
 	void		SetPosX(float vValue){_pos.x = vValue;};
 	void		SetPosY(float vValue){_pos.y = vValue;};
 
-	float		GetRad(int index){return _radR0[index];};
-	void		SetRad(float vValue,int index){_radR0[index] = vValue;};
+	float		GetRad(){return _radR0;};
+	void		SetRad(float vValue){_radR0 = vValue;};
 
 	point_2D*	GetPoly(void){return _polyMembrane;};
 
 	CellWM&     CellWM::operator=(const CellWM &vValue) {
 					if (this == &vValue) return *this;  
 
-					_fBusy			= false;
-					_fActive		= false;
-					_bRunning		= false;
+					_bActive		= false;
 
 					_pos			= vValue._pos;
 					_vel			= vValue._vel;
 
-					for(register int i = 0; i < 10 ; i++)
+					_radR0			= vValue._radR0;
+					for(register int i = 0; i < MAXFILO ; i++)
 					{
-						_radR0[i]			= vValue._radR0[i];
 						_angleThetha0[i]	= vValue._angleThetha0[i];
 
 						_paramA[i]			= vValue._paramA[i];
