@@ -967,5 +967,5 @@ bool isSegmentsIntersected(point_2D vX_Init, point_2D vX_End, point_2D vY_Init, 
 	*t = CmPxs * rxsr;
 	*u = CmPxr * rxsr;
  
-	return (*t >= 0.0f) && (*t <= 1.0f) && (*u >= 0.0f) && (*u <= 1.0f);
+	return (*t > 0.0f) && (*t < 1.0f) && (*u > 0.0f) && (*u < 1.0f);
 }

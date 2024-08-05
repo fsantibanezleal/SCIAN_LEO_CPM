@@ -70,10 +70,10 @@ namespace AplicacionCD2Cells {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->pictureBoxIni1 = (gcnew System::Windows::Forms::PictureBox);
+			this->pictureBoxIni1 = (gcnew System::Windows::Forms::PictureBox());
 			this->progressBarIni = (gcnew System::Windows::Forms::ProgressBar());
 			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->pictureBoxIni2 = (gcnew System::Windows::Forms::PictureBox);
+			this->pictureBoxIni2 = (gcnew System::Windows::Forms::PictureBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBoxIni1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBoxIni2))->BeginInit();
 			this->SuspendLayout();
@@ -130,7 +130,7 @@ namespace AplicacionCD2Cells {
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedToolWindow;
 			this->Name = L"Launcher";
 			this->ShowInTaskbar = false;
-			this->Text = L"Cell Migration & Collision Detection v 0.1.0 >>----> Initial Setting";
+			this->Text = L"Cell Migration & Collision Detection v 0.1.4 >>----> Initial Setting";
 			this->Load += gcnew System::EventHandler(this, &Launcher::Launcher_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBoxIni1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBoxIni2))->EndInit();
@@ -140,7 +140,7 @@ namespace AplicacionCD2Cells {
 #pragma endregion
 	private: System::Void Launcher_Load(System::Object^  sender, System::EventArgs^  e)
 			 {
-				 mutexOGL	=	gcnew Mutex;
+				 mutexOGL	=	gcnew Mutex();
 				 pictureBoxIni1->ImageLocation = "Multimedia/IDS_VB2.png";
 				 pictureBoxIni1->SizeMode = PictureBoxSizeMode::Zoom;
 				 pictureBoxIni2->ImageLocation = "Multimedia/SCIAN.png";
@@ -163,18 +163,15 @@ namespace AplicacionCD2Cells {
 				};
 
 				this->Hide();
+					
 				_mainWindow =	gcnew MainWindow(this);
 
 				_mainWindow->Show();
+
 				//_mainWindow->WindowState=FormWindowState::Maximized;
 				_mainWindow->BringToFront();
 
-				if(SystemInformation::MonitorCount > 1)
-				{
-				}
-				else
-				{
-				}
+				//if(SystemInformation::MonitorCount > 1)
 
 				progressBarIni->Value = progressBarIni->Minimum;
 			 }

@@ -20,6 +20,12 @@ public:
 		y = 0.0f;
 	}
 
+	point_2D(const point_2D& vP)
+	{
+		x = vP.x; 
+		y = vP.y;
+	}
+
 	point_2D(float vX, float vY)
 	{
 		x = vX;
@@ -31,12 +37,61 @@ public:
 		x = vP.x; 
 		y = vP.y;
 	}
+	void SetPoint(float vX, float vY)
+	{
+		x = vX;
+		y = vY;
+	}
+
 };
 
 //typedef pcl::PointXYZ<double>			point_3D;
-struct point_3D
+class point_3D
 {
+public:
 	float x,y,z;
+public:
+	point_3D()
+	{
+		x = 0.0f;
+		y = 0.0f;
+		z = 0.0f;
+	}
+
+	point_3D(const point_2D& vP)
+	{
+		x = vP.x; 
+		y = vP.y;
+		z = 0.0f;
+	}
+
+	point_3D(const point_3D& vP)
+	{
+		x = vP.x; 
+		y = vP.y;
+		z = vP.z;
+	}
+	point_3D(float vX, float vY, float vZ)
+	{
+		x = vX;
+		y = vY;
+		z = vZ;
+	}
+
+	void SetPoint(point_3D vP)
+	{
+		x = vP.x; 
+		y = vP.y;
+		z = vP.z;
+	}
+	void SetPoint(float vX, float vY, float vZ)
+	{
+		x = vX;
+		y = vY;
+		z = vZ;
+	}
+
 };
+
 
 #endif
