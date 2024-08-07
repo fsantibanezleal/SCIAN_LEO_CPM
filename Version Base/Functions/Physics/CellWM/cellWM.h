@@ -93,10 +93,11 @@ public:
 	float	EstimateV(void);
 	void	UpdatePos(void);
 
-	void	FixOverlap(CellWM *vValue);
+	void	FixOverlap(CellWM *vValue, float vFactor);
 
 
-	void	SimulationStep(void);
+	void	SimulationStepPre(void);
+	void	SimulationStepPost(void);
 
 };
 
