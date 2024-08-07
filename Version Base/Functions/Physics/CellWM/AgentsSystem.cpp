@@ -263,26 +263,39 @@ void	AgentsSystem::UpdateState(EnvironmentSystem* vEnvironmentSystem) {
 		{
 			if(_agentsWM_DFC[i].GetActive())
 			{
-				_agentsWM_DFC[i].SimulationStep();
+				_agentsWM_DFC[i].SimulationStepPre();
 				//_agentsWM_DFC[i].SimulationStepRestricted(vEnvironmentSystem,_agentsWM_DFC,_numDFCActiveAgents);
+
+				_agentsWM_DFC[i].SimulationStepPost();
 			}
 		}
 
 
 		AddOffspring(vEnvironmentSystem);
 
-
+		// Correct shape collision
+		// SemiFIX
 		for(i = 0; i < _numDFCActiveAgents; i++)
 		{
 			for(j = i + 1; j < _numDFCActiveAgents; j++)
 			{
 				if(_agentsWM_DFC[i].GetActive() && _agentsWM_DFC[j].GetActive())
 				{
-					_agentsWM_DFC[i].FixOverlap(&(_agentsWM_DFC[j]));
+					_agentsWM_DFC[i].FixOverlap(&(_agentsWM_DFC[j]),1.0f);
 				}
 			}
 		}
-
+		// Second FIX
+		for(i = _numDFCActiveAgents-1; i > -1; i--)
+		{
+			for(j = 0; j < i; j++)
+			{
+				if(_agentsWM_DFC[i].GetActive() && _agentsWM_DFC[j].GetActive())
+				{
+					_agentsWM_DFC[i].FixOverlap(&(_agentsWM_DFC[j]),0.0f);
+				}
+			}
+		}
 	}
 };
 
