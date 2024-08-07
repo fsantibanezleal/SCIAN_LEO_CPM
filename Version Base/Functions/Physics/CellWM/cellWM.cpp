@@ -211,7 +211,7 @@ void	CellWM::UpdatePos(void) {
 };
 
 
-void	CellWM::FixOverlap(CellWM *vValue) {
+void	CellWM::FixOverlap(CellWM *vValue, float vFactor) {
 	register int idxPi, idxPj, idxPk;
 	float t, u, radJ,radK;
 	bool fInter = false;
@@ -219,15 +219,13 @@ void	CellWM::FixOverlap(CellWM *vValue) {
 
 	point_2D centerI(_pos);
 	point_2D centerJ((vValue)->_pos);
-	point_3D vTriangulo[3];
 
 	point_2D pI,pJ,pK,pZ;
 	point_2D newNI,newNJ,newNK,newNZ;
 	for(idxPi = 0;idxPi < _nCont; idxPi++) {
-		pI = point_2D(_polyMembrane[idxPi]);
+		pI	  = point_2D(_polyMembrane[idxPi]);
 		newNI = point_2D(pI.x - centerI.x, pI.y - centerI.y);
 
-		vTriangulo[0] = point_3D((vValue)->GetPos());
 		for(idxPj = 0;idxPj < _nCont; idxPj++) {
 			if(idxPj == _nCont - 1){
 				idxPk = 0;
@@ -238,53 +236,15 @@ void	CellWM::FixOverlap(CellWM *vValue) {
 
 	        pJ = point_2D((vValue)->_polyMembrane[idxPj]);
 			pK = point_2D((vValue)->_polyMembrane[idxPk]);
-			//fInter = isSegmentsIntersected(centerI, pI, centerJ, pJ ,&t ,&u);
+
 			fInter = isSegmentsIntersected(centerI, pI, pJ, pK ,&t ,&u);
 
 			if(fInter) {
-				//point_2D newNI(pI.x - centerI.x, pI.y - centerI.y);
-				//point_2D newNJ(pJ.x - centerJ.x, pJ.y - centerJ.y);
-
-				//_polyMembrane[idxPi]		   = point_2D(centerI.x + t*newNI.x, centerI.y + t*newNI.y);
-				//(vValue)->_polyMembrane[idxPj] = point_2D(centerJ.x + u*newNJ.x, centerJ.y + u*newNJ.y);
-
-
-				//t     =  t + ((1.0f - t)/2.0f);
+				//t = t + (1-t)*0.5f= (2t+(1-t) )/2= (1+t)/2	    // for half intersection  == vFactor = 1
+			    //t = t				                        	// for full separation ==> vFactor = 0
+				t = t + vFactor * (1-t)*0.5f;  
 				_polyMembrane[idxPi].SetPoint(centerI.x + t*newNI.x, centerI.y + t*newNI.y);
-
-
-				newNJ = point_2D(pJ.x - centerJ.x, pJ.y - centerJ.y);
-				radJ  = newNJ.x * newNJ.x + newNJ.y * newNJ.y;
-				newNK = point_2D(pK.x - centerJ.x, pK.y - centerJ.y);
-				radK  = newNK.x * newNK.x + newNK.y * newNK.y;
-
-				if(radK >= radJ){
-					newNZ = point_2D(_polyMembrane[idxPi].x - pJ.x, _polyMembrane[idxPi].y - pJ.y);
-					pZ    = point_2D(pJ.x + 100.0f*newNZ.x,pJ.y + 100.0f*newNZ.y);
-					fInter = isSegmentsIntersected(centerJ, pK, pJ, pZ ,&t ,&u);
-
-					if(fInter){
-						//(vValue)->_polyMembrane[idxPk] = point_2D(centerJ.x + t*newNK.x, centerJ.y + t*newNK.y);
-					}
-				}
-				else{
-				//	newNZ = point_2D(_polyMembrane[idxPi].x - pK.x, _polyMembrane[idxPi].y - pK.y);
-				//	pZ    = point_2D(pK.x + 100.0f*newNZ.x,pK.y + 100.0f*newNZ.y);
-				//	fInter = isSegmentsIntersected(centerJ, pJ, pK, pZ ,&t ,&u);
-					if(fInter){
-				//	(vValue)->_polyMembrane[idxPj] = point_2D(centerJ.x + t*newNJ.x, centerJ.y + t*newNJ.y);
-					}
-				}
 			}
-
-			//vTriangulo[1] = point_3D(pJ);
-			//vTriangulo[2] = point_3D(pK);
-			
-
-			//if(IsPointInTriangleS(point_3D(0.0f,0.0f,1.0f),point_3D(pI),&vTriangulo[0])){
-			
-			
-			//}
 		}
 	}
 
@@ -293,11 +253,13 @@ void	CellWM::FixOverlap(CellWM *vValue) {
 };
 
 
-void	CellWM::SimulationStep(void) {
-	UdpdateAngle();
-	UpdateShape();
-
+void	CellWM::SimulationStepPre(void) {
 	EstimateV();
 	UpdatePos();
-
 };
+
+void	CellWM::SimulationStepPost(void) {
+	UdpdateAngle();
+	UpdateShape();
+};
+
