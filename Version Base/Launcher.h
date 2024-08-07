@@ -130,7 +130,7 @@ namespace AplicacionCD2Cells {
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedToolWindow;
 			this->Name = L"Launcher";
 			this->ShowInTaskbar = false;
-			this->Text = L"Cell Migration & Collision Detection v 0.1.4 >>----> Initial Setting";
+			this->Text = L"Cell Migration & Collision Detection v 0.1.6 >>----> Initial Setting";
 			this->Load += gcnew System::EventHandler(this, &Launcher::Launcher_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBoxIni1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->pictureBoxIni2))->EndInit();
