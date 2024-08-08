@@ -28,6 +28,8 @@ public:
 
 	float       _radius;
 
+	double      _itTime;
+
 	CellWM		*_agentsWM_DFC;
 public:
 	AgentsSystem();
@@ -37,6 +39,9 @@ public:
 	void	Initiate(EnvironmentSystem* vEnvironmentSystem); // setter
 	void	UpdateState(EnvironmentSystem* vEnvironmentSystem);
 	void	AddOffspring(EnvironmentSystem* vEnvironmentSystem);
+
+	void	SaveCurrentState(EnvironmentSystem* vEnvironmentSystem);
+
 };
 
 #endif

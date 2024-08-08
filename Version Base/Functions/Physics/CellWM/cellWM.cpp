@@ -10,7 +10,7 @@ CellWM::CellWM()
 	_nCont			= 100;
 	_paramNumFilo   = 4;
 
-	_radR0 			= 25;
+	_radR0 			= 15;
 	for(register int i = 0; i <_paramNumFilo; i++)
 	{
 		_angleThetha0[i]	= 0;
@@ -43,7 +43,7 @@ void	CellWM::InitCell(void){
 	_pos			= point_2D(0.0,0.0);
 	_vel			= point_2D(0.0,0.0);
 
-	_radR0 			= 25;
+	_radR0 			= 15;
 	for(register int i = 0; i <_paramNumFilo; i++)
 	{
 		_angleThetha0[i]	= 0;

@@ -4,9 +4,9 @@ EnvironmentSystem::EnvironmentSystem()
 {
 	_dimWS		= point_3D(400,350,0);
 
-	_dimDFCs	= point_3D(250,100,0);
+	_dimDFCs	= point_3D(250,70,0);
 
-	_gapMargin			  = 20;
+	_gapMargin			  = 10;
 
 	_velMarginEVL		  = 1.5;
 	_numItbyMin           = 10;
