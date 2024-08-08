@@ -122,7 +122,7 @@ System::Void MainWindow::nUD_InitialDFCsGap_ValueChanged(System::Object^  sender
 	// = (float) nUD_InitialDFCsGap->Value;
 };
 System::Void MainWindow::nUD_InitialNumDFCs_ValueChanged(System::Object^  sender, System::EventArgs^  e){
-	_theMatrixAgents_Static->_numDFCActiveAgents = (int) nUD_InitialNumDFCs->Value;
+	_theMatrixAgents_Static->_numDFCAgents = (int) nUD_InitialNumDFCs->Value;
 };
 
 //////////////////////// DFCs Individual

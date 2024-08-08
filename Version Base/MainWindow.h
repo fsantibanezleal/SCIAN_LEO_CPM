@@ -61,6 +61,7 @@ namespace AplicacionCD2Cells {
 
 	private: System::Windows::Forms::Label^  nUD_WS_SpeedEVL;
 	private: System::Windows::Forms::NumericUpDown^  nUD_WS_MigEVL;
+	private: System::Windows::Forms::TabPage^  tpOptions3;
 	private: System::Windows::Forms::Label^  label6;
 
 	public:
@@ -160,6 +161,7 @@ namespace AplicacionCD2Cells {
 			this->tpOptions2 = (gcnew System::Windows::Forms::TabPage());
 			this->bwControl = (gcnew System::ComponentModel::BackgroundWorker());
 			this->bwDraw = (gcnew System::ComponentModel::BackgroundWorker());
+			this->tpOptions3 = (gcnew System::Windows::Forms::TabPage());
 			this->menuMain->SuspendLayout();
 			this->tlpMain->SuspendLayout();
 			this->tcGraphics->SuspendLayout();
@@ -187,14 +189,15 @@ namespace AplicacionCD2Cells {
 			this->menuMain->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) {this->fileToolStripMenuItem});
 			this->menuMain->Location = System::Drawing::Point(0, 0);
 			this->menuMain->Name = L"menuMain";
-			this->menuMain->Size = System::Drawing::Size(1358, 24);
+			this->menuMain->Padding = System::Windows::Forms::Padding(8, 2, 0, 2);
+			this->menuMain->Size = System::Drawing::Size(1811, 28);
 			this->menuMain->TabIndex = 0;
 			this->menuMain->Text = L"Main Menu";
 			// 
 			// fileToolStripMenuItem
 			// 
 			this->fileToolStripMenuItem->Name = L"fileToolStripMenuItem";
-			this->fileToolStripMenuItem->Size = System::Drawing::Size(37, 20);
+			this->fileToolStripMenuItem->Size = System::Drawing::Size(44, 24);
 			this->fileToolStripMenuItem->Text = L"File";
 			// 
 			// tlpMain
@@ -202,13 +205,15 @@ namespace AplicacionCD2Cells {
 			this->tlpMain->ColumnCount = 2;
 			this->tlpMain->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 20)));
 			this->tlpMain->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 80)));
+			this->tlpMain->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 20)));
 			this->tlpMain->Controls->Add(this->tcGraphics, 1, 0);
 			this->tlpMain->Controls->Add(this->tcOptions, 0, 0);
-			this->tlpMain->Location = System::Drawing::Point(12, 27);
+			this->tlpMain->Location = System::Drawing::Point(16, 33);
+			this->tlpMain->Margin = System::Windows::Forms::Padding(4);
 			this->tlpMain->Name = L"tlpMain";
 			this->tlpMain->RowCount = 1;
 			this->tlpMain->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
-			this->tlpMain->Size = System::Drawing::Size(1640, 960);
+			this->tlpMain->Size = System::Drawing::Size(2187, 1182);
 			this->tlpMain->TabIndex = 1;
 			// 
 			// tcGraphics
@@ -218,19 +223,21 @@ namespace AplicacionCD2Cells {
 				| System::Windows::Forms::AnchorStyles::Right));
 			this->tcGraphics->Controls->Add(this->tpGraphs1);
 			this->tcGraphics->Controls->Add(this->tpGraphs2);
-			this->tcGraphics->Location = System::Drawing::Point(331, 3);
+			this->tcGraphics->Location = System::Drawing::Point(441, 4);
+			this->tcGraphics->Margin = System::Windows::Forms::Padding(4);
 			this->tcGraphics->Name = L"tcGraphics";
 			this->tcGraphics->SelectedIndex = 0;
-			this->tcGraphics->Size = System::Drawing::Size(1306, 954);
+			this->tcGraphics->Size = System::Drawing::Size(1742, 1174);
 			this->tcGraphics->TabIndex = 0;
 			// 
 			// tpGraphs1
 			// 
 			this->tpGraphs1->Controls->Add(this->panelSingleMode);
-			this->tpGraphs1->Location = System::Drawing::Point(4, 22);
+			this->tpGraphs1->Location = System::Drawing::Point(4, 25);
+			this->tpGraphs1->Margin = System::Windows::Forms::Padding(4);
 			this->tpGraphs1->Name = L"tpGraphs1";
-			this->tpGraphs1->Padding = System::Windows::Forms::Padding(3);
-			this->tpGraphs1->Size = System::Drawing::Size(1298, 928);
+			this->tpGraphs1->Padding = System::Windows::Forms::Padding(4);
+			this->tpGraphs1->Size = System::Drawing::Size(1734, 1145);
 			this->tpGraphs1->TabIndex = 0;
 			this->tpGraphs1->Text = L"Single Mode";
 			this->tpGraphs1->UseVisualStyleBackColor = true;
@@ -238,17 +245,19 @@ namespace AplicacionCD2Cells {
 			// panelSingleMode
 			// 
 			this->panelSingleMode->BackColor = System::Drawing::Color::Silver;
-			this->panelSingleMode->Location = System::Drawing::Point(175, 0);
+			this->panelSingleMode->Location = System::Drawing::Point(233, 0);
+			this->panelSingleMode->Margin = System::Windows::Forms::Padding(4);
 			this->panelSingleMode->Name = L"panelSingleMode";
-			this->panelSingleMode->Size = System::Drawing::Size(650, 650);
+			this->panelSingleMode->Size = System::Drawing::Size(867, 800);
 			this->panelSingleMode->TabIndex = 0;
 			// 
 			// tpGraphs2
 			// 
-			this->tpGraphs2->Location = System::Drawing::Point(4, 22);
+			this->tpGraphs2->Location = System::Drawing::Point(4, 25);
+			this->tpGraphs2->Margin = System::Windows::Forms::Padding(4);
 			this->tpGraphs2->Name = L"tpGraphs2";
-			this->tpGraphs2->Padding = System::Windows::Forms::Padding(3);
-			this->tpGraphs2->Size = System::Drawing::Size(1298, 928);
+			this->tpGraphs2->Padding = System::Windows::Forms::Padding(4);
+			this->tpGraphs2->Size = System::Drawing::Size(1734, 1145);
 			this->tpGraphs2->TabIndex = 1;
 			this->tpGraphs2->Text = L"Dual Mode";
 			this->tpGraphs2->UseVisualStyleBackColor = true;
@@ -257,11 +266,13 @@ namespace AplicacionCD2Cells {
 			// 
 			this->tcOptions->Controls->Add(this->tpOptions1);
 			this->tcOptions->Controls->Add(this->tpOptions2);
+			this->tcOptions->Controls->Add(this->tpOptions3);
 			this->tcOptions->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->tcOptions->Location = System::Drawing::Point(3, 3);
+			this->tcOptions->Location = System::Drawing::Point(4, 4);
+			this->tcOptions->Margin = System::Windows::Forms::Padding(4);
 			this->tcOptions->Name = L"tcOptions";
 			this->tcOptions->SelectedIndex = 0;
-			this->tcOptions->Size = System::Drawing::Size(322, 954);
+			this->tcOptions->Size = System::Drawing::Size(429, 1174);
 			this->tcOptions->TabIndex = 1;
 			// 
 			// tpOptions1
@@ -272,10 +283,11 @@ namespace AplicacionCD2Cells {
 			this->tpOptions1->Controls->Add(this->bUpdateSettings);
 			this->tpOptions1->Controls->Add(this->bStopSim);
 			this->tpOptions1->Controls->Add(this->bSartSim);
-			this->tpOptions1->Location = System::Drawing::Point(4, 22);
+			this->tpOptions1->Location = System::Drawing::Point(4, 25);
+			this->tpOptions1->Margin = System::Windows::Forms::Padding(4);
 			this->tpOptions1->Name = L"tpOptions1";
-			this->tpOptions1->Padding = System::Windows::Forms::Padding(3);
-			this->tpOptions1->Size = System::Drawing::Size(314, 928);
+			this->tpOptions1->Padding = System::Windows::Forms::Padding(4);
+			this->tpOptions1->Size = System::Drawing::Size(421, 1145);
 			this->tpOptions1->TabIndex = 0;
 			this->tpOptions1->Text = L"Options";
 			this->tpOptions1->UseVisualStyleBackColor = true;
@@ -292,19 +304,22 @@ namespace AplicacionCD2Cells {
 			this->gbSettingsDFC_Group->Controls->Add(this->nUD_MarginGap);
 			this->gbSettingsDFC_Group->Controls->Add(this->label1);
 			this->gbSettingsDFC_Group->Controls->Add(this->labelInitialMargindDist);
-			this->gbSettingsDFC_Group->Location = System::Drawing::Point(7, 282);
+			this->gbSettingsDFC_Group->Location = System::Drawing::Point(9, 347);
+			this->gbSettingsDFC_Group->Margin = System::Windows::Forms::Padding(4);
 			this->gbSettingsDFC_Group->Name = L"gbSettingsDFC_Group";
-			this->gbSettingsDFC_Group->Size = System::Drawing::Size(301, 179);
+			this->gbSettingsDFC_Group->Padding = System::Windows::Forms::Padding(4);
+			this->gbSettingsDFC_Group->Size = System::Drawing::Size(401, 220);
 			this->gbSettingsDFC_Group->TabIndex = 7;
 			this->gbSettingsDFC_Group->TabStop = false;
 			this->gbSettingsDFC_Group->Text = L"Settings DFC Group";
 			// 
 			// nUD_InitialNumDFCs
 			// 
-			this->nUD_InitialNumDFCs->Location = System::Drawing::Point(163, 146);
+			this->nUD_InitialNumDFCs->Location = System::Drawing::Point(217, 180);
+			this->nUD_InitialNumDFCs->Margin = System::Windows::Forms::Padding(4);
 			this->nUD_InitialNumDFCs->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 0});
 			this->nUD_InitialNumDFCs->Name = L"nUD_InitialNumDFCs";
-			this->nUD_InitialNumDFCs->Size = System::Drawing::Size(108, 20);
+			this->nUD_InitialNumDFCs->Size = System::Drawing::Size(144, 22);
 			this->nUD_InitialNumDFCs->TabIndex = 13;
 			this->nUD_InitialNumDFCs->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {25, 0, 0, 0});
 			this->nUD_InitialNumDFCs->ValueChanged += gcnew System::EventHandler(this, &MainWindow::nUD_InitialNumDFCs_ValueChanged);
@@ -312,62 +327,68 @@ namespace AplicacionCD2Cells {
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(18, 146);
+			this->label4->Location = System::Drawing::Point(24, 180);
+			this->label4->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(58, 13);
+			this->label4->Size = System::Drawing::Size(75, 17);
 			this->label4->TabIndex = 14;
 			this->label4->Text = L"Num DFCs";
 			// 
 			// nUD_InitialDFCsGap
 			// 
 			this->nUD_InitialDFCsGap->DecimalPlaces = 1;
-			this->nUD_InitialDFCsGap->Location = System::Drawing::Point(163, 111);
+			this->nUD_InitialDFCsGap->Location = System::Drawing::Point(217, 137);
+			this->nUD_InitialDFCsGap->Margin = System::Windows::Forms::Padding(4);
 			this->nUD_InitialDFCsGap->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1000, 0, 0, 0});
 			this->nUD_InitialDFCsGap->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 65536});
 			this->nUD_InitialDFCsGap->Name = L"nUD_InitialDFCsGap";
-			this->nUD_InitialDFCsGap->Size = System::Drawing::Size(108, 20);
+			this->nUD_InitialDFCsGap->Size = System::Drawing::Size(144, 22);
 			this->nUD_InitialDFCsGap->TabIndex = 11;
-			this->nUD_InitialDFCsGap->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {40, 0, 0, 0});
+			this->nUD_InitialDFCsGap->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {20, 0, 0, 0});
 			this->nUD_InitialDFCsGap->ValueChanged += gcnew System::EventHandler(this, &MainWindow::nUD_InitialDFCsGap_ValueChanged);
 			// 
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(18, 111);
+			this->label3->Location = System::Drawing::Point(24, 137);
+			this->label3->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(119, 13);
+			this->label3->Size = System::Drawing::Size(157, 17);
 			this->label3->TabIndex = 12;
 			this->label3->Text = L"Max DFC-DFC gap (um)";
 			// 
 			// nUD_InitialDFCsH
 			// 
 			this->nUD_InitialDFCsH->DecimalPlaces = 1;
-			this->nUD_InitialDFCsH->Location = System::Drawing::Point(163, 85);
+			this->nUD_InitialDFCsH->Location = System::Drawing::Point(217, 105);
+			this->nUD_InitialDFCsH->Margin = System::Windows::Forms::Padding(4);
 			this->nUD_InitialDFCsH->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1000, 0, 0, 0});
 			this->nUD_InitialDFCsH->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 65536});
 			this->nUD_InitialDFCsH->Name = L"nUD_InitialDFCsH";
-			this->nUD_InitialDFCsH->Size = System::Drawing::Size(108, 20);
+			this->nUD_InitialDFCsH->Size = System::Drawing::Size(144, 22);
 			this->nUD_InitialDFCsH->TabIndex = 9;
-			this->nUD_InitialDFCsH->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {100, 0, 0, 0});
+			this->nUD_InitialDFCsH->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {70, 0, 0, 0});
 			this->nUD_InitialDFCsH->ValueChanged += gcnew System::EventHandler(this, &MainWindow::nUD_InitialDFCsH_ValueChanged);
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(18, 85);
+			this->label2->Location = System::Drawing::Point(24, 105);
+			this->label2->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(88, 13);
+			this->label2->Size = System::Drawing::Size(118, 17);
 			this->label2->TabIndex = 10;
 			this->label2->Text = L"Initial Height (um)";
 			// 
 			// nUD_InitialDFCsW
 			// 
 			this->nUD_InitialDFCsW->DecimalPlaces = 1;
-			this->nUD_InitialDFCsW->Location = System::Drawing::Point(163, 58);
+			this->nUD_InitialDFCsW->Location = System::Drawing::Point(217, 71);
+			this->nUD_InitialDFCsW->Margin = System::Windows::Forms::Padding(4);
 			this->nUD_InitialDFCsW->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1000, 0, 0, 0});
 			this->nUD_InitialDFCsW->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 65536});
 			this->nUD_InitialDFCsW->Name = L"nUD_InitialDFCsW";
-			this->nUD_InitialDFCsW->Size = System::Drawing::Size(108, 20);
+			this->nUD_InitialDFCsW->Size = System::Drawing::Size(144, 22);
 			this->nUD_InitialDFCsW->TabIndex = 7;
 			this->nUD_InitialDFCsW->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {250, 0, 0, 0});
 			this->nUD_InitialDFCsW->ValueChanged += gcnew System::EventHandler(this, &MainWindow::nUD_InitialDFCsW_ValueChanged);
@@ -375,30 +396,33 @@ namespace AplicacionCD2Cells {
 			// nUD_MarginGap
 			// 
 			this->nUD_MarginGap->DecimalPlaces = 1;
-			this->nUD_MarginGap->Location = System::Drawing::Point(163, 27);
+			this->nUD_MarginGap->Location = System::Drawing::Point(217, 33);
+			this->nUD_MarginGap->Margin = System::Windows::Forms::Padding(4);
 			this->nUD_MarginGap->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {200, 0, 0, 0});
 			this->nUD_MarginGap->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 65536});
 			this->nUD_MarginGap->Name = L"nUD_MarginGap";
-			this->nUD_MarginGap->Size = System::Drawing::Size(108, 20);
+			this->nUD_MarginGap->Size = System::Drawing::Size(144, 22);
 			this->nUD_MarginGap->TabIndex = 7;
-			this->nUD_MarginGap->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {20, 0, 0, 0});
+			this->nUD_MarginGap->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {10, 0, 0, 0});
 			this->nUD_MarginGap->ValueChanged += gcnew System::EventHandler(this, &MainWindow::nUD_MarginGap_ValueChanged);
 			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(18, 58);
+			this->label1->Location = System::Drawing::Point(24, 71);
+			this->label1->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(85, 13);
+			this->label1->Size = System::Drawing::Size(113, 17);
 			this->label1->TabIndex = 8;
 			this->label1->Text = L"Initial Width (um)";
 			// 
 			// labelInitialMargindDist
 			// 
 			this->labelInitialMargindDist->AutoSize = true;
-			this->labelInitialMargindDist->Location = System::Drawing::Point(18, 27);
+			this->labelInitialMargindDist->Location = System::Drawing::Point(24, 33);
+			this->labelInitialMargindDist->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->labelInitialMargindDist->Name = L"labelInitialMargindDist";
-			this->labelInitialMargindDist->Size = System::Drawing::Size(112, 13);
+			this->labelInitialMargindDist->Size = System::Drawing::Size(151, 17);
 			this->labelInitialMargindDist->TabIndex = 4;
 			this->labelInitialMargindDist->Text = L"Initial Margin Gap (um)";
 			// 
@@ -410,9 +434,11 @@ namespace AplicacionCD2Cells {
 			this->gbSettingsDFC_Individual->Controls->Add(this->cbStochasticMov);
 			this->gbSettingsDFC_Individual->Controls->Add(this->labelDFCR);
 			this->gbSettingsDFC_Individual->Controls->Add(this->nUD_DFCRadius);
-			this->gbSettingsDFC_Individual->Location = System::Drawing::Point(7, 467);
+			this->gbSettingsDFC_Individual->Location = System::Drawing::Point(9, 575);
+			this->gbSettingsDFC_Individual->Margin = System::Windows::Forms::Padding(4);
 			this->gbSettingsDFC_Individual->Name = L"gbSettingsDFC_Individual";
-			this->gbSettingsDFC_Individual->Size = System::Drawing::Size(301, 172);
+			this->gbSettingsDFC_Individual->Padding = System::Windows::Forms::Padding(4);
+			this->gbSettingsDFC_Individual->Size = System::Drawing::Size(401, 212);
 			this->gbSettingsDFC_Individual->TabIndex = 6;
 			this->gbSettingsDFC_Individual->TabStop = false;
 			this->gbSettingsDFC_Individual->Text = L"Settings DFC Individual";
@@ -420,30 +446,33 @@ namespace AplicacionCD2Cells {
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(18, 70);
+			this->label5->Location = System::Drawing::Point(24, 86);
+			this->label5->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(119, 13);
+			this->label5->Size = System::Drawing::Size(159, 17);
 			this->label5->TabIndex = 6;
 			this->label5->Text = L"Adhesion Distance (um)";
 			// 
 			// nUD_DFC_AdhesionDist
 			// 
 			this->nUD_DFC_AdhesionDist->DecimalPlaces = 1;
-			this->nUD_DFC_AdhesionDist->Location = System::Drawing::Point(163, 70);
+			this->nUD_DFC_AdhesionDist->Location = System::Drawing::Point(217, 86);
+			this->nUD_DFC_AdhesionDist->Margin = System::Windows::Forms::Padding(4);
 			this->nUD_DFC_AdhesionDist->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 65536});
 			this->nUD_DFC_AdhesionDist->Name = L"nUD_DFC_AdhesionDist";
-			this->nUD_DFC_AdhesionDist->Size = System::Drawing::Size(108, 20);
+			this->nUD_DFC_AdhesionDist->Size = System::Drawing::Size(144, 22);
 			this->nUD_DFC_AdhesionDist->TabIndex = 7;
-			this->nUD_DFC_AdhesionDist->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {20, 0, 0, 0});
+			this->nUD_DFC_AdhesionDist->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {10, 0, 0, 0});
 			this->nUD_DFC_AdhesionDist->ValueChanged += gcnew System::EventHandler(this, &MainWindow::nUD_DFC_AdhesionDist_ValueChanged);
 			// 
 			// cbProliferation
 			// 
 			this->cbProliferation->AutoSize = true;
 			this->cbProliferation->Enabled = false;
-			this->cbProliferation->Location = System::Drawing::Point(21, 117);
+			this->cbProliferation->Location = System::Drawing::Point(28, 144);
+			this->cbProliferation->Margin = System::Windows::Forms::Padding(4);
 			this->cbProliferation->Name = L"cbProliferation";
-			this->cbProliferation->Size = System::Drawing::Size(81, 17);
+			this->cbProliferation->Size = System::Drawing::Size(106, 21);
 			this->cbProliferation->TabIndex = 5;
 			this->cbProliferation->Text = L"Proliferation";
 			this->cbProliferation->UseVisualStyleBackColor = true;
@@ -451,9 +480,10 @@ namespace AplicacionCD2Cells {
 			// cbStochasticMov
 			// 
 			this->cbStochasticMov->AutoSize = true;
-			this->cbStochasticMov->Location = System::Drawing::Point(163, 117);
+			this->cbStochasticMov->Location = System::Drawing::Point(217, 144);
+			this->cbStochasticMov->Margin = System::Windows::Forms::Padding(4);
 			this->cbStochasticMov->Name = L"cbStochasticMov";
-			this->cbStochasticMov->Size = System::Drawing::Size(129, 17);
+			this->cbStochasticMov->Size = System::Drawing::Size(164, 21);
 			this->cbStochasticMov->TabIndex = 4;
 			this->cbStochasticMov->Text = L"Stochastic Movement";
 			this->cbStochasticMov->UseVisualStyleBackColor = true;
@@ -461,21 +491,23 @@ namespace AplicacionCD2Cells {
 			// labelDFCR
 			// 
 			this->labelDFCR->AutoSize = true;
-			this->labelDFCR->Location = System::Drawing::Point(18, 27);
+			this->labelDFCR->Location = System::Drawing::Point(24, 33);
+			this->labelDFCR->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->labelDFCR->Name = L"labelDFCR";
-			this->labelDFCR->Size = System::Drawing::Size(87, 13);
+			this->labelDFCR->Size = System::Drawing::Size(116, 17);
 			this->labelDFCR->TabIndex = 2;
 			this->labelDFCR->Text = L"DFC Radius (um)";
 			// 
 			// nUD_DFCRadius
 			// 
 			this->nUD_DFCRadius->DecimalPlaces = 1;
-			this->nUD_DFCRadius->Location = System::Drawing::Point(163, 27);
+			this->nUD_DFCRadius->Location = System::Drawing::Point(217, 33);
+			this->nUD_DFCRadius->Margin = System::Windows::Forms::Padding(4);
 			this->nUD_DFCRadius->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 65536});
 			this->nUD_DFCRadius->Name = L"nUD_DFCRadius";
-			this->nUD_DFCRadius->Size = System::Drawing::Size(108, 20);
+			this->nUD_DFCRadius->Size = System::Drawing::Size(144, 22);
 			this->nUD_DFCRadius->TabIndex = 3;
-			this->nUD_DFCRadius->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {20, 0, 0, 0});
+			this->nUD_DFCRadius->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {10, 0, 0, 0});
 			this->nUD_DFCRadius->ValueChanged += gcnew System::EventHandler(this, &MainWindow::nUD_DFCRadius_ValueChanged);
 			// 
 			// gbSettingsWS
@@ -488,9 +520,11 @@ namespace AplicacionCD2Cells {
 			this->gbSettingsWS->Controls->Add(this->labelWSH);
 			this->gbSettingsWS->Controls->Add(this->nUD_WS_W);
 			this->gbSettingsWS->Controls->Add(this->labelW);
-			this->gbSettingsWS->Location = System::Drawing::Point(7, 113);
+			this->gbSettingsWS->Location = System::Drawing::Point(9, 139);
+			this->gbSettingsWS->Margin = System::Windows::Forms::Padding(4);
 			this->gbSettingsWS->Name = L"gbSettingsWS";
-			this->gbSettingsWS->Size = System::Drawing::Size(301, 151);
+			this->gbSettingsWS->Padding = System::Windows::Forms::Padding(4);
+			this->gbSettingsWS->Size = System::Drawing::Size(401, 186);
 			this->gbSettingsWS->TabIndex = 5;
 			this->gbSettingsWS->TabStop = false;
 			this->gbSettingsWS->Text = L"Setting Work Space";
@@ -498,10 +532,11 @@ namespace AplicacionCD2Cells {
 			// nUD_SpeedEVL
 			// 
 			this->nUD_SpeedEVL->DecimalPlaces = 1;
-			this->nUD_SpeedEVL->Location = System::Drawing::Point(163, 123);
+			this->nUD_SpeedEVL->Location = System::Drawing::Point(217, 151);
+			this->nUD_SpeedEVL->Margin = System::Windows::Forms::Padding(4);
 			this->nUD_SpeedEVL->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 65536});
 			this->nUD_SpeedEVL->Name = L"nUD_SpeedEVL";
-			this->nUD_SpeedEVL->Size = System::Drawing::Size(108, 20);
+			this->nUD_SpeedEVL->Size = System::Drawing::Size(144, 22);
 			this->nUD_SpeedEVL->TabIndex = 9;
 			this->nUD_SpeedEVL->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {15, 0, 0, 65536});
 			this->nUD_SpeedEVL->ValueChanged += gcnew System::EventHandler(this, &MainWindow::nUD_SpeedEVL_ValueChanged);
@@ -509,20 +544,22 @@ namespace AplicacionCD2Cells {
 			// nUD_WS_SpeedEVL
 			// 
 			this->nUD_WS_SpeedEVL->AutoSize = true;
-			this->nUD_WS_SpeedEVL->Location = System::Drawing::Point(18, 123);
+			this->nUD_WS_SpeedEVL->Location = System::Drawing::Point(24, 151);
+			this->nUD_WS_SpeedEVL->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->nUD_WS_SpeedEVL->Name = L"nUD_WS_SpeedEVL";
-			this->nUD_WS_SpeedEVL->Size = System::Drawing::Size(140, 13);
+			this->nUD_WS_SpeedEVL->Size = System::Drawing::Size(185, 17);
 			this->nUD_WS_SpeedEVL->TabIndex = 10;
 			this->nUD_WS_SpeedEVL->Text = L"Speed EVL Margin (um/min)";
 			// 
 			// nUD_WS_MigEVL
 			// 
 			this->nUD_WS_MigEVL->DecimalPlaces = 1;
-			this->nUD_WS_MigEVL->Location = System::Drawing::Point(163, 96);
+			this->nUD_WS_MigEVL->Location = System::Drawing::Point(217, 118);
+			this->nUD_WS_MigEVL->Margin = System::Windows::Forms::Padding(4);
 			this->nUD_WS_MigEVL->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1000, 0, 0, 0});
 			this->nUD_WS_MigEVL->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 65536});
 			this->nUD_WS_MigEVL->Name = L"nUD_WS_MigEVL";
-			this->nUD_WS_MigEVL->Size = System::Drawing::Size(108, 20);
+			this->nUD_WS_MigEVL->Size = System::Drawing::Size(144, 22);
 			this->nUD_WS_MigEVL->TabIndex = 7;
 			this->nUD_WS_MigEVL->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {350, 0, 0, 0});
 			this->nUD_WS_MigEVL->ValueChanged += gcnew System::EventHandler(this, &MainWindow::nUD_WS_MigEVL_ValueChanged);
@@ -530,20 +567,22 @@ namespace AplicacionCD2Cells {
 			// label6
 			// 
 			this->label6->AutoSize = true;
-			this->label6->Location = System::Drawing::Point(18, 96);
+			this->label6->Location = System::Drawing::Point(24, 118);
+			this->label6->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(131, 13);
+			this->label6->Size = System::Drawing::Size(176, 17);
 			this->label6->TabIndex = 8;
 			this->label6->Text = L"Migration EVL Margin (um)";
 			// 
 			// nUD_WS_H
 			// 
 			this->nUD_WS_H->DecimalPlaces = 1;
-			this->nUD_WS_H->Location = System::Drawing::Point(163, 54);
+			this->nUD_WS_H->Location = System::Drawing::Point(217, 66);
+			this->nUD_WS_H->Margin = System::Windows::Forms::Padding(4);
 			this->nUD_WS_H->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1000, 0, 0, 0});
 			this->nUD_WS_H->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 65536});
 			this->nUD_WS_H->Name = L"nUD_WS_H";
-			this->nUD_WS_H->Size = System::Drawing::Size(108, 20);
+			this->nUD_WS_H->Size = System::Drawing::Size(144, 22);
 			this->nUD_WS_H->TabIndex = 5;
 			this->nUD_WS_H->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {400, 0, 0, 0});
 			this->nUD_WS_H->ValueChanged += gcnew System::EventHandler(this, &MainWindow::nUD_WS_H_ValueChanged);
@@ -551,20 +590,22 @@ namespace AplicacionCD2Cells {
 			// labelWSH
 			// 
 			this->labelWSH->AutoSize = true;
-			this->labelWSH->Location = System::Drawing::Point(18, 54);
+			this->labelWSH->Location = System::Drawing::Point(24, 66);
+			this->labelWSH->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->labelWSH->Name = L"labelWSH";
-			this->labelWSH->Size = System::Drawing::Size(61, 13);
+			this->labelWSH->Size = System::Drawing::Size(82, 17);
 			this->labelWSH->TabIndex = 6;
 			this->labelWSH->Text = L"Height (um)";
 			// 
 			// nUD_WS_W
 			// 
 			this->nUD_WS_W->DecimalPlaces = 1;
-			this->nUD_WS_W->Location = System::Drawing::Point(163, 27);
+			this->nUD_WS_W->Location = System::Drawing::Point(217, 33);
+			this->nUD_WS_W->Margin = System::Windows::Forms::Padding(4);
 			this->nUD_WS_W->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1000, 0, 0, 0});
 			this->nUD_WS_W->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {1, 0, 0, 65536});
 			this->nUD_WS_W->Name = L"nUD_WS_W";
-			this->nUD_WS_W->Size = System::Drawing::Size(108, 20);
+			this->nUD_WS_W->Size = System::Drawing::Size(144, 22);
 			this->nUD_WS_W->TabIndex = 4;
 			this->nUD_WS_W->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {400, 0, 0, 0});
 			this->nUD_WS_W->ValueChanged += gcnew System::EventHandler(this, &MainWindow::nUD_WS_W_ValueChanged);
@@ -572,17 +613,19 @@ namespace AplicacionCD2Cells {
 			// labelW
 			// 
 			this->labelW->AutoSize = true;
-			this->labelW->Location = System::Drawing::Point(18, 27);
+			this->labelW->Location = System::Drawing::Point(24, 33);
+			this->labelW->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->labelW->Name = L"labelW";
-			this->labelW->Size = System::Drawing::Size(58, 13);
+			this->labelW->Size = System::Drawing::Size(77, 17);
 			this->labelW->TabIndex = 4;
 			this->labelW->Text = L"Width (um)";
 			// 
 			// bUpdateSettings
 			// 
-			this->bUpdateSettings->Location = System::Drawing::Point(28, 71);
+			this->bUpdateSettings->Location = System::Drawing::Point(37, 87);
+			this->bUpdateSettings->Margin = System::Windows::Forms::Padding(4);
 			this->bUpdateSettings->Name = L"bUpdateSettings";
-			this->bUpdateSettings->Size = System::Drawing::Size(108, 23);
+			this->bUpdateSettings->Size = System::Drawing::Size(144, 28);
 			this->bUpdateSettings->TabIndex = 4;
 			this->bUpdateSettings->Text = L"Update Settings";
 			this->bUpdateSettings->UseVisualStyleBackColor = true;
@@ -590,9 +633,10 @@ namespace AplicacionCD2Cells {
 			// 
 			// bStopSim
 			// 
-			this->bStopSim->Location = System::Drawing::Point(170, 32);
+			this->bStopSim->Location = System::Drawing::Point(227, 39);
+			this->bStopSim->Margin = System::Windows::Forms::Padding(4);
 			this->bStopSim->Name = L"bStopSim";
-			this->bStopSim->Size = System::Drawing::Size(108, 23);
+			this->bStopSim->Size = System::Drawing::Size(144, 28);
 			this->bStopSim->TabIndex = 1;
 			this->bStopSim->Text = L"Stop Simulation";
 			this->bStopSim->UseVisualStyleBackColor = true;
@@ -600,9 +644,10 @@ namespace AplicacionCD2Cells {
 			// 
 			// bSartSim
 			// 
-			this->bSartSim->Location = System::Drawing::Point(28, 32);
+			this->bSartSim->Location = System::Drawing::Point(37, 39);
+			this->bSartSim->Margin = System::Windows::Forms::Padding(4);
 			this->bSartSim->Name = L"bSartSim";
-			this->bSartSim->Size = System::Drawing::Size(108, 23);
+			this->bSartSim->Size = System::Drawing::Size(144, 28);
 			this->bSartSim->TabIndex = 0;
 			this->bSartSim->Text = L"Start Simulation";
 			this->bSartSim->UseVisualStyleBackColor = true;
@@ -610,12 +655,13 @@ namespace AplicacionCD2Cells {
 			// 
 			// tpOptions2
 			// 
-			this->tpOptions2->Location = System::Drawing::Point(4, 22);
+			this->tpOptions2->Location = System::Drawing::Point(4, 25);
+			this->tpOptions2->Margin = System::Windows::Forms::Padding(4);
 			this->tpOptions2->Name = L"tpOptions2";
-			this->tpOptions2->Padding = System::Windows::Forms::Padding(3);
-			this->tpOptions2->Size = System::Drawing::Size(314, 928);
+			this->tpOptions2->Padding = System::Windows::Forms::Padding(4);
+			this->tpOptions2->Size = System::Drawing::Size(421, 1145);
 			this->tpOptions2->TabIndex = 1;
-			this->tpOptions2->Text = L"More";
+			this->tpOptions2->Text = L"Batch";
 			this->tpOptions2->UseVisualStyleBackColor = true;
 			// 
 			// bwControl
@@ -626,14 +672,25 @@ namespace AplicacionCD2Cells {
 			// 
 			this->bwDraw->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &MainWindow::bwDraw_DoWork);
 			// 
+			// tpOptions3
+			// 
+			this->tpOptions3->Location = System::Drawing::Point(4, 25);
+			this->tpOptions3->Name = L"tpOptions3";
+			this->tpOptions3->Padding = System::Windows::Forms::Padding(3);
+			this->tpOptions3->Size = System::Drawing::Size(421, 1145);
+			this->tpOptions3->TabIndex = 2;
+			this->tpOptions3->Text = L"More";
+			this->tpOptions3->UseVisualStyleBackColor = true;
+			// 
 			// MainWindow
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
+			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1358, 703);
+			this->ClientSize = System::Drawing::Size(1811, 865);
 			this->Controls->Add(this->tlpMain);
 			this->Controls->Add(this->menuMain);
 			this->MainMenuStrip = this->menuMain;
+			this->Margin = System::Windows::Forms::Padding(4);
 			this->MaximizeBox = false;
 			this->Name = L"MainWindow";
 			this->Text = L"MainWindow";
