@@ -1,13 +1,16 @@
 #include "AgentsSystem.h"
 #include <math.h>
+#include <stdio.h>
+
 
 AgentsSystem::AgentsSystem()
 {
+	_itTime             = 0;
 	_numDFCActiveAgents = 0;
 	_bRunning     = false;
 	srand((unsigned)time(NULL));
 
-	_radius			= 20;
+	_radius			= 10;
 	_numDFCAgents   = 25;
 };
 AgentsSystem::~AgentsSystem()
@@ -21,6 +24,8 @@ void	AgentsSystem::Initiate(void)
 void	AgentsSystem::Initiate(EnvironmentSystem* vEnvironmentSystem)
 {
 	point_2D dummyP;
+	_itTime             = 0;
+
 	_numDFCActiveAgents	= 0;
 
 	_bRunning           = false;
@@ -44,7 +49,7 @@ void	AgentsSystem::Initiate(EnvironmentSystem* vEnvironmentSystem)
 	for(register int i = 0; i < _numDFCAgents; i++){
 		posDFC_Current.x = posDFC_Current.x + 2*_radius;
 		
-		if(posDFC_Current.x > posDFC_End.x)	{
+		if(posDFC_Current.x > posDFC_End.x - _radius)	{
 			posDFC_Current.x = posDFC_Init.x + _radius;
 			posDFC_Current.y = posDFC_Current.y + 2*_radius;
 			dummyP.x = posDFC_Current.x;
@@ -55,7 +60,7 @@ void	AgentsSystem::Initiate(EnvironmentSystem* vEnvironmentSystem)
 			dummyP.y = posDFC_Current.y;
 		}
 
-		if(posDFC_Current.y > posDFC_End.y){
+		if(posDFC_Current.y > posDFC_End.y  - _radius){
 			i = _numDFCAgents;
 		}
 		else{
@@ -98,13 +103,15 @@ void	AgentsSystem::Initiate(EnvironmentSystem* vEnvironmentSystem)
 			}
 		}
 	}
-} // To Set
 
+	vEnvironmentSystem->_posMarginEVL = posDFC_Current.y + _radius;
+} // To Set
 
 void	AgentsSystem::UpdateState(EnvironmentSystem* vEnvironmentSystem) {
 	register int i,j;
 	if(_bRunning)
 	{
+		SaveCurrentState(vEnvironmentSystem);
 		//if(vEnvironmentSystem->_useEVLInteraction)
 		//{
 		//	if(vEnvironmentSystem->_dataEVL_quantityKind == 1)
@@ -302,3 +309,24 @@ void	AgentsSystem::UpdateState(EnvironmentSystem* vEnvironmentSystem) {
 void	AgentsSystem::AddOffspring(EnvironmentSystem* vEnvironmentSystem) {
 
 };
+
+
+
+void	AgentsSystem::SaveCurrentState(EnvironmentSystem* vEnvironmentSystem){
+
+	FILE * pFile;
+	char buffer[] = { 'x' , 'y' , 'z' ,'\n'};
+	
+	pFile = fopen ("OutComes/Samples.dat", "wb");
+	//fwrite (buffer , sizeof(char), sizeof(buffer), pFile);
+	fprintf(pFile,"%d \n", _itTime);
+
+	fclose (pFile);	
+	
+	
+	
+	
+	_itTime++;
+
+};
+
