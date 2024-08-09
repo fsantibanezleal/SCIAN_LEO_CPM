@@ -68,7 +68,7 @@ void	CellWM::InitCell(point_2D vPos, float vRadio){
 	for(register int i = 0; i <_paramNumFilo; i++)
 	{
 		_angleThetha0[i]		= -(PI)* ( (float(rand())/float(RAND_MAX)) - 1.0f);
-		_paramA[i]				= 0.1f* vRadio * ( (float(rand())/float(RAND_MAX)));
+		_paramA[i]				= 0.3f* vRadio * ( (float(rand())/float(RAND_MAX)));
 		_paramW[i]				= 0.8f * ( (float(rand())/float(RAND_MAX)));
 		_paramGamma[i]			= 1.5f * ( (float(rand())/float(RAND_MAX)));
 		_paramSigma[i]			= 1.8f * ( (float(rand())/float(RAND_MAX)));

@@ -1,6 +1,8 @@
 #include "AgentsSystem.h"
 #include <math.h>
 #include <stdio.h>
+#include <direct.h>
+#include <windows.h>
 
 
 AgentsSystem::AgentsSystem()
@@ -78,7 +80,7 @@ void	AgentsSystem::Initiate(EnvironmentSystem* vEnvironmentSystem)
 	float minX = 10000.0f;
 	float maxX = -10000.0f;
 
-	for(register int i = 0; i < _numDFCActiveAgents; i++)
+	for(register int i = 0; i < _numDFCAgents; i++)
 	{
 		if(_agentsWM_DFC[i].GetActive() && (_agentsWM_DFC[i].GetPosY() == yMAX))
 		{
@@ -95,7 +97,7 @@ void	AgentsSystem::Initiate(EnvironmentSystem* vEnvironmentSystem)
 	if( fabs(maxX - minX) < (vEnvironmentSystem->_maxInitDFC.x - vEnvironmentSystem->_minInitDFC.x))
 	{
 		float register delta = ((vEnvironmentSystem->_maxInitDFC.x - vEnvironmentSystem->_minInitDFC.x) - fabs(maxX - minX))/ 2.0f;
-		for(register int i = 0; i < _numDFCActiveAgents; i++)
+		for(register int i = 0; i < _numDFCAgents; i++)
 		{
 			if(_agentsWM_DFC[i].GetActive() && (_agentsWM_DFC[i].GetPosY() == yMAX))
 			{
@@ -127,7 +129,7 @@ void	AgentsSystem::UpdateState(EnvironmentSystem* vEnvironmentSystem) {
 
 		//			int numAnterior = 0;
 		//			int numPosterior = 0;
-		//			for(register int i = 0; i < _numDFCActiveAgents; i++)
+		//			for(register int i = 0; i < _numDFCAgents; i++)
 		//			{
 		//				if(_agentsWM_DFC[i].GetActive())
 		//				{
@@ -266,7 +268,7 @@ void	AgentsSystem::UpdateState(EnvironmentSystem* vEnvironmentSystem) {
 		//}
 
 
-		for(i = 0; i < _numDFCActiveAgents; i++)
+		for(i = 0; i < _numDFCAgents; i++)
 		{
 			if(_agentsWM_DFC[i].GetActive())
 			{
@@ -282,9 +284,9 @@ void	AgentsSystem::UpdateState(EnvironmentSystem* vEnvironmentSystem) {
 
 		// Correct shape collision
 		// SemiFIX
-		for(i = 0; i < _numDFCActiveAgents; i++)
+		for(i = 0; i < _numDFCAgents; i++)
 		{
-			for(j = i + 1; j < _numDFCActiveAgents; j++)
+			for(j = i + 1; j < _numDFCAgents; j++)
 			{
 				if(_agentsWM_DFC[i].GetActive() && _agentsWM_DFC[j].GetActive())
 				{
@@ -293,7 +295,7 @@ void	AgentsSystem::UpdateState(EnvironmentSystem* vEnvironmentSystem) {
 			}
 		}
 		// Second FIX
-		for(i = _numDFCActiveAgents-1; i > -1; i--)
+		for(i = _numDFCAgents-1; i > -1; i--)
 		{
 			for(j = 0; j < i; j++)
 			{
@@ -315,11 +317,46 @@ void	AgentsSystem::AddOffspring(EnvironmentSystem* vEnvironmentSystem) {
 void	AgentsSystem::SaveCurrentState(EnvironmentSystem* vEnvironmentSystem){
 
 	FILE * pFile;
+
+    char  filename[256];
+	char* mainFolder = "OutComes";
+    char* subFolder  = "OutComes/SubFolder";
+    char* baseName   = "OutComes/SubFolder/Samples";
+	char  time[256]; 
+	char* extension  = ".dat";
+
+	point_2D* _Poly;
+	_mkdir(mainFolder);
+	_mkdir(subFolder);
+
+	strncpy(filename, baseName, sizeof(filename));
+	sprintf(time, "%d", _itTime);
+    strncat(filename, time, (sizeof(filename) - strlen(filename)) );
+	strncat(filename, extension, (sizeof(filename) - strlen(filename)) );
+
 	char buffer[] = { 'x' , 'y' , 'z' ,'\n'};
-	
-	pFile = fopen ("OutComes/Samples.dat", "wb");
+
+	pFile = fopen (filename, "wb");
 	//fwrite (buffer , sizeof(char), sizeof(buffer), pFile);
-	fprintf(pFile,"%d \n", _itTime);
+	fprintf(pFile,"%d ", _itTime);
+	fprintf(pFile,"%d \r\n",_numDFCActiveAgents);
+
+	for(int i = 0; i < _numDFCAgents; i++){
+		if(_agentsWM_DFC[i].GetActive()){
+			fprintf(pFile,"Cell %d %d %.5f %.5f \r\n", i,_agentsWM_DFC[i].GetNumNodesContour(),_agentsWM_DFC[i].GetPosX(),_agentsWM_DFC[i].GetPosY());
+				
+			_Poly = _agentsWM_DFC[i].GetPoly();
+			for(int idxN = 0;idxN < _agentsWM_DFC[i].GetNumNodesContour();idxN++){
+				fprintf(pFile,"    %.5f %.5f \r\n", _Poly[idxN].x, _Poly[idxN].y);
+
+					
+			}
+		}
+	}
+
+
+
+
 
 	fclose (pFile);	
 	
