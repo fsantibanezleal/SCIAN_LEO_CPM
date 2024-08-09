@@ -28,7 +28,7 @@ public:
 
 	float       _radius;
 
-	double      _itTime;
+	unsigned long long  _itTime;
 
 	CellWM		*_agentsWM_DFC;
 public:
