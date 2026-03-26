@@ -32,6 +32,7 @@ class SimControls {
             ['envWidth', 'valWidth'],
             ['envHeight', 'valHeight'],
             ['evlVelocity', 'valEVL'],
+            ['stiffnessStrength', 'valStiffness'],
             ['simSpeed', 'valSpeed'],
         ];
 
