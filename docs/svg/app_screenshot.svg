@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500" viewBox="0 0 900 500">
+  <defs>
+    <clipPath id="canvasClip">
+      <rect x="10" y="50" width="610" height="400"/>
+    </clipPath>
+  </defs>
+
+  <!-- Window chrome -->
+  <rect width="900" height="500" fill="#1e1e2e" rx="8"/>
+  <!-- Title bar -->
+  <rect width="900" height="36" fill="#181825" rx="8"/>
+  <rect y="20" width="900" height="16" fill="#181825"/>
+  <!-- Window buttons -->
+  <circle cx="20" cy="18" r="6" fill="#f38ba8"/>
+  <circle cx="40" cy="18" r="6" fill="#f9e2af"/>
+  <circle cx="60" cy="18" r="6" fill="#a6e3a1"/>
+  <!-- Title -->
+  <text x="450" y="23" text-anchor="middle" fill="#cdd6f4" font-family="monospace" font-size="12">CPM Simulator -- Cellular Potts Model -- Zebrafish Embryonic Cell Migration</text>
+
+  <!-- Header -->
+  <rect x="0" y="36" width="900" height="14" fill="#11111b"/>
+  <text x="12" y="47" fill="#89b4fa" font-family="Arial, sans-serif" font-size="10" font-weight="bold">CPM Simulator</text>
+  <text x="130" y="47" fill="#6c7086" font-family="Arial, sans-serif" font-size="9">Cellular Potts Model -- Zebrafish Embryonic Cell Migration</text>
+
+  <!-- Canvas area (dark background) -->
+  <rect x="10" y="54" width="610" height="400" fill="#0a0a1a" rx="4"/>
+
+  <!-- Grid lines (subtle) -->
+  <g stroke="rgba(255,255,255,0.03)" stroke-width="0.5" clip-path="url(#canvasClip)">
+    <line x1="110" y1="54" x2="110" y2="454"/>
+    <line x1="210" y1="54" x2="210" y2="454"/>
+    <line x1="310" y1="54" x2="310" y2="454"/>
+    <line x1="410" y1="54" x2="410" y2="454"/>
+    <line x1="510" y1="54" x2="510" y2="454"/>
+    <line x1="10" y1="134" x2="620" y2="134"/>
+    <line x1="10" y1="214" x2="620" y2="214"/>
+    <line x1="10" y1="294" x2="620" y2="294"/>
+    <line x1="10" y1="374" x2="620" y2="374"/>
+  </g>
+
+  <!-- DFC Region (blue transparent) -->
+  <rect x="25" y="190" width="380" height="110" fill="rgba(15,52,96,0.4)" stroke="rgba(15,52,96,0.6)" stroke-width="1" stroke-dasharray="3,3" clip-path="url(#canvasClip)"/>
+  <text x="32" y="203" fill="rgba(15,52,96,0.8)" font-family="monospace" font-size="9">DFC Region</text>
+
+  <!-- EVL boundary (red dashed line) -->
+  <line x1="15" y1="145" x2="615" y2="145" stroke="#e94560" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="20" y="140" fill="#e94560" font-family="monospace" font-size="10">EVL (stage 2)</text>
+
+  <!-- DEB boundary (green dashed line) -->
+  <line x1="15" y1="380" x2="615" y2="380" stroke="#4ecca3" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="20" y="395" fill="#4ecca3" font-family="monospace" font-size="10">DEB margin</text>
+
+  <!-- Cell 1 (hue 0 - red-ish) -->
+  <polygon points="80,210 88,198 100,195 110,200 112,212 108,222 98,225 86,220" fill="hsla(0,70%,60%,0.06)" stroke="hsla(0,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="96" cy="210" r="2" fill="#ffd700"/>
+
+  <!-- Cell 2 (hue 37) -->
+  <polygon points="140,205 150,192 162,190 170,196 172,208 166,218 155,220 142,215" fill="hsla(37,70%,60%,0.06)" stroke="hsla(37,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="156" cy="206" r="2" fill="#ffd700"/>
+
+  <!-- Cell 3 (hue 74) -->
+  <polygon points="200,218 206,204 215,198 228,200 232,210 230,222 220,228 208,226" fill="hsla(74,70%,60%,0.06)" stroke="hsla(74,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="216" cy="214" r="2" fill="#ffd700"/>
+
+  <!-- Cell 4 (hue 111) -->
+  <polygon points="260,200 270,188 282,186 292,192 294,204 288,215 276,218 264,210" fill="hsla(111,70%,60%,0.06)" stroke="hsla(111,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="278" cy="202" r="2" fill="#ffd700"/>
+
+  <!-- Cell 5 (hue 148) -->
+  <polygon points="318,208 326,194 340,190 350,198 352,210 346,222 334,226 320,218" fill="hsla(148,70%,60%,0.06)" stroke="hsla(148,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="336" cy="210" r="2" fill="#ffd700"/>
+
+  <!-- Cell 6 (hue 185) -->
+  <polygon points="375,215 382,202 394,198 404,204 406,216 400,226 390,230 378,224" fill="hsla(185,70%,60%,0.06)" stroke="hsla(185,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="390" cy="214" r="2" fill="#ffd700"/>
+
+  <!-- Row 2 of cells -->
+  <!-- Cell 7 (hue 222) -->
+  <polygon points="65,250 72,236 84,232 96,238 98,250 92,262 80,265 68,258" fill="hsla(222,70%,60%,0.06)" stroke="hsla(222,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="82" cy="250" r="2" fill="#ffd700"/>
+
+  <!-- Cell 8 (hue 259) -->
+  <polygon points="125,245 134,232 146,228 156,236 158,248 150,258 140,262 128,256" fill="hsla(259,70%,60%,0.06)" stroke="hsla(259,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="142" cy="246" r="2" fill="#ffd700"/>
+
+  <!-- Cell 9 (hue 296) -->
+  <polygon points="190,252 198,238 210,234 222,240 224,252 218,264 206,268 192,260" fill="hsla(296,70%,60%,0.06)" stroke="hsla(296,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="207" cy="252" r="2" fill="#ffd700"/>
+
+  <!-- Cell 10 (hue 333) -->
+  <polygon points="252,240 262,226 274,224 284,230 286,242 280,254 268,258 254,250" fill="hsla(333,70%,60%,0.06)" stroke="hsla(333,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="268" cy="242" r="2" fill="#ffd700"/>
+
+  <!-- Cell 11 (hue 10) -->
+  <polygon points="312,248 322,234 334,230 344,238 346,250 338,260 328,264 314,256" fill="hsla(10,70%,60%,0.06)" stroke="hsla(10,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="330" cy="248" r="2" fill="#ffd700"/>
+
+  <!-- Cell 12 (hue 47) -->
+  <polygon points="368,254 376,240 388,236 400,242 402,254 396,266 384,268 370,262" fill="hsla(47,70%,60%,0.06)" stroke="hsla(47,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="384" cy="254" r="2" fill="#ffd700"/>
+
+  <!-- Row 3 of cells -->
+  <!-- Cell 13 (hue 84) -->
+  <polygon points="85,285 94,272 106,268 116,276 118,288 110,298 100,302 88,295" fill="hsla(84,70%,60%,0.06)" stroke="hsla(84,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="102" cy="286" r="2" fill="#ffd700"/>
+
+  <!-- Cell 14 (hue 121) -->
+  <polygon points="148,278 158,264 170,262 180,268 182,280 176,292 164,296 150,288" fill="hsla(121,70%,60%,0.06)" stroke="hsla(121,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="164" cy="280" r="2" fill="#ffd700"/>
+
+  <!-- Cell 15 (hue 158) -->
+  <polygon points="215,290 222,276 234,272 246,278 248,290 240,302 230,306 218,298" fill="hsla(158,70%,60%,0.06)" stroke="hsla(158,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="232" cy="290" r="2" fill="#ffd700"/>
+
+  <!-- Cell 16 (hue 195) -->
+  <polygon points="275,282 284,268 296,264 308,270 310,282 304,294 292,298 278,292" fill="hsla(195,70%,60%,0.06)" stroke="hsla(195,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="292" cy="282" r="2" fill="#ffd700"/>
+
+  <!-- Cell 17 (hue 232) -->
+  <polygon points="340,288 348,274 360,270 372,276 374,288 368,300 356,304 342,296" fill="hsla(232,70%,60%,0.06)" stroke="hsla(232,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="356" cy="288" r="2" fill="#ffd700"/>
+
+  <!-- Cell 18 (hue 269) -->
+  <polygon points="398,280 406,266 418,262 430,268 432,280 426,292 414,296 400,288" fill="hsla(269,70%,60%,0.06)" stroke="hsla(269,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="416" cy="280" r="2" fill="#ffd700"/>
+
+  <!-- Row 4 of cells -->
+  <!-- Cell 19 (hue 306) -->
+  <polygon points="130,318 140,304 152,300 162,308 164,320 156,330 146,334 132,326" fill="hsla(306,70%,60%,0.06)" stroke="hsla(306,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="148" cy="318" r="2" fill="#ffd700"/>
+
+  <!-- Cell 20 (hue 343) -->
+  <polygon points="195,326 204,312 216,310 226,316 228,328 222,338 210,342 198,334" fill="hsla(343,70%,60%,0.06)" stroke="hsla(343,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="212" cy="326" r="2" fill="#ffd700"/>
+
+  <!-- Cell 21 (hue 20) -->
+  <polygon points="260,320 270,306 282,304 292,310 294,322 288,334 276,336 262,328" fill="hsla(20,70%,60%,0.06)" stroke="hsla(20,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="278" cy="320" r="2" fill="#ffd700"/>
+
+  <!-- Cell 22 (hue 57) -->
+  <polygon points="325,324 334,310 346,308 356,314 358,326 352,338 340,340 328,332" fill="hsla(57,70%,60%,0.06)" stroke="hsla(57,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="342" cy="324" r="2" fill="#ffd700"/>
+
+  <!-- Cell 23 (hue 94) -->
+  <polygon points="388,316 396,302 408,298 420,304 422,316 416,328 404,332 390,324" fill="hsla(94,70%,60%,0.06)" stroke="hsla(94,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="406" cy="316" r="2" fill="#ffd700"/>
+
+  <!-- Cell 24 (hue 131) -->
+  <polygon points="455,310 464,296 476,292 486,298 488,310 482,322 470,326 458,318" fill="hsla(131,70%,60%,0.06)" stroke="hsla(131,70%,60%,0.8)" stroke-width="1.5"/>
+  <circle cx="472" cy="310" r="2" fill="#ffd700"/>
+
+  <!-- Canvas info bar -->
+  <rect x="10" y="454" width="610" height="24" fill="#11111b" rx="0"/>
+  <text x="22" y="470" fill="#89b4fa" font-family="monospace" font-size="11">Step: 142</text>
+  <text x="130" y="470" fill="#a6e3a1" font-family="monospace" font-size="11">Cells: 24</text>
+  <text x="240" y="470" fill="#f9e2af" font-family="monospace" font-size="11">FPS: 18</text>
+
+  <!-- Controls panel (right side) -->
+  <rect x="630" y="54" width="260" height="424" fill="#181825" rx="4"/>
+
+  <!-- Simulation controls section -->
+  <text x="645" y="78" fill="#cdd6f4" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Simulation</text>
+  <rect x="645" y="86" width="55" height="22" rx="4" fill="#89b4fa"/>
+  <text x="672" y="101" text-anchor="middle" fill="#1e1e2e" font-family="Arial, sans-serif" font-size="10" font-weight="bold">Initialize</text>
+  <rect x="706" y="86" width="45" height="22" rx="4" fill="#a6e3a1"/>
+  <text x="728" y="101" text-anchor="middle" fill="#1e1e2e" font-family="Arial, sans-serif" font-size="10" font-weight="bold">Start</text>
+  <rect x="757" y="86" width="40" height="22" rx="4" fill="#f38ba8"/>
+  <text x="777" y="101" text-anchor="middle" fill="#1e1e2e" font-family="Arial, sans-serif" font-size="10" font-weight="bold">Stop</text>
+  <rect x="803" y="86" width="40" height="22" rx="4" fill="#6c7086"/>
+  <text x="823" y="101" text-anchor="middle" fill="#cdd6f4" font-family="Arial, sans-serif" font-size="10" font-weight="bold">Step</text>
+
+  <!-- Cell Parameters section -->
+  <text x="645" y="132" fill="#cdd6f4" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Cell Parameters</text>
+
+  <!-- Slider: Number of Cells -->
+  <text x="645" y="150" fill="#a6adc8" font-family="Arial, sans-serif" font-size="10">Number of Cells: 24</text>
+  <rect x="645" y="155" width="230" height="4" rx="2" fill="#313244"/>
+  <rect x="645" y="155" width="115" height="4" rx="2" fill="#89b4fa"/>
+  <circle cx="760" cy="157" r="5" fill="#89b4fa"/>
+
+  <!-- Slider: Cell Radius -->
+  <text x="645" y="178" fill="#a6adc8" font-family="Arial, sans-serif" font-size="10">Cell Radius: 10</text>
+  <rect x="645" y="183" width="230" height="4" rx="2" fill="#313244"/>
+  <rect x="645" y="183" width="75" height="4" rx="2" fill="#89b4fa"/>
+  <circle cx="720" cy="185" r="5" fill="#89b4fa"/>
+
+  <!-- Slider: Filopodia -->
+  <text x="645" y="206" fill="#a6adc8" font-family="Arial, sans-serif" font-size="10">Filopodia: 4</text>
+  <rect x="645" y="211" width="230" height="4" rx="2" fill="#313244"/>
+  <rect x="645" y="211" width="78" height="4" rx="2" fill="#89b4fa"/>
+  <circle cx="723" cy="213" r="5" fill="#89b4fa"/>
+
+  <!-- Slider: Contour Points -->
+  <text x="645" y="234" fill="#a6adc8" font-family="Arial, sans-serif" font-size="10">Contour Points: 100</text>
+  <rect x="645" y="239" width="230" height="4" rx="2" fill="#313244"/>
+  <rect x="645" y="239" width="105" height="4" rx="2" fill="#89b4fa"/>
+  <circle cx="750" cy="241" r="5" fill="#89b4fa"/>
+
+  <!-- Slider: Velocity Scale -->
+  <text x="645" y="262" fill="#a6adc8" font-family="Arial, sans-serif" font-size="10">Velocity Scale: 0.010</text>
+  <rect x="645" y="267" width="230" height="4" rx="2" fill="#313244"/>
+  <rect x="645" y="267" width="23" height="4" rx="2" fill="#89b4fa"/>
+  <circle cx="668" cy="269" r="5" fill="#89b4fa"/>
+
+  <!-- Environment section -->
+  <text x="645" y="298" fill="#cdd6f4" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Environment</text>
+
+  <text x="645" y="316" fill="#a6adc8" font-family="Arial, sans-serif" font-size="10">Width: 400    Height: 350</text>
+
+  <!-- Checkboxes -->
+  <rect x="645" y="326" width="12" height="12" rx="2" fill="#89b4fa"/>
+  <text x="645" y="337" fill="#1e1e2e" font-family="Arial, sans-serif" font-size="9" font-weight="bold" dx="2">v</text>
+  <text x="664" y="337" fill="#a6adc8" font-family="Arial, sans-serif" font-size="10">EVL Boundary</text>
+
+  <rect x="760" y="326" width="12" height="12" rx="2" fill="#89b4fa"/>
+  <text x="760" y="337" fill="#1e1e2e" font-family="Arial, sans-serif" font-size="9" font-weight="bold" dx="2">v</text>
+  <text x="778" y="337" fill="#a6adc8" font-family="Arial, sans-serif" font-size="10">DEB Boundary</text>
+
+  <rect x="645" y="346" width="12" height="12" rx="2" fill="#313244"/>
+  <text x="664" y="357" fill="#a6adc8" font-family="Arial, sans-serif" font-size="10">Proliferation</text>
+
+  <!-- Display section -->
+  <text x="645" y="382" fill="#cdd6f4" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Display</text>
+
+  <text x="645" y="400" fill="#a6adc8" font-family="Arial, sans-serif" font-size="10">Speed (ms/step): 50</text>
+  <rect x="645" y="405" width="230" height="4" rx="2" fill="#313244"/>
+  <rect x="645" y="405" width="22" height="4" rx="2" fill="#f9e2af"/>
+  <circle cx="667" cy="407" r="5" fill="#f9e2af"/>
+
+  <!-- Display checkboxes -->
+  <rect x="645" y="418" width="12" height="12" rx="2" fill="#89b4fa"/>
+  <text x="645" y="429" fill="#1e1e2e" font-family="Arial, sans-serif" font-size="9" font-weight="bold" dx="2">v</text>
+  <text x="664" y="429" fill="#a6adc8" font-family="Arial, sans-serif" font-size="10">Contours</text>
+
+  <rect x="730" y="418" width="12" height="12" rx="2" fill="#89b4fa"/>
+  <text x="730" y="429" fill="#1e1e2e" font-family="Arial, sans-serif" font-size="9" font-weight="bold" dx="2">v</text>
+  <text x="748" y="429" fill="#a6adc8" font-family="Arial, sans-serif" font-size="10">Centers</text>
+
+  <rect x="810" y="418" width="12" height="12" rx="2" fill="#89b4fa"/>
+  <text x="810" y="429" fill="#1e1e2e" font-family="Arial, sans-serif" font-size="9" font-weight="bold" dx="2">v</text>
+  <text x="828" y="429" fill="#a6adc8" font-family="Arial, sans-serif" font-size="10">Bounds</text>
+
+  <rect x="645" y="438" width="12" height="12" rx="2" fill="#313244"/>
+  <text x="664" y="449" fill="#a6adc8" font-family="Arial, sans-serif" font-size="10">Grid</text>
+
+  <!-- About section -->
+  <text x="645" y="470" fill="#585b70" font-family="Arial, sans-serif" font-size="9">SCIAN-Lab | University of Chile | API Docs</text>
+</svg>

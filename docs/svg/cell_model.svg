@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+  <defs>
+    <marker id="arrowTip" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#e94560"/>
+    </marker>
+    <marker id="arrowTipBlue" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#58a6ff"/>
+    </marker>
+    <marker id="arrowTipGold" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#ffd700"/>
+    </marker>
+    <radialGradient id="cellGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#1a3a4a;stop-opacity:0.6"/>
+      <stop offset="100%" style="stop-color:#0a1520;stop-opacity:0.3"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="600" fill="#f8f9fa" rx="4"/>
+
+  <!-- Title -->
+  <text x="300" y="32" text-anchor="middle" fill="#1a1a2e" font-family="Arial, sans-serif" font-size="17" font-weight="bold">Gaussian Filopodia Cell Model</text>
+  <text x="300" y="52" text-anchor="middle" fill="#555" font-family="Arial, sans-serif" font-size="12">R(theta) = max_j { R0 + A_j * exp( -(theta - theta0_j)^2 / (2 W_j^2) ) }</text>
+
+  <!-- Coordinate system center -->
+  <!-- Cell center at (280, 310) -->
+
+  <!-- Base radius circle (dashed) -->
+  <circle cx="280" cy="310" r="110" fill="url(#cellGrad)" stroke="#888" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <text x="280" y="445" text-anchor="middle" fill="#666" font-family="Arial, sans-serif" font-size="11">Base circle (R0)</text>
+
+  <!-- R0 radius label line -->
+  <line x1="280" y1="310" x2="390" y2="310" stroke="#888" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="340" y="303" text-anchor="middle" fill="#e94560" font-family="Arial, sans-serif" font-size="13" font-weight="bold">R0</text>
+
+  <!-- Cell center dot -->
+  <circle cx="280" cy="310" r="4" fill="#e94560"/>
+  <text x="268" y="330" text-anchor="end" fill="#e94560" font-family="Arial, sans-serif" font-size="11">center</text>
+
+  <!-- Filopodium 1 (top-right, angle ~40 deg) -->
+  <!-- Gaussian bump extending from base radius -->
+  <path d="M 364,228 C 370,215 385,195 400,185 C 415,195 420,215 416,228" fill="none" stroke="#4ecca3" stroke-width="2.5"/>
+  <!-- A label (amplitude) -->
+  <line x1="400" y1="228" x2="400" y2="185" stroke="#4ecca3" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="415" y="205" fill="#4ecca3" font-family="Arial, sans-serif" font-size="13" font-weight="bold">A</text>
+  <!-- W label (width) -->
+  <line x1="370" y1="220" x2="420" y2="220" stroke="#58a6ff" stroke-width="1" marker-start="url(#arrowTipBlue)" marker-end="url(#arrowTipBlue)"/>
+  <text x="395" y="237" fill="#58a6ff" font-family="Arial, sans-serif" font-size="12" font-weight="bold">W</text>
+
+  <!-- Filopodium 2 (upper-left, angle ~150 deg) -->
+  <path d="M 185,240 C 170,230 155,215 150,200 C 140,210 137,230 140,245" fill="none" stroke="#4ecca3" stroke-width="2.5"/>
+
+  <!-- Filopodium 3 (lower-left, angle ~210 deg) -->
+  <path d="M 175,380 C 160,390 140,400 130,410 C 140,420 160,418 172,408" fill="none" stroke="#4ecca3" stroke-width="2.5"/>
+
+  <!-- Filopodium 4 (lower-right, angle ~320 deg) -->
+  <path d="M 380,388 C 395,400 410,415 420,425 C 428,415 425,395 415,383" fill="none" stroke="#4ecca3" stroke-width="2.5"/>
+
+  <!-- Resulting envelope contour (the actual cell shape) -->
+  <path d="M 390,310 C 395,290 400,260 416,228 C 420,215 415,195 400,185 C 385,195 370,215 364,228 C 350,250 330,230 310,218 C 290,210 260,215 240,222 C 220,230 200,238 185,240 C 170,230 155,215 150,200 C 140,210 137,230 140,245 C 143,260 155,275 170,290 C 175,300 172,320 170,340 C 168,360 170,375 175,380 C 160,390 140,400 130,410 C 140,420 160,418 172,408 C 185,398 200,395 220,392 C 245,388 270,395 300,398 C 330,400 355,395 380,388 C 395,400 410,415 420,425 C 428,415 425,395 415,383 C 405,370 398,350 395,330 C 393,320 392,315 390,310 Z" fill="none" stroke="#4ecca3" stroke-width="2" stroke-opacity="0.5"/>
+
+  <!-- theta0 angle arc for filopodium 1 -->
+  <path d="M 320,310 A 40,40 0 0,0 306,278" fill="none" stroke="#f0883e" stroke-width="1.5"/>
+  <text x="330" y="283" fill="#f0883e" font-family="Arial, sans-serif" font-size="13" font-weight="bold">theta0</text>
+
+  <!-- Angle reference line (horizontal) -->
+  <line x1="280" y1="310" x2="330" y2="310" stroke="#f0883e" stroke-width="1" stroke-dasharray="2,2"/>
+  <!-- Angle line to filopodium 1 -->
+  <line x1="280" y1="310" x2="330" y2="275" stroke="#f0883e" stroke-width="1" stroke-dasharray="2,2"/>
+
+  <!-- Velocity arrow -->
+  <line x1="280" y1="310" x2="340" y2="250" stroke="#ffd700" stroke-width="2.5" marker-end="url(#arrowTipGold)"/>
+  <text x="345" y="265" fill="#ffd700" font-family="Arial, sans-serif" font-size="13" font-weight="bold">v</text>
+
+  <!-- Legend box -->
+  <rect x="20" y="475" width="560" height="110" rx="6" fill="#fff" stroke="#ddd" stroke-width="1"/>
+  <text x="300" y="498" text-anchor="middle" fill="#1a1a2e" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Parameters</text>
+
+  <circle cx="45" cy="520" r="5" fill="#e94560"/>
+  <text x="60" y="524" fill="#333" font-family="Arial, sans-serif" font-size="11">R0 -- Base radius of the cell body</text>
+
+  <circle cx="45" cy="542" r="5" fill="#4ecca3"/>
+  <text x="60" y="546" fill="#333" font-family="Arial, sans-serif" font-size="11">A -- Filopodium amplitude (protrusion height above R0)</text>
+
+  <circle cx="45" cy="564" r="5" fill="#58a6ff"/>
+  <text x="60" y="568" fill="#333" font-family="Arial, sans-serif" font-size="11">W -- Gaussian width (angular spread of the filopodium)</text>
+
+  <circle cx="350" cy="520" r="5" fill="#f0883e"/>
+  <text x="365" y="524" fill="#333" font-family="Arial, sans-serif" font-size="11">theta0 -- Angular position of filopodium center</text>
+
+  <circle cx="350" cy="542" r="5" fill="#ffd700"/>
+  <text x="365" y="546" fill="#333" font-family="Arial, sans-serif" font-size="11">v -- Velocity from shape asymmetry</text>
+
+  <line x1="350" y1="564" x2="370" y2="564" stroke="#888" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="380" y="568" fill="#333" font-family="Arial, sans-serif" font-size="11">Dashed circle -- Base radius boundary</text>
+</svg>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <defs>
+    <marker id="arrowRight" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#4ecca3"/>
+    </marker>
+    <marker id="arrowLeft" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="10 0, 0 3.5, 10 7" fill="#e94560"/>
+    </marker>
+    <marker id="arrowDown" markerWidth="7" markerHeight="10" refX="3.5" refY="10" orient="auto">
+      <polygon points="0 0, 3.5 10, 7 0" fill="#ffd700"/>
+    </marker>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117"/>
+      <stop offset="100%" style="stop-color:#161b22"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="url(#bgGrad)" rx="8"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" fill="#e6edf3" font-family="Arial, sans-serif" font-size="18" font-weight="bold">SCIAN LEO CPM -- System Architecture</text>
+
+  <!-- Backend Box -->
+  <rect x="30" y="60" width="340" height="400" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="2"/>
+  <text x="200" y="90" text-anchor="middle" fill="#4ecca3" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Python Backend</text>
+
+  <!-- FastAPI Box -->
+  <rect x="55" y="108" width="290" height="60" rx="6" fill="#161b22" stroke="#4ecca3" stroke-width="1.5"/>
+  <text x="200" y="133" text-anchor="middle" fill="#e6edf3" font-family="Arial, sans-serif" font-size="13" font-weight="bold">FastAPI + Uvicorn</text>
+  <text x="200" y="155" text-anchor="middle" fill="#8b949e" font-family="Arial, sans-serif" font-size="11">REST API + WebSocket Server</text>
+
+  <!-- Simulation Engine Box -->
+  <rect x="55" y="185" width="290" height="60" rx="6" fill="#161b22" stroke="#f0883e" stroke-width="1.5"/>
+  <text x="200" y="210" text-anchor="middle" fill="#e6edf3" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Simulation Engine</text>
+  <text x="200" y="232" text-anchor="middle" fill="#8b949e" font-family="Arial, sans-serif" font-size="11">NumPy + SciPy Numerics</text>
+
+  <!-- CellWM Box -->
+  <rect x="55" y="262" width="135" height="55" rx="6" fill="#161b22" stroke="#e94560" stroke-width="1.5"/>
+  <text x="122" y="285" text-anchor="middle" fill="#e6edf3" font-family="Arial, sans-serif" font-size="12" font-weight="bold">CellWM</text>
+  <text x="122" y="304" text-anchor="middle" fill="#8b949e" font-family="Arial, sans-serif" font-size="10">Deformable Cell</text>
+
+  <!-- AgentsSystem Box -->
+  <rect x="210" y="262" width="135" height="55" rx="6" fill="#161b22" stroke="#e94560" stroke-width="1.5"/>
+  <text x="277" y="285" text-anchor="middle" fill="#e6edf3" font-family="Arial, sans-serif" font-size="12" font-weight="bold">AgentsSystem</text>
+  <text x="277" y="304" text-anchor="middle" fill="#8b949e" font-family="Arial, sans-serif" font-size="10">Population Manager</text>
+
+  <!-- EnvironmentSystem Box -->
+  <rect x="55" y="334" width="135" height="55" rx="6" fill="#161b22" stroke="#e94560" stroke-width="1.5"/>
+  <text x="122" y="357" text-anchor="middle" fill="#e6edf3" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Environment</text>
+  <text x="122" y="376" text-anchor="middle" fill="#8b949e" font-family="Arial, sans-serif" font-size="10">EVL + DEB Bounds</text>
+
+  <!-- Config / Pydantic Box -->
+  <rect x="210" y="334" width="135" height="55" rx="6" fill="#161b22" stroke="#e94560" stroke-width="1.5"/>
+  <text x="277" y="357" text-anchor="middle" fill="#e6edf3" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Config</text>
+  <text x="277" y="376" text-anchor="middle" fill="#8b949e" font-family="Arial, sans-serif" font-size="10">Pydantic Validation</text>
+
+  <!-- Internal arrows (backend) -->
+  <line x1="200" y1="168" x2="200" y2="185" stroke="#ffd700" stroke-width="1.5" marker-end="url(#arrowDown)"/>
+  <line x1="122" y1="245" x2="122" y2="262" stroke="#ffd700" stroke-width="1" marker-end="url(#arrowDown)"/>
+  <line x1="277" y1="245" x2="277" y2="262" stroke="#ffd700" stroke-width="1" marker-end="url(#arrowDown)"/>
+
+  <!-- Frontend Box -->
+  <rect x="430" y="60" width="340" height="400" rx="10" fill="#0d1117" stroke="#30363d" stroke-width="2"/>
+  <text x="600" y="90" text-anchor="middle" fill="#e94560" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Browser Frontend</text>
+
+  <!-- HTML5 Canvas Box -->
+  <rect x="455" y="108" width="290" height="60" rx="6" fill="#161b22" stroke="#e94560" stroke-width="1.5"/>
+  <text x="600" y="133" text-anchor="middle" fill="#e6edf3" font-family="Arial, sans-serif" font-size="13" font-weight="bold">HTML5 Canvas 2D</text>
+  <text x="600" y="155" text-anchor="middle" fill="#8b949e" font-family="Arial, sans-serif" font-size="11">Real-Time Cell Rendering</text>
+
+  <!-- WebSocket Client Box -->
+  <rect x="455" y="185" width="290" height="60" rx="6" fill="#161b22" stroke="#f0883e" stroke-width="1.5"/>
+  <text x="600" y="210" text-anchor="middle" fill="#e6edf3" font-family="Arial, sans-serif" font-size="13" font-weight="bold">WebSocket Client</text>
+  <text x="600" y="232" text-anchor="middle" fill="#8b949e" font-family="Arial, sans-serif" font-size="11">Bidirectional State Streaming</text>
+
+  <!-- Controls Panel Box -->
+  <rect x="455" y="262" width="135" height="55" rx="6" fill="#161b22" stroke="#4ecca3" stroke-width="1.5"/>
+  <text x="522" y="285" text-anchor="middle" fill="#e6edf3" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Controls</text>
+  <text x="522" y="304" text-anchor="middle" fill="#8b949e" font-family="Arial, sans-serif" font-size="10">Sliders + Buttons</text>
+
+  <!-- Renderer Box -->
+  <rect x="610" y="262" width="135" height="55" rx="6" fill="#161b22" stroke="#4ecca3" stroke-width="1.5"/>
+  <text x="677" y="285" text-anchor="middle" fill="#e6edf3" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Renderer</text>
+  <text x="677" y="304" text-anchor="middle" fill="#8b949e" font-family="Arial, sans-serif" font-size="10">Canvas Draw Ops</text>
+
+  <!-- App Orchestrator Box -->
+  <rect x="455" y="334" width="290" height="55" rx="6" fill="#161b22" stroke="#4ecca3" stroke-width="1.5"/>
+  <text x="600" y="357" text-anchor="middle" fill="#e6edf3" font-family="Arial, sans-serif" font-size="12" font-weight="bold">App Orchestrator (app.js)</text>
+  <text x="600" y="376" text-anchor="middle" fill="#8b949e" font-family="Arial, sans-serif" font-size="10">Coordinates UI, WS, and Rendering</text>
+
+  <!-- Frontend internal arrows -->
+  <line x1="600" y1="168" x2="600" y2="185" stroke="#ffd700" stroke-width="1.5" marker-end="url(#arrowDown)"/>
+
+  <!-- Data flow arrows between Backend and Frontend -->
+  <!-- WebSocket: Server to Client (state data) -->
+  <line x1="370" y1="135" x2="445" y2="135" stroke="#4ecca3" stroke-width="2.5" marker-end="url(#arrowRight)" filter="url(#glow)"/>
+  <text x="408" y="125" text-anchor="middle" fill="#4ecca3" font-family="Arial, sans-serif" font-size="9">JSON State</text>
+
+  <!-- WebSocket: Client to Server (commands) -->
+  <line x1="445" y1="215" x2="370" y2="215" stroke="#e94560" stroke-width="2.5" marker-end="url(#arrowLeft)" filter="url(#glow)"/>
+  <text x="408" y="240" text-anchor="middle" fill="#e94560" font-family="Arial, sans-serif" font-size="9">Commands</text>
+
+  <!-- Protocol labels -->
+  <rect x="378" y="160" width="60" height="22" rx="4" fill="#21262d" stroke="#30363d" stroke-width="1"/>
+  <text x="408" y="175" text-anchor="middle" fill="#ffd700" font-family="monospace" font-size="10">WS</text>
+
+  <rect x="378" y="252" width="60" height="22" rx="4" fill="#21262d" stroke="#30363d" stroke-width="1"/>
+  <text x="408" y="267" text-anchor="middle" fill="#ffd700" font-family="monospace" font-size="10">HTTP</text>
+
+  <!-- HTTP arrows -->
+  <line x1="370" y1="290" x2="445" y2="290" stroke="#4ecca3" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowRight)"/>
+  <text x="408" y="305" text-anchor="middle" fill="#8b949e" font-family="Arial, sans-serif" font-size="9">REST API</text>
+
+  <!-- Legend -->
+  <rect x="30" y="468" width="740" height="24" rx="4" fill="#0d1117"/>
+  <circle cx="50" cy="480" r="5" fill="#4ecca3"/>
+  <text x="62" y="484" fill="#8b949e" font-family="Arial, sans-serif" font-size="10">Data Out</text>
+  <circle cx="140" cy="480" r="5" fill="#e94560"/>
+  <text x="152" y="484" fill="#8b949e" font-family="Arial, sans-serif" font-size="10">Commands In</text>
+  <circle cx="240" cy="480" r="5" fill="#ffd700"/>
+  <text x="252" y="484" fill="#8b949e" font-family="Arial, sans-serif" font-size="10">Internal Flow</text>
+  <circle cx="350" cy="480" r="5" fill="#f0883e"/>
+  <text x="362" y="484" fill="#8b949e" font-family="Arial, sans-serif" font-size="10">Communication Layer</text>
+</svg>

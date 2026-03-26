@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="500" viewBox="0 0 700 500">
+  <defs>
+    <marker id="bioArrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#e94560"/>
+    </marker>
+    <marker id="bioArrowGreen" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#4ecca3"/>
+    </marker>
+    <linearGradient id="yolkGrad" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffd700;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#f0883e;stop-opacity:0.25"/>
+    </linearGradient>
+    <radialGradient id="embryoGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#f0f4f8"/>
+      <stop offset="100%" style="stop-color:#dce6f0"/>
+    </radialGradient>
+    <clipPath id="embryoClip">
+      <ellipse cx="350" cy="265" rx="260" ry="200"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="700" height="500" fill="#f8f9fa" rx="4"/>
+
+  <!-- Title -->
+  <text x="350" y="30" text-anchor="middle" fill="#1a1a2e" font-family="Arial, sans-serif" font-size="17" font-weight="bold">Biological Context: Zebrafish Embryo Cross-Section</text>
+  <text x="350" y="50" text-anchor="middle" fill="#666" font-family="Arial, sans-serif" font-size="11">Dorsal Forerunner Cell migration during epiboly (simplified lateral view)</text>
+
+  <!-- Embryo outline (ellipse) -->
+  <ellipse cx="350" cy="265" rx="260" ry="200" fill="url(#embryoGrad)" stroke="#888" stroke-width="2"/>
+
+  <!-- Animal pole label -->
+  <text x="350" y="80" text-anchor="middle" fill="#888" font-family="Arial, sans-serif" font-size="11" font-style="italic">Animal Pole</text>
+
+  <!-- Vegetal pole label -->
+  <text x="350" y="460" text-anchor="middle" fill="#888" font-family="Arial, sans-serif" font-size="11" font-style="italic">Vegetal Pole</text>
+
+  <!-- Yolk cell (large region in lower half) -->
+  <ellipse cx="350" cy="340" rx="200" ry="110" fill="url(#yolkGrad)" stroke="#daa520" stroke-width="1.5" stroke-dasharray="5,3" clip-path="url(#embryoClip)"/>
+  <text x="350" y="395" text-anchor="middle" fill="#b8860b" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Yolk Cell</text>
+
+  <!-- EVL Layer (red, top boundary sweeping down) -->
+  <path d="M 120,155 C 180,145 250,140 350,138 C 450,140 520,145 580,155" fill="none" stroke="#e94560" stroke-width="3.5"/>
+  <path d="M 115,165 C 175,155 245,150 350,148 C 455,150 525,155 585,165" fill="none" stroke="#e94560" stroke-width="2" stroke-opacity="0.5"/>
+
+  <!-- EVL label -->
+  <rect x="510" y="118" width="120" height="38" rx="5" fill="#e94560" fill-opacity="0.1" stroke="#e94560" stroke-width="1"/>
+  <text x="570" y="136" text-anchor="middle" fill="#e94560" font-family="Arial, sans-serif" font-size="12" font-weight="bold">EVL</text>
+  <text x="570" y="150" text-anchor="middle" fill="#e94560" font-family="Arial, sans-serif" font-size="9">Enveloping Layer</text>
+
+  <!-- EVL migration arrows (pointing downward) -->
+  <line x1="200" y1="115" x2="200" y2="140" stroke="#e94560" stroke-width="1.5" marker-end="url(#bioArrow)"/>
+  <line x1="300" y1="110" x2="300" y2="130" stroke="#e94560" stroke-width="1.5" marker-end="url(#bioArrow)"/>
+  <line x1="400" y1="110" x2="400" y2="130" stroke="#e94560" stroke-width="1.5" marker-end="url(#bioArrow)"/>
+  <line x1="500" y1="115" x2="500" y2="140" stroke="#e94560" stroke-width="1.5" marker-end="url(#bioArrow)"/>
+  <text x="310" y="110" fill="#e94560" font-family="Arial, sans-serif" font-size="9">epiboly direction</text>
+
+  <!-- DFC cells cluster (cyan circles) -->
+  <!-- Row 1 -->
+  <circle cx="305" cy="200" r="14" fill="rgba(0,191,255,0.2)" stroke="#00bfff" stroke-width="2"/>
+  <circle cx="340" cy="195" r="13" fill="rgba(0,191,255,0.2)" stroke="#00bfff" stroke-width="2"/>
+  <circle cx="375" cy="198" r="14" fill="rgba(0,191,255,0.2)" stroke="#00bfff" stroke-width="2"/>
+  <circle cx="405" cy="202" r="12" fill="rgba(0,191,255,0.2)" stroke="#00bfff" stroke-width="2"/>
+  <!-- Row 2 -->
+  <circle cx="285" cy="228" r="13" fill="rgba(0,191,255,0.2)" stroke="#00bfff" stroke-width="2"/>
+  <circle cx="318" cy="225" r="14" fill="rgba(0,191,255,0.2)" stroke="#00bfff" stroke-width="2"/>
+  <circle cx="352" cy="222" r="13" fill="rgba(0,191,255,0.2)" stroke="#00bfff" stroke-width="2"/>
+  <circle cx="385" cy="228" r="14" fill="rgba(0,191,255,0.2)" stroke="#00bfff" stroke-width="2"/>
+  <circle cx="415" cy="230" r="12" fill="rgba(0,191,255,0.2)" stroke="#00bfff" stroke-width="2"/>
+  <!-- Row 3 -->
+  <circle cx="300" cy="255" r="12" fill="rgba(0,191,255,0.2)" stroke="#00bfff" stroke-width="2"/>
+  <circle cx="335" cy="252" r="14" fill="rgba(0,191,255,0.2)" stroke="#00bfff" stroke-width="2"/>
+  <circle cx="370" cy="255" r="13" fill="rgba(0,191,255,0.2)" stroke="#00bfff" stroke-width="2"/>
+  <circle cx="400" cy="258" r="12" fill="rgba(0,191,255,0.2)" stroke="#00bfff" stroke-width="2"/>
+
+  <!-- DFC label -->
+  <rect x="440" y="215" width="140" height="38" rx="5" fill="#00bfff" fill-opacity="0.1" stroke="#00bfff" stroke-width="1"/>
+  <text x="510" y="233" text-anchor="middle" fill="#00bfff" font-family="Arial, sans-serif" font-size="12" font-weight="bold">DFCs</text>
+  <text x="510" y="247" text-anchor="middle" fill="#00bfff" font-family="Arial, sans-serif" font-size="9">Dorsal Forerunner Cells</text>
+  <!-- Line from DFC label to cells -->
+  <line x1="440" y1="234" x2="420" y2="234" stroke="#00bfff" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- Apical contacts (thin lines connecting DFCs to EVL) -->
+  <line x1="305" y1="186" x2="305" y2="150" stroke="#00bfff" stroke-width="0.8" stroke-dasharray="2,2" stroke-opacity="0.5"/>
+  <line x1="340" y1="182" x2="340" y2="145" stroke="#00bfff" stroke-width="0.8" stroke-dasharray="2,2" stroke-opacity="0.5"/>
+  <line x1="375" y1="184" x2="375" y2="145" stroke="#00bfff" stroke-width="0.8" stroke-dasharray="2,2" stroke-opacity="0.5"/>
+  <text x="185" y="183" fill="#00bfff" font-family="Arial, sans-serif" font-size="9" font-style="italic">apical contacts</text>
+
+  <!-- DEB Boundary (green, lower boundary moving up) -->
+  <path d="M 140,310 C 200,305 280,300 350,298 C 420,300 500,305 560,310" fill="none" stroke="#4ecca3" stroke-width="3.5"/>
+  <path d="M 145,300 C 205,295 285,290 350,288 C 415,290 495,295 555,300" fill="none" stroke="#4ecca3" stroke-width="2" stroke-opacity="0.5"/>
+
+  <!-- DEB label -->
+  <rect x="75" y="275" width="120" height="38" rx="5" fill="#4ecca3" fill-opacity="0.1" stroke="#4ecca3" stroke-width="1"/>
+  <text x="135" y="293" text-anchor="middle" fill="#4ecca3" font-family="Arial, sans-serif" font-size="12" font-weight="bold">DEB</text>
+  <text x="135" y="307" text-anchor="middle" fill="#4ecca3" font-family="Arial, sans-serif" font-size="9">Dorsal Epiblast Boundary</text>
+
+  <!-- DEB migration arrows (pointing upward) -->
+  <line x1="250" y1="330" x2="250" y2="310" stroke="#4ecca3" stroke-width="1.5" marker-end="url(#bioArrowGreen)"/>
+  <line x1="350" y1="325" x2="350" y2="305" stroke="#4ecca3" stroke-width="1.5" marker-end="url(#bioArrowGreen)"/>
+  <line x1="450" y1="330" x2="450" y2="310" stroke="#4ecca3" stroke-width="1.5" marker-end="url(#bioArrowGreen)"/>
+  <text x="450" y="345" fill="#4ecca3" font-family="Arial, sans-serif" font-size="9">convergence direction</text>
+
+  <!-- Compression arrows (squeezing the DFCs) -->
+  <text x="185" y="240" fill="#888" font-family="Arial, sans-serif" font-size="10" font-style="italic" transform="rotate(-90, 185, 240)">compression</text>
+
+  <!-- Legend -->
+  <rect x="30" y="455" width="640" height="35" rx="5" fill="#fff" stroke="#ddd" stroke-width="1"/>
+  <line x1="50" y1="472" x2="80" y2="472" stroke="#e94560" stroke-width="3"/>
+  <text x="88" y="476" fill="#333" font-family="Arial, sans-serif" font-size="10">EVL front (migrates vegetalward)</text>
+  <circle cx="260" cy="472" r="8" fill="rgba(0,191,255,0.2)" stroke="#00bfff" stroke-width="1.5"/>
+  <text x="275" y="476" fill="#333" font-family="Arial, sans-serif" font-size="10">DFC cells (migrate collectively)</text>
+  <line x1="445" y1="472" x2="475" y2="472" stroke="#4ecca3" stroke-width="3"/>
+  <text x="483" y="476" fill="#333" font-family="Arial, sans-serif" font-size="10">DEB margin (converges dorsally)</text>
+</svg>

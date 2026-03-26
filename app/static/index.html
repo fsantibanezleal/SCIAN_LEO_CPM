@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCIAN LEO CPM - Cellular Potts Model Simulator</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>CPM Simulator</h1>
+            <p class="subtitle">Cellular Potts Model &mdash; Zebrafish Embryonic Cell Migration</p>
+        </header>
+
+        <div class="main-layout">
+            <div class="canvas-container">
+                <canvas id="simCanvas" width="800" height="700"></canvas>
+                <div class="canvas-info">
+                    <span id="stepCount">Step: 0</span>
+                    <span id="cellCount">Cells: 0</span>
+                    <span id="fpsCount">FPS: 0</span>
+                </div>
+            </div>
+
+            <div class="controls-panel">
+                <div class="control-section">
+                    <h3>Simulation</h3>
+                    <div class="button-group">
+                        <button id="btnInit" class="btn btn-primary">Initialize</button>
+                        <button id="btnStart" class="btn btn-success" disabled>Start</button>
+                        <button id="btnStop" class="btn btn-danger" disabled>Stop</button>
+                        <button id="btnStep" class="btn btn-secondary" disabled>Step</button>
+                    </div>
+                </div>
+
+                <div class="control-section">
+                    <h3>Cell Parameters</h3>
+                    <label>Number of Cells: <span id="valNumCells">24</span>
+                        <input type="range" id="numCells" min="4" max="100" value="24">
+                    </label>
+                    <label>Cell Radius: <span id="valRadius">10</span>
+                        <input type="range" id="cellRadius" min="3" max="25" value="10" step="0.5">
+                    </label>
+                    <label>Filopodia: <span id="valFilo">4</span>
+                        <input type="range" id="numFilo" min="1" max="10" value="4">
+                    </label>
+                    <label>Contour Points: <span id="valContour">100</span>
+                        <input type="range" id="numContour" min="20" max="200" value="100">
+                    </label>
+                    <label>Velocity Scale: <span id="valVelocity">0.010</span>
+                        <input type="range" id="velocityScale" min="0.001" max="0.1" value="0.01" step="0.001">
+                    </label>
+                </div>
+
+                <div class="control-section">
+                    <h3>Environment</h3>
+                    <label>Width: <span id="valWidth">400</span>
+                        <input type="range" id="envWidth" min="200" max="800" value="400">
+                    </label>
+                    <label>Height: <span id="valHeight">350</span>
+                        <input type="range" id="envHeight" min="200" max="800" value="350">
+                    </label>
+                    <label>
+                        <input type="checkbox" id="evlEnabled" checked> EVL Boundary
+                    </label>
+                    <label>EVL Velocity: <span id="valEVL">1.5</span>
+                        <input type="range" id="evlVelocity" min="0" max="5" value="1.5" step="0.1">
+                    </label>
+                    <label>
+                        <input type="checkbox" id="debEnabled" checked> DEB Boundary
+                    </label>
+                    <label>
+                        <input type="checkbox" id="prolifEnabled"> Proliferation
+                    </label>
+                </div>
+
+                <div class="control-section">
+                    <h3>Display</h3>
+                    <label>Speed (ms/step): <span id="valSpeed">50</span>
+                        <input type="range" id="simSpeed" min="10" max="500" value="50">
+                    </label>
+                    <label>
+                        <input type="checkbox" id="showContours" checked> Show Contours
+                    </label>
+                    <label>
+                        <input type="checkbox" id="showCenters" checked> Show Centers
+                    </label>
+                    <label>
+                        <input type="checkbox" id="showBoundaries" checked> Show Boundaries
+                    </label>
+                    <label>
+                        <input type="checkbox" id="showGrid"> Show Grid
+                    </label>
+                </div>
+
+                <div class="control-section">
+                    <h3>About</h3>
+                    <p class="about-text">
+                        Cellular Potts Model simulation of DFC migration
+                        during zebrafish embryonic development. Based on
+                        Gaussian filopodia-driven cell motility with
+                        mechanotactic tissue boundaries.
+                    </p>
+                    <p class="about-text">
+                        <a href="/docs" target="_blank">API Documentation</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/websocket.js"></script>
+    <script src="/static/js/renderer.js"></script>
+    <script src="/static/js/controls.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
