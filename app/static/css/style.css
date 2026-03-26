@@ -123,3 +123,120 @@ input[type="checkbox"] {
 
 .about-text { font-size: 0.75rem; color: #888; line-height: 1.4; margin-bottom: 0.5rem; }
 .about-text a { color: #4ecca3; }
+
+/* Header row with help button */
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-help {
+    background: #0f3460;
+    color: #e94560;
+    border: 2px solid #e94560;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+.btn-help:hover { background: #e94560; color: #fff; }
+
+/* Help icon next to section headers */
+.help-icon {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background: #0f3460;
+    color: #e94560;
+    border: 1px solid #e94560;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-align: center;
+    line-height: 18px;
+    cursor: pointer;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+    transition: all 0.2s;
+}
+.help-icon:hover { background: #e94560; color: #fff; }
+
+/* Expandable help text under section headers */
+.help-text {
+    background: #0f3460;
+    border-radius: 4px;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.75rem;
+    color: #aaa;
+    line-height: 1.4;
+}
+
+/* Help Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #16213e;
+    border: 1px solid #0f3460;
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 560px;
+    max-height: 80vh;
+    overflow-y: auto;
+    color: #e0e0e0;
+    position: relative;
+}
+
+.modal-content h2 {
+    color: #e94560;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.modal-content h3 {
+    color: #4ecca3;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.modal-content p, .modal-content li {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #ccc;
+    margin-bottom: 0.4rem;
+}
+
+.modal-content ol {
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.modal-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.modal-close:hover { color: #e94560; }

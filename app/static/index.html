@@ -9,8 +9,13 @@
 <body>
     <div id="app">
         <header>
-            <h1>CPM Simulator</h1>
-            <p class="subtitle">Cellular Potts Model &mdash; Zebrafish Embryonic Cell Migration</p>
+            <div class="header-row">
+                <div>
+                    <h1>CPM Simulator</h1>
+                    <p class="subtitle">Cellular Potts Model &mdash; Zebrafish Embryonic Cell Migration</p>
+                </div>
+                <button id="btnHelp" class="btn btn-help" title="Open help guide">?</button>
+            </div>
         </header>
 
         <div class="main-layout">
@@ -19,6 +24,7 @@
                 <div class="canvas-info">
                     <span id="stepCount">Step: 0</span>
                     <span id="cellCount">Cells: 0</span>
+                    <span id="avgEnergy">Energy: 0</span>
                     <span id="fpsCount">FPS: 0</span>
                 </div>
             </div>
@@ -35,61 +41,76 @@
                 </div>
 
                 <div class="control-section">
-                    <h3>Cell Parameters</h3>
-                    <label>Number of Cells: <span id="valNumCells">24</span>
+                    <h3>Cell Parameters <span class="help-icon" data-help="cell-params">?</span></h3>
+                    <div class="help-text" id="help-cell-params" style="display:none;">
+                        <p>Configure the number and shape of simulated cells. Each cell has Gaussian filopodia protrusions that determine its membrane shape and drive motility.</p>
+                    </div>
+                    <label title="Total number of DFC cells placed in the initialization region">Number of Cells: <span id="valNumCells">24</span>
                         <input type="range" id="numCells" min="4" max="100" value="24">
                     </label>
-                    <label>Cell Radius: <span id="valRadius">10</span>
+                    <label title="Base radius R0 of each cell in spatial units">Cell Radius: <span id="valRadius">10</span>
                         <input type="range" id="cellRadius" min="3" max="25" value="10" step="0.5">
                     </label>
-                    <label>Filopodia: <span id="valFilo">4</span>
+                    <label title="Number of Gaussian protrusions per cell. More filopodia = more irregular shape">Filopodia: <span id="valFilo">4</span>
                         <input type="range" id="numFilo" min="1" max="10" value="4">
                     </label>
-                    <label>Contour Points: <span id="valContour">100</span>
+                    <label title="Discrete points on the cell membrane. Higher = smoother but slower">Contour Points: <span id="valContour">100</span>
                         <input type="range" id="numContour" min="20" max="200" value="100">
                     </label>
-                    <label>Velocity Scale: <span id="valVelocity">0.010</span>
+                    <label title="Scaling factor for velocity estimation from shape asymmetry. Higher = faster cells">Velocity Scale: <span id="valVelocity">0.010</span>
                         <input type="range" id="velocityScale" min="0.001" max="0.1" value="0.01" step="0.001">
                     </label>
                 </div>
 
                 <div class="control-section">
-                    <h3>Environment</h3>
-                    <label>Width: <span id="valWidth">400</span>
+                    <h3>Environment <span class="help-icon" data-help="env-params">?</span></h3>
+                    <div class="help-text" id="help-env-params" style="display:none;">
+                        <p>Control the simulation domain dimensions, tissue boundaries (EVL migrates downward, DEB converges upward), and substrate stiffness gradient for mechanotaxis.</p>
+                    </div>
+                    <label title="Simulation domain width in spatial units">Width: <span id="valWidth">400</span>
                         <input type="range" id="envWidth" min="200" max="800" value="400">
                     </label>
-                    <label>Height: <span id="valHeight">350</span>
+                    <label title="Simulation domain height in spatial units">Height: <span id="valHeight">350</span>
                         <input type="range" id="envHeight" min="200" max="800" value="350">
                     </label>
-                    <label>
+                    <label title="Enable the Enveloping Layer boundary that migrates downward">
                         <input type="checkbox" id="evlEnabled" checked> EVL Boundary
                     </label>
-                    <label>EVL Velocity: <span id="valEVL">1.5</span>
+                    <label title="Speed of EVL front migration in units per step">EVL Velocity: <span id="valEVL">1.5</span>
                         <input type="range" id="evlVelocity" min="0" max="5" value="1.5" step="0.1">
                     </label>
-                    <label>
+                    <label title="Enable the Dorsal Epiblast Boundary that converges upward">
                         <input type="checkbox" id="debEnabled" checked> DEB Boundary
                     </label>
-                    <label>
+                    <label title="Enable cell division according to the proliferation schedule">
                         <input type="checkbox" id="prolifEnabled"> Proliferation
+                    </label>
+                    <label title="Enable directional bias force from substrate stiffness gradient (durotaxis)">
+                        <input type="checkbox" id="mechanoEnabled"> Mechanotaxis
+                    </label>
+                    <label title="Strength of the substrate stiffness gradient force">Stiffness Strength: <span id="valStiffness">0.002</span>
+                        <input type="range" id="stiffnessStrength" min="0" max="0.02" value="0.002" step="0.001">
                     </label>
                 </div>
 
                 <div class="control-section">
-                    <h3>Display</h3>
-                    <label>Speed (ms/step): <span id="valSpeed">50</span>
+                    <h3>Display <span class="help-icon" data-help="display-params">?</span></h3>
+                    <div class="help-text" id="help-display-params" style="display:none;">
+                        <p>Toggle visual elements and control the simulation playback speed. Lower speed values run faster.</p>
+                    </div>
+                    <label title="Milliseconds between simulation steps. Lower = faster simulation">Speed (ms/step): <span id="valSpeed">50</span>
                         <input type="range" id="simSpeed" min="10" max="500" value="50">
                     </label>
-                    <label>
+                    <label title="Draw cell membrane contour polygons">
                         <input type="checkbox" id="showContours" checked> Show Contours
                     </label>
-                    <label>
+                    <label title="Draw cell center position markers">
                         <input type="checkbox" id="showCenters" checked> Show Centers
                     </label>
-                    <label>
+                    <label title="Draw EVL and DEB tissue boundary lines">
                         <input type="checkbox" id="showBoundaries" checked> Show Boundaries
                     </label>
-                    <label>
+                    <label title="Overlay a coordinate grid on the canvas">
                         <input type="checkbox" id="showGrid"> Show Grid
                     </label>
                 </div>
@@ -110,9 +131,58 @@
         </div>
     </div>
 
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="modal-close" id="closeHelp">&times;</span>
+            <h2>CPM Simulator Guide</h2>
+            <h3>Getting Started</h3>
+            <ol>
+                <li>Click <strong>Initialize</strong> to create the cell population</li>
+                <li>Click <strong>Start</strong> to begin the simulation</li>
+                <li>Use <strong>Step</strong> for frame-by-frame advancement</li>
+                <li>Adjust parameters in the controls panel</li>
+            </ol>
+            <h3>Cell Parameters</h3>
+            <p><strong>Filopodia</strong>: Number of Gaussian protrusions per cell. More filopodia = more irregular cell shape.</p>
+            <p><strong>Velocity Scale</strong>: Controls how fast cells move. Higher values = faster but less stable simulation.</p>
+            <p><strong>Contour Points</strong>: Resolution of the cell membrane. Higher = smoother but slower.</p>
+            <h3>Environment</h3>
+            <p><strong>EVL</strong>: The Enveloping Layer boundary migrates downward, pushing cells.</p>
+            <p><strong>DEB</strong>: The Dorsal Epiblast boundary converges upward.</p>
+            <p><strong>Mechanotaxis</strong>: When enabled, cells experience a directional bias force toward stiffer substrate.</p>
+            <h3>Visualization</h3>
+            <p>Cells are colored by their index. Toggle contours, centers, and boundaries independently.</p>
+        </div>
+    </div>
+
     <script src="/static/js/websocket.js"></script>
     <script src="/static/js/renderer.js"></script>
     <script src="/static/js/controls.js"></script>
     <script src="/static/js/app.js"></script>
+
+    <script>
+    // Help modal toggle
+    document.getElementById('btnHelp').addEventListener('click', function() {
+        document.getElementById('helpModal').style.display = 'flex';
+    });
+    document.getElementById('closeHelp').addEventListener('click', function() {
+        document.getElementById('helpModal').style.display = 'none';
+    });
+    document.getElementById('helpModal').addEventListener('click', function(e) {
+        if (e.target === this) this.style.display = 'none';
+    });
+
+    // Expandable help icons next to section headers
+    document.querySelectorAll('.help-icon').forEach(function(icon) {
+        icon.addEventListener('click', function() {
+            var helpId = 'help-' + this.getAttribute('data-help');
+            var el = document.getElementById(helpId);
+            if (el) {
+                el.style.display = el.style.display === 'none' ? 'block' : 'none';
+            }
+        });
+    });
+    </script>
 </body>
 </html>
