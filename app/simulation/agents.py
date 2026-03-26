@@ -76,13 +76,27 @@ class AgentsSystem:
         """
         self.cells = []
 
-        # Grid layout parameters
-        cols = int(np.sqrt(num_dfcs * env.width / env.height))
-        if cols < 1:
-            cols = 1
+        # Available space within the DFC region (with radius margin)
+        region_w = (env.dfc_region[2] - env.dfc_region[0]) - 2 * radius
+        region_h = (env.dfc_region[3] - env.dfc_region[1]) - 2 * radius
+
+        # Determine grid dimensions that fit all cells
+        # Start with an aspect-ratio-aware estimate and widen until all fit
+        cols = max(1, int(np.ceil(np.sqrt(num_dfcs * region_w / max(region_h, 1)))))
         rows = int(np.ceil(num_dfcs / cols))
 
-        spacing = 2.5 * radius
+        # Compute spacing to distribute cells evenly within the region
+        spacing_x = region_w / max(cols - 1, 1) if cols > 1 else 0.0
+        spacing_y = region_h / max(rows - 1, 1) if rows > 1 else 0.0
+
+        # Ensure minimum spacing of 2 * radius to avoid immediate overlap
+        min_spacing = 2.0 * radius
+        if spacing_x < min_spacing and cols > 1:
+            cols = max(1, int(region_w / min_spacing) + 1)
+            rows = int(np.ceil(num_dfcs / cols))
+            spacing_x = region_w / max(cols - 1, 1) if cols > 1 else 0.0
+            spacing_y = region_h / max(rows - 1, 1) if rows > 1 else 0.0
+
         start_x = env.dfc_region[0] + radius
         start_y = env.dfc_region[1] + radius
 
@@ -91,19 +105,18 @@ class AgentsSystem:
             for col in range(cols):
                 if count >= num_dfcs:
                     break
-                x = start_x + col * spacing
-                y = start_y + row * spacing
+                x = start_x + col * spacing_x
+                y = start_y + row * spacing_y
 
-                if x < env.dfc_region[2] and y < env.dfc_region[3]:
-                    cell = CellWM(
-                        position=[x, y],
-                        radius=radius,
-                        num_filo=self.config.get("num_filopodia", 4),
-                        num_contour=self.config.get("num_contour_points", 100),
-                    )
-                    cell.velocity_scale = self.config.get("velocity_scale", 0.01)
-                    self.cells.append(cell)
-                    count += 1
+                cell = CellWM(
+                    position=[x, y],
+                    radius=radius,
+                    num_filo=self.config.get("num_filopodia", 4),
+                    num_contour=self.config.get("num_contour_points", 100),
+                )
+                cell.velocity_scale = self.config.get("velocity_scale", 0.01)
+                self.cells.append(cell)
+                count += 1
 
         self.running = True
 
