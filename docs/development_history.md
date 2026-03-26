@@ -24,6 +24,58 @@ The rewrite preserved the core mathematical model (Gaussian filopodia with elast
 
 ## Changelog
 
+### v2.1.0 (2026-03-26)
+
+#### Algorithmic Improvements
+
+##### Vectorized Computation Engine
+All cell operations use NumPy broadcasting instead of Python loops.
+Contour generation computes all filopodia at all angles simultaneously:
+
+```
+Δθ_{ij} = wrap(θ_i - θ_{0,j})
+R_{ij} = R_0 + A_j * exp(-Δθ_{ij}² / (2 * W_j²))
+R(θ_i) = max_j(R_{ij})
+```
+
+##### Hamiltonian Energy Model
+Shape energy functional for each cell:
+
+```
+H = λ_A * (A - A₀)² + λ_P * (P - P₀)²
+```
+
+Area via shoelace formula, perimeter via segment summation.
+
+##### Mechanotaxis (Durotaxis)
+Directional bias from substrate stiffness gradient:
+
+```
+F_mechano = s * d_hat
+```
+
+##### Persistent Random Walk
+Filopodia maintain direction for τ ∈ [5, 20] steps:
+
+```
+Δθ_j = (π/4) * σ_j * ξ + 0.05 * wrap(θ_pref - θ_j)
+```
+
+##### Improved Collision Detection
+Uses actual contour extent (max radial reach) instead of base radius.
+
+##### Centroid-Based Velocity
+```
+v = V₀ * (centroid(contour) - center)
+```
+
+#### Frontend Improvements
+- Help modal with usage guide
+- Tooltips on all controls
+- Energy display in status bar
+- Mechanotaxis controls and direction indicator
+- Section-level expandable help text
+
 ### v2.0.0 (2026-03-26)
 
 **Complete rewrite from C++/CLI to Python/FastAPI web application.**
