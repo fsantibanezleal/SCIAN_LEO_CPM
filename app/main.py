@@ -70,6 +70,8 @@ class SimulationConfig(BaseModel):
     evl_velocity: float = 1.5
     deb_enabled: bool = True
     proliferation_enabled: bool = False
+    mechanotaxis_enabled: bool = False
+    stiffness_gradient_strength: float = 0.002
     speed_ms: int = 50
 
 
@@ -102,6 +104,8 @@ async def init_simulation(config: SimulationConfig):
         "evl_velocity": config.evl_velocity,
         "deb_enabled": config.deb_enabled,
         "proliferation_enabled": config.proliferation_enabled,
+        "mechanotaxis_enabled": config.mechanotaxis_enabled,
+        "stiffness_gradient_strength": config.stiffness_gradient_strength,
     }
     agent_config = {
         "num_filopodia": config.num_filopodia,

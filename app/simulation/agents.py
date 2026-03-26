@@ -135,10 +135,11 @@ class AgentsSystem:
         if not self.running:
             return
 
-        # Step 1: Update each cell
+        # Step 1: Update each cell (with optional mechanotaxis force)
         for cell in self.cells:
             if cell.active:
-                cell.simulation_step()
+                mechano_force = env.get_mechanotaxis_force(cell.position) if hasattr(env, 'get_mechanotaxis_force') else None
+                cell.simulation_step(mechanotaxis_force=mechano_force)
 
         # Step 2: Resolve collisions (two-pass)
         self._resolve_collisions()
@@ -173,24 +174,38 @@ class AgentsSystem:
                 self._fix_overlap(active[i], active[j], factor=0.0)
 
     def _fix_overlap(self, cell_a, cell_b, factor=0.0):
-        """Resolve overlap between two cells using radial push-apart.
+        """Resolve overlap between two cells using centroid-based repulsion.
 
-        When two cells overlap (center distance < sum of radii), they are
-        pushed apart along the axis connecting their centers. The push
-        magnitude depends on the overlap distance and the factor parameter.
+        Applies a repulsive force proportional to the overlap depth.
+        The factor parameter controls collision softness:
+            factor=0.0 -> full separation (hard collision)
+            factor=1.0 -> half-separation (soft, allows partial overlap)
+
+        The push direction is along the line connecting cell centers,
+        which approximates the minimum translation vector for convex shapes.
+        Uses the actual contour extent (maximum radial reach) instead of
+        the nominal base radius for more accurate overlap detection.
 
         Args:
-            cell_a: First CellWM instance.
-            cell_b: Second CellWM instance.
-            factor: Softness factor (0.0 = hard separation, 1.0 = soft).
+            cell_a: First cell.
+            cell_b: Second cell.
+            factor: Softness factor in [0, 1].
         """
         dist = np.linalg.norm(cell_a.position - cell_b.position)
-        min_dist = cell_a.base_radius + cell_b.base_radius
+        # Use effective radius from actual contour extent (not just base_radius)
+        r_a = np.max(np.sqrt(
+            (cell_a.contour[:, 0] - cell_a.position[0])**2 +
+            (cell_a.contour[:, 1] - cell_a.position[1])**2
+        ))
+        r_b = np.max(np.sqrt(
+            (cell_b.contour[:, 0] - cell_b.position[0])**2 +
+            (cell_b.contour[:, 1] - cell_b.position[1])**2
+        ))
+        min_dist = r_a + r_b
 
         if dist >= min_dist or dist < 1e-10:
             return
 
-        # Push apart along connecting axis
         direction = (cell_a.position - cell_b.position) / dist
         overlap = min_dist - dist
         push = overlap * (1.0 - factor * 0.5)
@@ -198,7 +213,7 @@ class AgentsSystem:
         cell_a.position += direction * push * 0.5
         cell_b.position -= direction * push * 0.5
 
-        # Rebuild contours
+        # Rebuild contours after position change
         cell_a._create_contour()
         cell_b._create_contour()
 

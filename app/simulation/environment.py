@@ -93,6 +93,14 @@ class EnvironmentSystem:
         self.deb_position = config.get("deb_initial_position", self.height)
         self.deb_velocity = config.get("deb_velocity", 0.5)
 
+        # Mechanotaxis: substrate stiffness gradient
+        self.mechanotaxis_enabled = config.get('mechanotaxis_enabled', False)
+        self.stiffness_gradient_direction = np.array(
+            config.get('stiffness_gradient', [0.0, -1.0]),  # default: stiffer toward bottom
+            dtype=np.float64
+        )
+        self.stiffness_gradient_strength = config.get('stiffness_gradient_strength', 0.002)
+
         # Proliferation
         self.proliferation_enabled = config.get("proliferation_enabled", False)
         self.proliferation_rates = [0.0, 0.0, 0.1, 0.0, 0.2, 0.0, 0.0, 0.0]
@@ -131,12 +139,34 @@ class EnvironmentSystem:
                 if self.proliferation_stage < len(self.proliferation_rates) - 1:
                     self.proliferation_stage += 1
 
+    def get_mechanotaxis_force(self, position):
+        """Compute mechanotactic bias force at a given position.
+
+        Cells in a stiffness gradient experience durotaxis: migration
+        toward stiffer substrate regions. The force is modeled as a
+        constant directional bias proportional to the gradient strength.
+
+        F_mechano = strength * gradient_direction
+
+        This simplified model captures the key phenomenology without
+        requiring a full finite-element substrate model.
+
+        Args:
+            position: Cell center [x, y] coordinates.
+
+        Returns:
+            Force vector [fx, fy] for mechanotactic bias.
+        """
+        if not self.mechanotaxis_enabled:
+            return np.zeros(2)
+        return self.stiffness_gradient_strength * self.stiffness_gradient_direction
+
     def get_state(self):
         """Return serializable environment state.
 
         Returns:
             Dictionary with width, height, EVL/DEB positions and stages,
-            adhesion strength, and DFC region bounds.
+            adhesion strength, DFC region bounds, and mechanotaxis settings.
         """
         return {
             "width": self.width,
@@ -148,4 +178,7 @@ class EnvironmentSystem:
             ],
             "deb_position": self.deb_position,
             "dfc_region": self.dfc_region,
+            "mechanotaxis_enabled": self.mechanotaxis_enabled,
+            "stiffness_gradient": self.stiffness_gradient_direction.tolist(),
+            "stiffness_gradient_strength": self.stiffness_gradient_strength,
         }
