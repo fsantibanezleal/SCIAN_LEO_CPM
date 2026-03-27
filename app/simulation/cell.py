@@ -1,23 +1,53 @@
 """
-Cellular Potts Model - Cell with Membrane (CellWM).
+Cell With Membrane (CellWM) — Deformable agent model with Gaussian filopodia.
 
-Implements a deformable cell model where the cell boundary is defined by
-Gaussian-shaped filopodia protruding from a base radius. The cell contour
-is computed as the envelope of multiple Gaussian peaks in polar coordinates.
+===== IMPORTANT NOTE ON NOMENCLATURE =====
 
-Mathematical model:
-    R(theta) = max_j(R0 + A_j * exp(-(theta - theta0_j)^2 / (2 * W_j^2)))
+This project is named "CPM" (Cellular Potts Model) following the original
+research group's convention, but the implementation is NOT a classical CPM.
 
-Where:
-    R0: base radius
-    A_j: amplitude of filopodium j (protrusion height)
-    theta0_j: angular position of filopodium j
-    W_j: Gaussian width of filopodium j
+A classical CPM (Graner & Glazier, 1992) is a lattice-based model where:
+- Each pixel on a grid belongs to a cell (identified by spin sigma)
+- Cell shapes EMERGE from Hamiltonian energy minimization
+- Monte Carlo dynamics: stochastic pixel copy-attempts
+- Energy: H = Sum J_adhesion + lambda(A-A0)^2 + lambda(P-P0)^2
 
-References:
-    - Graner & Glazier (1992), Simulation of biological cell sorting using a
-      two-dimensional extended Potts model
-    - Wortel & Textor (2021), Artistoo, eLife 10:e61288
+This implementation is a GEOMETRIC AGENT-BASED model where:
+- Each cell has a prescribed shape (Gaussian filopodia envelope)
+- Cell contours are computed analytically, not from energy minimization
+- Dynamics are deterministic + stochastic (not Monte Carlo)
+- The Hamiltonian is computed for MONITORING, not for driving dynamics
+
+The two approaches are complementary. The classical CPM excels at emergent
+multicellular behaviors (cell sorting, tissue morphogenesis). This geometric
+model excels at capturing individual cell morphology and filopodial dynamics.
+
+===== MATHEMATICAL MODEL =====
+
+Cell boundary in polar coordinates:
+    R(theta) = max_j { R0 + Aj * exp(-(theta - theta0j)^2 / (2 * Wj^2)) }
+
+Filopodium dynamics (persistent random walk + durotaxis):
+    theta_j(t+dt) = theta_j(t) + sigma_j*xi + beta*sin(theta_pref - theta_j)
+                    + alpha*sin(theta_stiff - theta_j)
+
+Cell velocity (filopodia-weighted propulsion):
+    v = V0 * Sum_j Aj * (cos theta_j, sin theta_j)
+
+Membrane relaxation (viscoelastic):
+    R(theta, t+dt) = R(theta, t) + gamma * (R_ideal(theta) - R(theta, t))
+
+Hamiltonian energy (monitoring):
+    H = lambda_A * (A - A0)^2 + lambda_P * (P - P0)^2
+
+===== REFERENCES =====
+
+- Graner & Glazier (1992), Simulation of biological cell sorting using a
+  two-dimensional extended Potts model. Phys. Rev. Lett. 69(13), 2013.
+- Wortel & Textor (2021), Artistoo. eLife 10:e61288.
+- Rens & Merks (2020), Cell Shape and Durotaxis. iScience 23(9):101420.
+- Selmeczi et al. (2005), Cell motility as persistent random motion.
+  Biophys. J. 89(2), 912-931.
 """
 
 import numpy as np
@@ -175,43 +205,91 @@ class CellWM:
         self.contour[:, 0] = self.position[0] + max_radii * np.cos(thetas)
         self.contour[:, 1] = self.position[1] + max_radii * np.sin(thetas)
 
-    def update_angles(self):
-        """Apply persistent random walk to filopodium angles.
+    def update_angles(self, stiffness_gradient=None):
+        """Apply persistent random walk with optional durotactic bias.
 
-        Filopodia exhibit directional persistence: they maintain their
-        orientation for several time steps before reorienting. This
-        models the biological observation that cell protrusions have
-        a characteristic lifetime before retraction and re-extension.
+        ===== MATHEMATICAL MODEL =====
 
-        The persistence is controlled by a timer. When the timer expires,
-        a new preferred direction is chosen randomly, and the timer resets.
+        Each filopodium angle evolves as:
+
+            theta_j(t+dt) = theta_j(t) + sigma_j*xi_j + beta_persist*d_pref
+                            + beta_duro*d_stiff
+
+        where:
+            sigma_j*xi_j       = stochastic step (xi ~ Uniform(-0.5, 0.5))
+            beta_persist*d_pref = bias toward preferred direction (persistence)
+            beta_duro*d_stiff   = bias toward stiffness gradient (durotaxis)
+
+        ===== DUROTAXIS MECHANISM =====
+
+        When a stiffness gradient grad_E is present, filopodia experience a
+        torque that rotates them toward the gradient direction:
+
+            d_stiff = 0.1 * sin(theta_gradient - theta_j)
+
+        The sin() function creates a restoring torque: filopodia aligned
+        with the gradient feel no torque, while perpendicular ones feel
+        maximum torque. This models focal adhesion reinforcement on
+        stiffer substrates (Rens & Merks, 2020).
+
+        Args:
+            stiffness_gradient: Optional [gx, gy] gradient vector.
+                Direction of increasing substrate stiffness.
         """
         self.steps_since_change += 1
 
         if self.steps_since_change >= self.persistence_time:
-            # Major reorientation event
             self.steps_since_change = 0
             self.persistence_time = np.random.randint(5, 20)
             self.preferred_direction = np.random.uniform(-np.pi, np.pi)
 
-        # Small stochastic steps biased toward preferred direction
+        # Persistence bias: gentle pull toward preferred direction
         bias = 0.1 * (self.preferred_direction - self.angles)
-        bias = (bias + np.pi) % (2 * np.pi) - np.pi  # wrap
+        bias = (bias + np.pi) % (2 * np.pi) - np.pi
 
+        # Stochastic step
         steps = (np.pi / 4) * self.sigmas * (np.random.random(self.num_filo) - 0.5) + 0.05 * bias
+
+        # Durotactic bias: rotate filopodia toward stiffness gradient
+        if stiffness_gradient is not None:
+            grad = np.asarray(stiffness_gradient)
+            grad_magnitude = np.linalg.norm(grad)
+            if grad_magnitude > 1e-10:
+                # Direction of maximum stiffness
+                grad_angle = np.arctan2(grad[1], grad[0])
+                # Sinusoidal torque: filopodia turn toward gradient
+                # sin(theta_grad - theta_j) is positive when theta_j < theta_grad
+                durotactic_torque = 0.1 * grad_magnitude * np.sin(grad_angle - self.angles)
+                steps += durotactic_torque
+
         self.angles += steps
         self.angles = (self.angles + np.pi) % (2 * np.pi) - np.pi
 
     def update_shape(self):
-        """Update membrane shape with viscoelastic damping toward ideal form.
+        """Relax membrane shape toward the ideal Gaussian envelope.
 
-        Each membrane point relaxes toward its ideal radius with a rate
-        controlled by the damping coefficient gamma:
-            r_new = r_current - gamma * (r_current - r_ideal)
+        ===== VISCOELASTIC MEMBRANE MODEL =====
 
-        When gamma=1, the membrane instantly adopts the ideal shape.
-        When gamma<1, the membrane gradually relaxes (viscoelastic).
-        When gamma>1, the response overshoots (overdamped oscillation).
+        The cell membrane behaves as a viscoelastic material that relaxes
+        toward the shape dictated by the filopodial protrusions:
+
+            R(theta, t+dt) = R(theta, t) + gamma_eff * (R_ideal(theta) - R(theta, t))
+
+        where:
+            R(theta, t)    = current radial distance at angle theta
+            R_ideal(theta) = envelope of Gaussian filopodia at current angles
+            gamma_eff      = effective damping rate (mean of per-filopodium gamma_j)
+
+        When gamma_eff = 1: membrane instantly matches ideal shape (elastic limit)
+        When gamma_eff < 1: membrane lags behind (viscoelastic, creates memory)
+        When gamma_eff > 1: overshoots (can create oscillations, usually avoided)
+
+        The ideal shape is the envelope (pointwise maximum) of all Gaussian
+        filopodia, re-evaluated at the current filopodium angles:
+
+            R_ideal(theta) = max_j { R0 + Aj * exp(-(theta - theta_j)^2 / (2*Wj^2)) }
+
+        A minimum radius of 0.5*R0 is enforced to prevent cell collapse.
         """
         thetas = np.linspace(-np.pi, np.pi, self.num_contour, endpoint=False)
 
@@ -220,36 +298,69 @@ class CellWM:
         dy = self.contour[:, 1] - self.position[1]
         current_r = np.sqrt(dx**2 + dy**2)
 
-        # Ideal radii for each filopodium (vectorized)
+        # Ideal envelope at current filopodium positions (vectorized)
         d_angles = thetas[:, np.newaxis] - self.angles[np.newaxis, :]
         d_angles = (d_angles + np.pi) % (2 * np.pi) - np.pi
-        ideal_radii = self.base_radius + self.amplitudes * np.exp(
+        ideal_per_filo = self.base_radius + self.amplitudes * np.exp(
             -d_angles**2 / (2 * self.widths**2 + 1e-10)
-        )  # (N, F)
+        )
+        ideal_r = np.max(ideal_per_filo, axis=1)
 
-        # Apply damping per filopodium, then take maximum
-        damped = current_r[:, np.newaxis] - self.gammas * (
-            current_r[:, np.newaxis] - ideal_radii
-        )  # (N, F)
-        best_r = np.maximum(np.max(damped, axis=1), self.base_radius * 0.5)
+        # Effective damping rate: mean of per-filopodium damping coefficients
+        gamma_eff = np.clip(np.mean(self.gammas), 0.01, 1.5)
 
-        self.contour[:, 0] = self.position[0] + best_r * np.cos(thetas)
-        self.contour[:, 1] = self.position[1] + best_r * np.sin(thetas)
+        # Viscoelastic relaxation toward ideal shape
+        new_r = current_r + gamma_eff * (ideal_r - current_r)
+
+        # Enforce minimum radius to prevent collapse
+        new_r = np.maximum(new_r, self.base_radius * 0.5)
+
+        # Update contour in Cartesian coordinates
+        self.contour[:, 0] = self.position[0] + new_r * np.cos(thetas)
+        self.contour[:, 1] = self.position[1] + new_r * np.sin(thetas)
 
     def estimate_velocity(self):
-        """Estimate cell velocity from membrane shape asymmetry.
+        """Estimate cell velocity from active filopodial forces.
 
-        The velocity is computed as the normalized displacement between
-        the cell center and the centroid of the membrane contour:
-            v = V0 * (centroid - center)
+        ===== PHYSICAL MODEL =====
 
-        This captures the idea that asymmetric filopodial protrusions
-        generate a net force that propels the cell in that direction,
-        consistent with the self-propelled particle model.
+        Cell motility is driven by actin polymerization at filopodial tips
+        generating protrusive forces. Each filopodium contributes a traction
+        force proportional to its amplitude (protrusion length), directed
+        radially outward at its angular position:
+
+            v = V0 * Sum_j Aj * (cos theta_j, sin theta_j)
+
+        This is a self-propelled particle model where shape asymmetry drives
+        motion. When filopodia are clustered on one side, the cell migrates
+        in that direction. When filopodia are uniformly distributed, forces
+        cancel and the cell remains stationary.
+
+        Unlike the centroid-offset model (v proportional to centroid - center),
+        this formulation correctly produces directed motion even when the
+        contour is nearly symmetric around the center.
+
+        The velocity magnitude scales with the total protrusive activity
+        (sum of amplitudes), matching the biological observation that more
+        active cells move faster.
+
+        ===== COMPARISON WITH ORIGINAL C++ =====
+
+        The original C++ code (cellWM.cpp::EstimateV) computed velocity as:
+            vx = Sum_i ri*cos(theta_i),  vy = Sum_i ri*sin(theta_i)
+        summing over ALL contour points. This is equivalent to the centroid
+        offset and suffers from the same cancellation problem.
+
+        Our filopodia-weighted model sums over filopodia (not contour points),
+        using amplitudes as weights, which gives physically meaningful motility.
         """
-        centroid = np.mean(self.contour, axis=0)
-        displacement = centroid - self.position
-        self.velocity = self.velocity_scale * displacement
+        # Each filopodium exerts a protrusive force proportional to its amplitude,
+        # directed radially outward at its angular position
+        force_x = np.sum(self.amplitudes * np.cos(self.angles))
+        force_y = np.sum(self.amplitudes * np.sin(self.angles))
+
+        # Scale by velocity factor to get displacement per step
+        self.velocity = self.velocity_scale * np.array([force_x, force_y])
 
     def update_position(self):
         """Euler integration of position.
@@ -259,28 +370,36 @@ class CellWM:
         """
         self.position += self.velocity
 
-    def simulation_step(self, mechanotaxis_force=None):
-        """Execute one complete simulation step with optional mechanotaxis.
+    def simulation_step(self, mechanotaxis_gradient=None):
+        """Execute one complete simulation step.
 
-        The step sequence:
-            1. Brownian angle update (filopodium reorientation)
-            2. Elastic shape relaxation
-            3. Velocity from shape asymmetry
-            4. Add mechanotactic bias if present
-            5. Euler position integration
-            6. Compute energy for monitoring
+        ===== SIMULATION PIPELINE =====
+
+        The step sequence implements a biologically-motivated update cycle:
+
+        Step 1 -- Filopodium reorientation (Brownian + bias):
+            theta_j(t+1) = theta_j(t) + sigma_j*xi + beta*bias_toward_gradient
+
+        Step 2 -- Membrane shape relaxation (viscoelastic):
+            R(theta, t+1) = R(theta, t) - gamma*(R(theta, t) - R_ideal(theta))
+
+        Step 3 -- Velocity from filopodial forces (self-propelled):
+            v = V0 * Sum_j Aj * (cos theta_j, sin theta_j)
+
+        Step 4 -- Position integration (Euler):
+            x(t+1) = x(t) + v*dt
+
+        Step 5 -- Energy computation (monitoring):
+            H = lambda_A*(A-A0)^2 + lambda_P*(P-P0)^2
 
         Args:
-            mechanotaxis_force: Optional [fx, fy] external force vector.
+            mechanotaxis_gradient: Optional [gx, gy] substrate stiffness
+                gradient vector. When present, filopodia are biased toward
+                the gradient direction (durotaxis).
         """
-        self.update_angles()
+        self.update_angles(stiffness_gradient=mechanotaxis_gradient)
         self.update_shape()
         self.estimate_velocity()
-
-        # Apply mechanotaxis bias
-        if mechanotaxis_force is not None:
-            self.velocity += mechanotaxis_force
-
         self.update_position()
         self.compute_energy()
 

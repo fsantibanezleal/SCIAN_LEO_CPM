@@ -63,20 +63,25 @@ def test_evl_progression():
 
 
 def test_mechanotaxis_drift():
-    """Verify cells drift in mechanotaxis direction over many steps."""
+    """Verify cells drift in mechanotaxis direction over many steps.
+
+    The durotactic model biases filopodial angles toward the stiffness
+    gradient, which indirectly steers cell velocity. This requires more
+    steps and stronger gradient than a direct-force model.
+    """
     env = EnvironmentSystem({
-        'width': 400, 'height': 350,
+        'width': 800, 'height': 700,
         'evl_enabled': False, 'deb_enabled': False,
         'mechanotaxis_enabled': True,
         'stiffness_gradient': [0.0, -1.0],
-        'stiffness_gradient_strength': 0.01,
+        'stiffness_gradient_strength': 0.5,
     })
-    agents = AgentsSystem({'num_filopodia': 2, 'velocity_scale': 0.001})
+    agents = AgentsSystem({'num_filopodia': 6, 'velocity_scale': 0.01})
     agents.initialize(env, num_dfcs=5, radius=8.0)
 
     initial_y = np.mean([c.position[1] for c in agents.cells])
 
-    for _ in range(100):
+    for _ in range(300):
         env.update()
         agents.update(env)
 

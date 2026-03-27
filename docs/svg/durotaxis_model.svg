@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="500" viewBox="0 0 600 500">
+  <defs>
+    <marker id="arrMagenta" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ff44cc"/>
+    </marker>
+    <marker id="arrOrange" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#ff8844"/>
+    </marker>
+    <marker id="arrCyanD" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#00ddff"/>
+    </marker>
+    <marker id="arrGreenD" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#44ee88"/>
+    </marker>
+    <linearGradient id="stiffnessGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#223344;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#5588aa;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background with stiffness gradient -->
+  <rect width="600" height="500" fill="#1a1a2e" rx="8"/>
+
+  <!-- Stiffness gradient band -->
+  <rect x="40" y="60" width="520" height="380" fill="url(#stiffnessGrad)" rx="6" opacity="0.4"/>
+  <text x="60" y="85" fill="#6688aa" font-family="Arial, sans-serif" font-size="11">SOFT</text>
+  <text x="510" y="85" fill="#99ccdd" font-family="Arial, sans-serif" font-size="11">STIFF</text>
+
+  <!-- Title -->
+  <text x="300" y="35" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="18" font-weight="bold">Durotaxis: Sinusoidal Torque Model</text>
+
+  <!-- Stiffness gradient arrow -->
+  <line x1="120" y1="440" x2="480" y2="440" stroke="#ff44cc" stroke-width="2.5" marker-end="url(#arrMagenta)"/>
+  <text x="300" y="470" text-anchor="middle" fill="#ff44cc" font-family="Arial, sans-serif" font-size="14" font-weight="bold">grad E (stiffness gradient)</text>
+
+  <!-- Cell body -->
+  <circle cx="280" cy="250" r="70" fill="none" stroke="#8899bb" stroke-width="2.5"/>
+  <circle cx="280" cy="250" r="3" fill="#ffcc00"/>
+  <text x="268" y="243" fill="#ffcc00" font-family="Arial, sans-serif" font-size="10">cell</text>
+
+  <!-- Filopodium 1: pointing RIGHT (aligned with gradient) - NO torque -->
+  <line x1="280" y1="250" x2="390" y2="250" stroke="#44ee88" stroke-width="2.5" marker-end="url(#arrGreenD)"/>
+  <text x="395" y="246" fill="#44ee88" font-family="Arial, sans-serif" font-size="11">F1: aligned</text>
+  <text x="395" y="260" fill="#44ee88" font-family="Arial, sans-serif" font-size="10">torque ~ 0</text>
+
+  <!-- Filopodium 2: pointing UP (perpendicular) - MAXIMUM torque clockwise toward right -->
+  <line x1="280" y1="250" x2="280" y2="145" stroke="#44ee88" stroke-width="2.5" marker-end="url(#arrGreenD)"/>
+  <text x="290" y="138" fill="#44ee88" font-family="Arial, sans-serif" font-size="11">F2: perpendicular</text>
+  <!-- Torque arc arrow (clockwise, toward right) -->
+  <path d="M 280 160 A 30 30 0 0 1 310 175" fill="none" stroke="#ff8844" stroke-width="2.5" marker-end="url(#arrOrange)"/>
+  <text x="315" y="158" fill="#ff8844" font-family="Arial, sans-serif" font-size="10" font-weight="bold">MAX torque</text>
+
+  <!-- Filopodium 3: pointing LEFT (anti-aligned) - NO torque (sin(pi)=0, unstable equilibrium) -->
+  <line x1="280" y1="250" x2="175" y2="250" stroke="#44ee88" stroke-width="2" marker-end="url(#arrGreenD)"/>
+  <text x="100" y="246" fill="#44ee88" font-family="Arial, sans-serif" font-size="11">F3: anti-aligned</text>
+  <text x="110" y="260" fill="#ff8844" font-family="Arial, sans-serif" font-size="10">unstable: sin(pi)=0</text>
+
+  <!-- Filopodium 4: pointing DOWN-LEFT (oblique) - medium torque -->
+  <line x1="280" y1="250" x2="210" y2="340" stroke="#44ee88" stroke-width="2" marker-end="url(#arrGreenD)"/>
+  <text x="140" y="350" fill="#44ee88" font-family="Arial, sans-serif" font-size="11">F4: oblique</text>
+  <!-- Torque arc arrow (counterclockwise, toward right) -->
+  <path d="M 225 325 A 25 25 0 0 0 240 350" fill="none" stroke="#ff8844" stroke-width="2.5" marker-end="url(#arrOrange)"/>
+  <text x="245" y="365" fill="#ff8844" font-family="Arial, sans-serif" font-size="10">medium torque</text>
+
+  <!-- Formula box -->
+  <rect x="50" y="390" width="500" height="35" fill="#111122" rx="4" stroke="#333355" stroke-width="1"/>
+  <text x="300" y="412" text-anchor="middle" fill="#ccccee" font-family="monospace" font-size="13">d_theta_duro = alpha * |grad E| * sin(theta_gradient - theta_j)</text>
+
+  <!-- Legend -->
+  <line x1="50" y1="105" x2="75" y2="105" stroke="#44ee88" stroke-width="2.5"/>
+  <text x="80" y="109" fill="#aaaacc" font-family="Arial, sans-serif" font-size="11">filopodium direction</text>
+  <path d="M 50 125 A 10 10 0 0 1 70 125" fill="none" stroke="#ff8844" stroke-width="2.5"/>
+  <text x="80" y="129" fill="#aaaacc" font-family="Arial, sans-serif" font-size="11">durotactic torque</text>
+</svg>
