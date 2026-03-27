@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400">
+  <defs>
+    <style>
+      text { font-family: 'Segoe UI', Arial, sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="400" fill="#0d1117"/>
+
+  <!-- Title -->
+  <text x="400" y="30" fill="#e6edf3" font-size="16" font-weight="bold" text-anchor="middle">Comparison of Cell Modeling Approaches</text>
+
+  <!-- Column headers -->
+  <text x="100" y="70" fill="#58a6ff" font-size="12" font-weight="bold" text-anchor="middle">Classical CPM</text>
+  <text x="300" y="70" fill="#58a6ff" font-size="12" font-weight="bold" text-anchor="middle">Vertex Model</text>
+  <text x="500" y="70" fill="#58a6ff" font-size="12" font-weight="bold" text-anchor="middle">Phase Field</text>
+  <text x="700" y="70" fill="#58a6ff" font-size="12" font-weight="bold" text-anchor="middle">This Model (ABM)</text>
+
+  <!-- CPM: Lattice-based pixelated cell -->
+  <g transform="translate(50, 85)">
+    <!-- Grid -->
+    <rect x="0" y="0" width="100" height="100" fill="none" stroke="#30363d" stroke-width="0.5"/>
+    <!-- Pixelated cell shape -->
+    <rect x="20" y="20" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="30" y="20" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="40" y="20" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="50" y="20" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="10" y="30" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="20" y="30" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="30" y="30" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="40" y="30" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="50" y="30" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="60" y="30" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="10" y="40" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="20" y="40" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="30" y="40" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="40" y="40" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="50" y="40" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="60" y="40" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="70" y="40" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="20" y="50" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="30" y="50" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="40" y="50" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="50" y="50" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="60" y="50" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="20" y="60" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="30" y="60" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="40" y="60" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="50" y="60" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="30" y="70" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <rect x="40" y="70" width="10" height="10" fill="#3fb950" opacity="0.7"/>
+    <!-- Grid lines -->
+    <line x1="0" y1="10" x2="100" y2="10" stroke="#30363d" stroke-width="0.3"/>
+    <line x1="0" y1="20" x2="100" y2="20" stroke="#30363d" stroke-width="0.3"/>
+    <line x1="0" y1="30" x2="100" y2="30" stroke="#30363d" stroke-width="0.3"/>
+    <line x1="0" y1="40" x2="100" y2="40" stroke="#30363d" stroke-width="0.3"/>
+    <line x1="0" y1="50" x2="100" y2="50" stroke="#30363d" stroke-width="0.3"/>
+    <line x1="0" y1="60" x2="100" y2="60" stroke="#30363d" stroke-width="0.3"/>
+    <line x1="0" y1="70" x2="100" y2="70" stroke="#30363d" stroke-width="0.3"/>
+    <line x1="0" y1="80" x2="100" y2="80" stroke="#30363d" stroke-width="0.3"/>
+    <line x1="0" y1="90" x2="100" y2="90" stroke="#30363d" stroke-width="0.3"/>
+    <line x1="10" y1="0" x2="10" y2="100" stroke="#30363d" stroke-width="0.3"/>
+    <line x1="20" y1="0" x2="20" y2="100" stroke="#30363d" stroke-width="0.3"/>
+    <line x1="30" y1="0" x2="30" y2="100" stroke="#30363d" stroke-width="0.3"/>
+    <line x1="40" y1="0" x2="40" y2="100" stroke="#30363d" stroke-width="0.3"/>
+    <line x1="50" y1="0" x2="50" y2="100" stroke="#30363d" stroke-width="0.3"/>
+    <line x1="60" y1="0" x2="60" y2="100" stroke="#30363d" stroke-width="0.3"/>
+    <line x1="70" y1="0" x2="70" y2="100" stroke="#30363d" stroke-width="0.3"/>
+    <line x1="80" y1="0" x2="80" y2="100" stroke="#30363d" stroke-width="0.3"/>
+    <line x1="90" y1="0" x2="90" y2="100" stroke="#30363d" stroke-width="0.3"/>
+    <text x="50" y="115" fill="#8b949e" font-size="9" text-anchor="middle">Lattice pixels</text>
+    <text x="50" y="126" fill="#8b949e" font-size="9" text-anchor="middle">Monte Carlo</text>
+  </g>
+
+  <!-- Vertex Model: Polygon mesh -->
+  <g transform="translate(250, 85)">
+    <!-- Cell 1 (hexagonal) -->
+    <polygon points="50,15 75,30 75,55 50,70 25,55 25,30" fill="none" stroke="#da3633" stroke-width="1.5"/>
+    <circle cx="50" cy="15" r="2.5" fill="#f0883e"/>
+    <circle cx="75" cy="30" r="2.5" fill="#f0883e"/>
+    <circle cx="75" cy="55" r="2.5" fill="#f0883e"/>
+    <circle cx="50" cy="70" r="2.5" fill="#f0883e"/>
+    <circle cx="25" cy="55" r="2.5" fill="#f0883e"/>
+    <circle cx="25" cy="30" r="2.5" fill="#f0883e"/>
+    <!-- Neighboring cell edges -->
+    <line x1="75" y1="30" x2="100" y2="20" stroke="#da3633" stroke-width="1" opacity="0.5"/>
+    <line x1="75" y1="55" x2="100" y2="65" stroke="#da3633" stroke-width="1" opacity="0.5"/>
+    <line x1="25" y1="30" x2="0" y2="20" stroke="#da3633" stroke-width="1" opacity="0.5"/>
+    <line x1="25" y1="55" x2="0" y2="65" stroke="#da3633" stroke-width="1" opacity="0.5"/>
+    <line x1="50" y1="70" x2="50" y2="95" stroke="#da3633" stroke-width="1" opacity="0.5"/>
+    <line x1="50" y1="15" x2="50" y2="0" stroke="#da3633" stroke-width="1" opacity="0.5"/>
+    <text x="50" y="115" fill="#8b949e" font-size="9" text-anchor="middle">Shared vertices</text>
+    <text x="50" y="126" fill="#8b949e" font-size="9" text-anchor="middle">Energy minimization</text>
+  </g>
+
+  <!-- Phase Field: Continuous field with diffuse boundary -->
+  <g transform="translate(450, 85)">
+    <!-- Gradient representing the phase field -->
+    <defs>
+      <radialGradient id="phaseGrad" cx="50%" cy="45%" r="40%">
+        <stop offset="0%" stop-color="#a371f7" stop-opacity="0.9"/>
+        <stop offset="60%" stop-color="#a371f7" stop-opacity="0.4"/>
+        <stop offset="80%" stop-color="#a371f7" stop-opacity="0.15"/>
+        <stop offset="100%" stop-color="#a371f7" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect x="0" y="0" width="100" height="100" fill="url(#phaseGrad)"/>
+    <!-- Contour lines -->
+    <ellipse cx="50" cy="45" rx="30" ry="28" fill="none" stroke="#a371f7" stroke-width="1" stroke-dasharray="3,2"/>
+    <ellipse cx="50" cy="45" rx="20" ry="18" fill="none" stroke="#a371f7" stroke-width="1.5"/>
+    <text x="50" y="115" fill="#8b949e" font-size="9" text-anchor="middle">Continuous field</text>
+    <text x="50" y="126" fill="#8b949e" font-size="9" text-anchor="middle">PDE evolution</text>
+  </g>
+
+  <!-- This Model: Gaussian filopodia -->
+  <g transform="translate(650, 85)">
+    <!-- Cell body -->
+    <circle cx="50" cy="50" r="25" fill="none" stroke="#58a6ff" stroke-width="1" stroke-dasharray="3,2" opacity="0.5"/>
+    <!-- Deformed contour with filopodia bumps -->
+    <path d="M 50,18 C 58,18 68,22 75,30 C 80,38 78,45 77,50 C 76,58 72,68 65,73 C 58,78 52,76 50,75 C 44,76 35,72 28,65 C 22,58 20,50 22,42 C 24,34 30,25 38,20 C 43,17 47,18 50,18 Z"
+          fill="none" stroke="#58a6ff" stroke-width="2"/>
+    <!-- Filopodia arrows -->
+    <line x1="50" y1="50" x2="50" y2="18" stroke="#f0883e" stroke-width="1.5" opacity="0.7"/>
+    <line x1="50" y1="50" x2="77" y2="50" stroke="#f0883e" stroke-width="1.5" opacity="0.7"/>
+    <line x1="50" y1="50" x2="65" y2="73" stroke="#f0883e" stroke-width="1" opacity="0.5"/>
+    <line x1="50" y1="50" x2="22" y2="42" stroke="#f0883e" stroke-width="1" opacity="0.5"/>
+    <!-- Center dot -->
+    <circle cx="50" cy="50" r="2.5" fill="#f0883e"/>
+    <text x="50" y="115" fill="#8b949e" font-size="9" text-anchor="middle">Gaussian envelope</text>
+    <text x="50" y="126" fill="#8b949e" font-size="9" text-anchor="middle">Direct computation</text>
+  </g>
+
+  <!-- Summary labels at bottom -->
+  <g transform="translate(0, 230)">
+    <rect x="20" y="0" width="760" height="160" rx="6" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+    <text x="40" y="25" fill="#e6edf3" font-size="11" font-weight="bold">Key trade-offs:</text>
+
+    <circle cx="50" cy="45" r="4" fill="#3fb950"/>
+    <text x="62" y="49" fill="#e6edf3" font-size="10">CPM: Most flexible topology (division, rearrangement, sorting), but lattice artifacts and moderate speed.</text>
+
+    <circle cx="50" cy="70" r="4" fill="#da3633"/>
+    <text x="62" y="74" fill="#e6edf3" font-size="10">Vertex: Very efficient for packed epithelia (10k+ cells), but cannot model isolated/freely migrating cells.</text>
+
+    <circle cx="50" cy="95" r="4" fill="#a371f7"/>
+    <text x="62" y="99" fill="#e6edf3" font-size="10">Phase Field: Richest subcellular detail (protrusions, shape instabilities), but high cost limits cell count.</text>
+
+    <circle cx="50" cy="120" r="4" fill="#58a6ff"/>
+    <text x="62" y="124" fill="#e6edf3" font-size="10">This Model: Explicit filopodia parameterization enables fast prototyping of migration hypotheses.</text>
+
+    <text x="40" y="150" fill="#8b949e" font-size="9">Comparison based on: Graner &amp; Glazier (1992), Kafer et al. (2007), Nonomura (2012), and this work.</text>
+  </g>
+</svg>
