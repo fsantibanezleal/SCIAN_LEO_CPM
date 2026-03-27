@@ -1,19 +1,46 @@
 """
 Agent-based system managing populations of DFC, DEB, and EVL cells.
 
-Models collective cell behavior during zebrafish embryogenesis including:
-- DFC (Dorsal Forerunner Cells): migratory cells with filopodia
-- DEB (Dorsal Epiblast Boundary): lower tissue margin
-- EVL (Enveloping Layer): upper tissue boundary
+===== SYSTEM ARCHITECTURE =====
 
-The system handles cell initialization in grid layouts, collision detection
-and resolution, cell proliferation, and tissue boundary dynamics.
+The AgentsSystem manages the full simulation pipeline per time step:
+
+    +-----------------------------------------------------+
+    |  For each active cell:                              |
+    |    1. update_angles (random walk + durotaxis)       |
+    |    2. update_shape  (viscoelastic relaxation)       |
+    |    3. estimate_velocity (filopodial propulsion)     |
+    |    4. update_position (Euler integration)           |
+    |    5. compute_energy (Hamiltonian monitoring)       |
+    +-----------------------------------------------------+
+    +-----------------------------------------------------+
+    |  Collective interactions:                           |
+    |    6. Resolve collisions (two-pass: soft + hard)    |
+    |    7. Apply adhesion (differential adhesion forces) |
+    |    8. Enforce boundaries (walls, EVL, DEB)          |
+    |    9. Check proliferation (Hertwig's rule division) |
+    +-----------------------------------------------------+
+
+===== COLLISION ALGORITHM =====
+
+Two-pass collision resolution prevents oscillations:
+  Forward pass (i < j):  Soft push (factor=1.0) -- allows partial overlap
+  Backward pass (i > j): Hard push (factor=0.0) -- ensures full separation
+
+This is equivalent to Gauss-Seidel relaxation with forward-backward sweep.
+
+===== BIOLOGICAL CONTEXT =====
+
+Models DFC (Dorsal Forerunner Cell) migration during zebrafish epiboly:
+- ~20-30 DFCs form a cohesive cluster
+- Cluster migrates collectively toward the vegetal pole
+- EVL boundary drives migration via apical attachments
+- DEB boundary constrains the cluster from below
+- DFCs eventually form Kupffer's vesicle (left-right organizer)
 
 References:
-    - Oteiza et al. (2015), Cell collectivity regulation within migrating
-      cell cluster during Kupffer's vesicle formation
-    - Ablooglu et al. (eLife 2021), Apical contacts stemming from incomplete
-      delamination guide progenitor cell allocation
+    - Oteiza et al. (2015), Cell collectivity regulation during KV formation
+    - Ablooglu et al. (eLife 2021), DFC apical contacts and dragging mechanism
 """
 
 import numpy as np
@@ -135,19 +162,22 @@ class AgentsSystem:
         if not self.running:
             return
 
-        # Step 1: Update each cell (with optional mechanotaxis force)
+        # Step 1: Update each cell (with optional stiffness gradient for durotaxis)
         for cell in self.cells:
             if cell.active:
-                mechano_force = env.get_mechanotaxis_force(cell.position) if hasattr(env, 'get_mechanotaxis_force') else None
-                cell.simulation_step(mechanotaxis_force=mechano_force)
+                gradient = env.get_stiffness_gradient(cell.position) if hasattr(env, 'get_stiffness_gradient') else None
+                cell.simulation_step(mechanotaxis_gradient=gradient)
 
         # Step 2: Resolve collisions (two-pass)
         self._resolve_collisions()
 
-        # Step 3: Apply boundary constraints
+        # Step 3: Apply cell-cell adhesion
+        self._apply_adhesion()
+
+        # Step 4: Apply boundary constraints
         self._apply_boundaries(env)
 
-        # Step 4: Check proliferation
+        # Step 5: Check proliferation
         if self.config.get("proliferation_enabled", False):
             self._check_proliferation(env)
 
@@ -243,40 +273,109 @@ class AgentsSystem:
             if env.deb_enabled and cell.position[1] > env.deb_position:
                 cell.position[1] = env.deb_position - r
 
+    def _apply_adhesion(self, strength=0.002, range_factor=3.0):
+        """Apply pairwise cell-cell adhesion forces.
+
+        ===== DIFFERENTIAL ADHESION MODEL =====
+
+        Cells within range experience attractive forces mediated by
+        cadherin-based adhesion:
+
+            F_adh = s * (d - d_contact) / (d_max - d_contact) * d_hat
+
+        for d_contact < d < d_max, where:
+            s          = adhesion strength parameter
+            d          = center-to-center distance
+            d_contact  = sum of effective radii (touching distance)
+            d_max      = range_factor * d_contact
+            d_hat      = unit vector from cell i toward cell j
+
+        This creates cohesive cell clusters, as observed in DFC collectives
+        during zebrafish epiboly (Oteiza et al., 2015).
+        """
+        active = [c for c in self.cells if c.active]
+        n = len(active)
+
+        for i in range(n):
+            for j in range(i + 1, n):
+                dist = np.linalg.norm(active[i].position - active[j].position)
+                r_contact = active[i].base_radius + active[j].base_radius
+                r_max = r_contact * range_factor
+
+                if r_contact < dist < r_max:
+                    # Linear attractive force
+                    force_mag = strength * (dist - r_contact) / (r_max - r_contact)
+                    direction = (active[j].position - active[i].position) / dist
+
+                    active[i].position += direction * force_mag
+                    active[j].position -= direction * force_mag
+
     def _check_proliferation(self, env):
-        """Add new cells according to proliferation schedule.
+        """Cell division along the longest axis of the mother cell.
 
-        Creates new cells at random valid positions within the DFC region.
-        A position is valid if it does not overlap with any existing cell.
-        The proliferation rate depends on the current environment stage.
+        ===== BIOLOGICAL MODEL =====
 
-        Args:
-            env: EnvironmentSystem instance with proliferation parameters.
+        Cell division in epithelial tissues follows Hertwig's rule: the
+        mitotic spindle aligns with the cell's longest axis, producing
+        two daughter cells side by side.
+
+        The division process:
+        1. Select a cell probabilistically (rate depends on environment stage)
+        2. Compute the cell's principal axis (direction of maximum extent)
+        3. Place two daughters at +/-offset along that axis
+        4. Each daughter inherits half the mother's area (reduced radius)
+
+        This replaces the original random-spawn model, which placed new
+        cells at arbitrary positions unrelated to any parent cell.
         """
         if env.proliferation_stage >= len(env.proliferation_rates):
             return
 
-        target = int(
-            len(self.cells) * (1 + env.proliferation_rates[env.proliferation_stage])
-        )
+        rate = env.proliferation_rates[env.proliferation_stage]
+        if rate <= 0 or len(self.cells) >= 1000:
+            return
 
-        while len(self.cells) < target and len(self.cells) < 1000:
-            # Find valid position
-            for _ in range(100):
-                x = np.random.uniform(env.dfc_region[0], env.dfc_region[2])
-                y = np.random.uniform(env.dfc_region[1], env.dfc_region[3])
+        # Probabilistic division: each cell has a chance to divide
+        for i in range(len(self.cells) - 1, -1, -1):  # iterate backwards for safe append
+            cell = self.cells[i]
+            if not cell.active:
+                continue
+            if np.random.random() > rate * 0.01:  # Small per-step probability
+                continue
 
-                valid = all(
-                    np.linalg.norm(np.array([x, y]) - c.position) > 2 * c.base_radius
-                    for c in self.cells
-                    if c.active
-                )
+            # Find the cell's longest axis from its contour
+            dx = cell.contour[:, 0] - cell.position[0]
+            dy = cell.contour[:, 1] - cell.position[1]
+            # Use the angle of the filopodium with maximum amplitude
+            # as the division axis (approximation of longest axis)
+            max_filo_idx = np.argmax(cell.amplitudes)
+            div_angle = cell.angles[max_filo_idx]
 
-                if valid:
-                    new_cell = CellWM([x, y], radius=self.cells[0].base_radius)
-                    new_cell.is_offspring = True
-                    self.cells.append(new_cell)
-                    break
+            # Offset for daughter cells: half the base radius
+            offset = cell.base_radius * 0.6
+            daughter_radius = cell.base_radius * 0.85  # Slightly smaller
+
+            pos1 = cell.position + offset * np.array([np.cos(div_angle), np.sin(div_angle)])
+            pos2 = cell.position - offset * np.array([np.cos(div_angle), np.sin(div_angle)])
+
+            # Create daughters
+            d1 = CellWM(pos1, radius=daughter_radius,
+                         num_filo=cell.num_filo, num_contour=cell.num_contour)
+            d1.is_offspring = True
+            d1.velocity_scale = cell.velocity_scale
+
+            d2 = CellWM(pos2, radius=daughter_radius,
+                         num_filo=cell.num_filo, num_contour=cell.num_contour)
+            d2.is_offspring = True
+            d2.velocity_scale = cell.velocity_scale
+
+            # Deactivate mother, add daughters
+            cell.active = False
+            self.cells.append(d1)
+            self.cells.append(d2)
+
+            if len(self.cells) >= 1000:
+                break
 
     def get_state(self):
         """Return full system state for WebSocket transmission.
