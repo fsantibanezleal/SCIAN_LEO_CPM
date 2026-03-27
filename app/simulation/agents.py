@@ -274,7 +274,7 @@ class AgentsSystem:
                 cell.position[1] = env.deb_position - r
 
     def _apply_adhesion(self, strength=0.002, range_factor=3.0):
-        """Apply pairwise cell-cell adhesion forces.
+        """Vectorized differential adhesion using NumPy pairwise distances.
 
         ===== DIFFERENTIAL ADHESION MODEL =====
 
@@ -295,20 +295,47 @@ class AgentsSystem:
         """
         active = [c for c in self.cells if c.active]
         n = len(active)
+        if n < 2:
+            return
 
-        for i in range(n):
-            for j in range(i + 1, n):
-                dist = np.linalg.norm(active[i].position - active[j].position)
-                r_contact = active[i].base_radius + active[j].base_radius
-                r_max = r_contact * range_factor
+        # Build position matrix (n, 2)
+        positions = np.array([c.position for c in active])
+        radii = np.array([c.base_radius for c in active])
 
-                if r_contact < dist < r_max:
-                    # Linear attractive force
-                    force_mag = strength * (dist - r_contact) / (r_max - r_contact)
-                    direction = (active[j].position - active[i].position) / dist
+        # Pairwise distances (n, n) -- vectorized
+        diff = positions[:, None, :] - positions[None, :, :]  # (n, n, 2)
+        dists = np.linalg.norm(diff, axis=2)  # (n, n)
 
-                    active[i].position += direction * force_mag
-                    active[j].position -= direction * force_mag
+        # Contact and max range matrices
+        r_contact = radii[:, None] + radii[None, :]  # (n, n)
+        r_max = r_contact * range_factor
+
+        # Adhesion mask: between contact and max range, upper triangle only
+        mask = (dists > r_contact) & (dists < r_max) & (np.triu(np.ones((n, n), dtype=bool), k=1))
+
+        if not np.any(mask):
+            return
+
+        # Force magnitude (n, n) -- only where mask is True
+        force_mag = np.zeros((n, n))
+        force_mag[mask] = strength * (dists[mask] - r_contact[mask]) / (r_max[mask] - r_contact[mask])
+
+        # Direction unit vectors (n, n, 2)
+        direction = np.zeros_like(diff)
+        nonzero = dists > 1e-10
+        direction[nonzero] = diff[nonzero] / dists[nonzero, None]
+
+        # Force vectors (n, n, 2)
+        forces = force_mag[:, :, None] * direction  # (n, n, 2)
+
+        # Net force per cell: sum over interaction partners
+        # Cell i is pulled toward j: +forces[i,j]
+        # Cell j is pulled toward i: -forces[i,j] (Newton's 3rd law via upper triangle)
+        net_force = forces.sum(axis=1) - forces.sum(axis=0)  # (n, 2)
+
+        # Apply
+        for i, cell in enumerate(active):
+            cell.position += net_force[i]
 
     def _check_proliferation(self, env):
         """Cell division along the longest axis of the mother cell.
