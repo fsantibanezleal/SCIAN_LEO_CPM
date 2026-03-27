@@ -4,6 +4,7 @@ Validates end-to-end behavior: multiple steps with EVL/DEB boundaries
 active, cell boundary enforcement, and EVL stage progression.
 """
 
+import numpy as np
 import sys
 import os
 
@@ -61,7 +62,38 @@ def test_evl_progression():
     print("PASS: test_evl_progression")
 
 
+def test_mechanotaxis_drift():
+    """Verify cells drift in mechanotaxis direction over many steps.
+
+    The durotactic model biases filopodial angles toward the stiffness
+    gradient, which indirectly steers cell velocity. This requires more
+    steps and stronger gradient than a direct-force model.
+    """
+    env = EnvironmentSystem({
+        'width': 800, 'height': 700,
+        'evl_enabled': False, 'deb_enabled': False,
+        'mechanotaxis_enabled': True,
+        'stiffness_gradient': [0.0, -1.0],
+        'stiffness_gradient_strength': 0.5,
+    })
+    agents = AgentsSystem({'num_filopodia': 6, 'velocity_scale': 0.01})
+    agents.initialize(env, num_dfcs=5, radius=8.0)
+
+    initial_y = np.mean([c.position[1] for c in agents.cells])
+
+    for _ in range(300):
+        env.update()
+        agents.update(env)
+
+    final_y = np.mean([c.position[1] for c in agents.cells])
+
+    # Cells should have drifted downward (negative y direction from gradient)
+    assert final_y < initial_y, f"Cells should drift down: initial={initial_y:.1f}, final={final_y:.1f}"
+    print("PASS: test_mechanotaxis_drift")
+
+
 if __name__ == "__main__":
     test_full_simulation()
     test_evl_progression()
+    test_mechanotaxis_drift()
     print("\nAll integration tests passed!")

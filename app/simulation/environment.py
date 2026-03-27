@@ -139,26 +139,36 @@ class EnvironmentSystem:
                 if self.proliferation_stage < len(self.proliferation_rates) - 1:
                     self.proliferation_stage += 1
 
-    def get_mechanotaxis_force(self, position):
-        """Compute mechanotactic bias force at a given position.
+    def get_stiffness_gradient(self, position):
+        """Compute the substrate stiffness gradient at a given position.
 
-        Cells in a stiffness gradient experience durotaxis: migration
-        toward stiffer substrate regions. The force is modeled as a
-        constant directional bias proportional to the gradient strength.
+        ===== DUROTAXIS MODEL =====
 
-        F_mechano = strength * gradient_direction
+        The substrate has a linear stiffness field:
+            E(x, y) = E0 + grad_E . (x, y)
 
-        This simplified model captures the key phenomenology without
-        requiring a full finite-element substrate model.
+        where grad_E is the constant stiffness gradient vector. The gradient
+        direction points toward stiffer regions. Cells sense this gradient
+        through focal adhesion mechanosensing and bias their filopodial
+        activity accordingly.
+
+        This simplified linear model captures the essential phenomenology
+        of durotaxis without requiring a full finite-element substrate
+        simulation (cf. Rens & Merks, iScience 2020).
+
+        A position-dependent gradient could be implemented by replacing
+        the constant gradient with a function E(x,y) and computing
+        grad_E = (dE/dx, dE/dy) numerically.
 
         Args:
-            position: Cell center [x, y] coordinates.
+            position: Cell center [x, y] in spatial coordinates.
 
         Returns:
-            Force vector [fx, fy] for mechanotactic bias.
+            Gradient vector [dE/dx, dE/dy]. None if mechanotaxis
+            is disabled.
         """
         if not self.mechanotaxis_enabled:
-            return np.zeros(2)
+            return None
         return self.stiffness_gradient_strength * self.stiffness_gradient_direction
 
     def get_state(self):

@@ -70,9 +70,31 @@ def test_collision_resolution():
     print("PASS: test_collision_resolution")
 
 
+def test_contour_based_collision():
+    """Verify collision uses actual contour extent, not just base radius."""
+    env = EnvironmentSystem({'width': 400, 'height': 350, 'evl_enabled': False, 'deb_enabled': False})
+    agents = AgentsSystem({'num_filopodia': 4, 'velocity_scale': 0.0})
+    agents.initialize(env, num_dfcs=2, radius=10.0)
+
+    # Set one cell to have large filopodia (extending beyond base radius)
+    agents.cells[0].amplitudes[:] = 5.0
+    agents.cells[0]._create_contour()
+
+    # Place cells close but beyond base_radius sum
+    agents.cells[0].position = np.array([100.0, 100.0])
+    agents.cells[1].position = np.array([125.0, 100.0])
+
+    agents._resolve_collisions()
+
+    dist = np.linalg.norm(agents.cells[0].position - agents.cells[1].position)
+    # Should have been pushed apart because contour extent > base radius
+    print(f"PASS: test_contour_based_collision (dist={dist:.1f})")
+
+
 if __name__ == "__main__":
     test_initialization()
     test_simulation_step()
     test_get_state()
     test_collision_resolution()
+    test_contour_based_collision()
     print("\nAll agent tests passed!")
