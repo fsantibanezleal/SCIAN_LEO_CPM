@@ -60,3 +60,22 @@
 - **FastAPI**: Ramirez, S. (2018-present). FastAPI framework, https://fastapi.tiangolo.com -- The web framework providing REST and WebSocket endpoints.
 - **Pydantic**: Colvin, S. (2017-present). Pydantic data validation, https://docs.pydantic.dev -- Used for request/response validation and configuration models.
 - **Uvicorn**: Encode (2018-present). Uvicorn ASGI server, https://www.uvicorn.org -- The ASGI server that runs the FastAPI application.
+
+## Vertex and Phase Field Models
+
+- **Kafer, J., Hayashi, T., Maree, A.F.M., Carthew, R.W. & Graner, F.** (2007). Cell adhesion and cortex contractility determine cell patterning in the Drosophila retina. *Proceedings of the National Academy of Sciences*, 104(47), 18549-18554. doi:10.1073/pnas.0704235104
+  -- Applied a vertex model to study cell packing in the Drosophila retina, showing that the interplay between differential adhesion and cortical contractility suffices to explain observed cell arrangements. The vertex model represents cell boundaries as a shared polygon mesh and minimizes an energy functional over vertex positions, making it highly efficient for densely packed epithelia but unable to represent isolated or freely migrating cells.
+
+- **Nonomura, M.** (2012). Study on multicellular systems using a phase field model. *PLoS ONE*, 7(4), e33501. doi:10.1371/journal.pone.0033501
+  -- Introduced a phase field approach for multicellular systems in which each cell is described by a continuous scalar field, and cell boundaries emerge as level sets of the field. The model captures complex shape dynamics (protrusion, retraction, deformation) at the cost of high computational expense per cell. This work provides the theoretical foundation for comparing phase field models against agent-based approaches like our Gaussian filopodia model.
+
+## Cell Motility and Collective Migration
+
+- **Camley, B.A. & Rappel, W.J.** (2017). Physical models of collective cell motility: from cell to tissue. *Journal of Physics D: Applied Physics*, 50(11), 113002. doi:10.1088/1361-6463/aa56fe
+  -- A comprehensive review of computational models for cell motility spanning single-cell to tissue-level scales. Covers phase field models, CPM, vertex models, particle-based models, and continuum approaches. Provides a useful taxonomy for positioning our Gaussian filopodia model within the broader landscape of cell migration simulations.
+
+- **Alert, R. & Trepat, X.** (2020). Physical models of collective cell migration. *Annual Review of Condensed Matter Physics*, 11, 77-101. doi:10.1146/annurev-conmatphys-031218-013516
+  -- Reviews the physics of collective cell migration with emphasis on the interplay between cell-cell adhesion, substrate mechanics, and active forces. Discusses how leader-follower dynamics, durotaxis, and contact inhibition of locomotion emerge from simple physical rules -- phenomena that are directly relevant to the DFC collective migration modeled in our simulator.
+
+- **Basan, M., Elgeti, J., Hannezo, E., Rappel, W.J. & Levine, H.** (2013). Alignment of cellular motility forces with tissue flow as a mechanism for efficient wound healing. *Proceedings of the National Academy of Sciences*, 110(7), 2452-2459. doi:10.1073/pnas.1219937110
+  -- Showed that cells within a migrating tissue spontaneously align their polarity with the local tissue flow, producing efficient collective migration without requiring long-range chemical signaling. This alignment mechanism is relevant to understanding how DFC clusters maintain coherent migration during epiboly, and provides theoretical support for the persistent random walk model used in our simulator.
