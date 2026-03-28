@@ -55,7 +55,7 @@ class SimControls {
      * Bind all checkbox inputs and fire change events.
      */
     _bindCheckboxes() {
-        ['evlEnabled', 'debEnabled', 'prolifEnabled',
+        ['evlEnabled', 'debEnabled', 'prolifEnabled', 'mechanoEnabled',
          'showContours', 'showCenters', 'showBoundaries', 'showGrid'].forEach(id => {
             const cb = document.getElementById(id);
             if (cb) {
@@ -86,6 +86,8 @@ class SimControls {
             evl_velocity: parseFloat(this.sliders.evlVelocity?.value || 1.5),
             deb_enabled: this.checkboxes.debEnabled?.checked ?? true,
             proliferation_enabled: this.checkboxes.prolifEnabled?.checked ?? false,
+            mechanotaxis_enabled: document.getElementById('mechanoEnabled').checked,
+            stiffness_gradient_strength: parseFloat(document.getElementById('stiffnessStrength').value),
             speed_ms: parseInt(this.sliders.simSpeed?.value || 50),
         };
     }
