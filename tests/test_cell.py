@@ -137,6 +137,57 @@ def test_vectorized_contour():
     print("PASS: test_vectorized_contour")
 
 
+def test_polarity_initialization():
+    """Verify polarity vector is initialized as unit vector matching preferred direction."""
+    cell = CellWM([100, 100], radius=10.0, num_filo=4)
+    assert hasattr(cell, 'polarity'), "Cell should have polarity attribute"
+    mag = np.linalg.norm(cell.polarity)
+    assert abs(mag - 1.0) < 1e-10, f"Polarity should be unit vector, got magnitude {mag}"
+    expected_x = np.cos(cell.preferred_direction)
+    expected_y = np.sin(cell.preferred_direction)
+    assert abs(cell.polarity[0] - expected_x) < 1e-10
+    assert abs(cell.polarity[1] - expected_y) < 1e-10
+    print("PASS: test_polarity_initialization")
+
+
+def test_contact_inhibition():
+    """Verify CIL repolarizes cell away from contact direction."""
+    cell = CellWM([100, 100], radius=10.0, num_filo=4)
+    # Polarity pointing diagonally (not aligned with contact direction)
+    cell.polarity = np.array([1.0, 1.0]) / np.sqrt(2)
+    cell.preferred_direction = np.pi / 4
+    # Other cell is directly to the right
+    other_pos = np.array([115.0, 100.0])
+    old_pol = cell.polarity.copy()
+    cell.apply_contact_inhibition(other_pos)
+    # Polarity x component should decrease (rotating away from contact at +x)
+    assert cell.polarity[0] < old_pol[0], "Polarity x should decrease (away from contact)"
+    mag = np.linalg.norm(cell.polarity)
+    assert abs(mag - 1.0) < 1e-10, "Polarity should remain unit vector"
+    print("PASS: test_contact_inhibition")
+
+
+def test_cil_no_effect_when_far():
+    """Verify CIL has no effect when cells are far apart."""
+    cell = CellWM([100, 100], radius=10.0, num_filo=4)
+    cell.polarity = np.array([1.0, 0.0])
+    old_pol = cell.polarity.copy()
+    # Other cell is very far away (> 3 * base_radius)
+    other_pos = np.array([200.0, 100.0])
+    cell.apply_contact_inhibition(other_pos)
+    assert np.allclose(cell.polarity, old_pol), "Polarity should not change for far cells"
+    print("PASS: test_cil_no_effect_when_far")
+
+
+def test_polarity_in_state():
+    """Verify polarity is included in serialized state."""
+    cell = CellWM([100, 100], radius=10.0)
+    state = cell.get_state()
+    assert 'polarity' in state, "State should include polarity"
+    assert len(state['polarity']) == 2
+    print("PASS: test_polarity_in_state")
+
+
 if __name__ == "__main__":
     test_cell_creation()
     test_contour_bounds()
@@ -148,4 +199,8 @@ if __name__ == "__main__":
     test_persistent_walk()
     test_mechanotaxis_step()
     test_vectorized_contour()
+    test_polarity_initialization()
+    test_contact_inhibition()
+    test_cil_no_effect_when_far()
+    test_polarity_in_state()
     print("\nAll cell tests passed!")

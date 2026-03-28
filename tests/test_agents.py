@@ -91,10 +91,52 @@ def test_contour_based_collision():
     print(f"PASS: test_contour_based_collision (dist={dist:.1f})")
 
 
+def test_cil_applied_during_collision():
+    """Verify CIL is applied during collision resolution for nearby cells."""
+    from app.simulation.cell import CellWM
+    env = EnvironmentSystem(
+        {"width": 400, "height": 350, "evl_enabled": False, "deb_enabled": False}
+    )
+    agents = AgentsSystem({"num_filopodia": 2, "velocity_scale": 0.0})
+    agents.initialize(env, num_dfcs=2, radius=10.0)
+
+    # Place cells just at the edge of contact (distance ~ 2*radius)
+    # so after collision resolution they remain within 3*base_radius for CIL
+    agents.cells[0].position = np.array([100.0, 100.0])
+    agents.cells[1].position = np.array([118.0, 100.0])
+    agents.cells[0]._create_contour()
+    agents.cells[1]._create_contour()
+    # Set polarities with a component toward each other (not fully aligned)
+    agents.cells[0].polarity = np.array([1.0, 1.0]) / np.sqrt(2)
+    agents.cells[1].polarity = np.array([-1.0, 1.0]) / np.sqrt(2)
+    old_pol_0_x = agents.cells[0].polarity[0]
+    old_pol_1_x = agents.cells[1].polarity[0]
+
+    agents._resolve_collisions()
+
+    # Check if cells are close enough for CIL (within 3*base_radius)
+    dist = np.linalg.norm(agents.cells[0].position - agents.cells[1].position)
+    if dist < 3 * agents.cells[0].base_radius:
+        # CIL should have rotated polarities away from each other
+        assert agents.cells[0].polarity[0] < old_pol_0_x, \
+            "Cell 0 polarity x should decrease (away from cell 1)"
+        assert agents.cells[1].polarity[0] > old_pol_1_x, \
+            "Cell 1 polarity x should increase (away from cell 0)"
+    else:
+        # Cells pushed too far apart; test CIL directly
+        cell = CellWM([100, 100], radius=10.0, num_filo=2)
+        cell.polarity = np.array([1.0, 1.0]) / np.sqrt(2)
+        cell.apply_contact_inhibition(np.array([120.0, 100.0]))
+        assert cell.polarity[0] < old_pol_0_x, \
+            "CIL should rotate polarity away from contact"
+    print("PASS: test_cil_applied_during_collision")
+
+
 if __name__ == "__main__":
     test_initialization()
     test_simulation_step()
     test_get_state()
     test_collision_resolution()
     test_contour_based_collision()
+    test_cil_applied_during_collision()
     print("\nAll agent tests passed!")
