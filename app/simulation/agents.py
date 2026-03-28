@@ -203,6 +203,14 @@ class AgentsSystem:
             for j in range(i):
                 self._fix_overlap(active[i], active[j], factor=0.0)
 
+        # Apply Contact Inhibition of Locomotion (CIL) for colliding pairs
+        for i in range(n):
+            for j in range(i + 1, n):
+                dist = np.linalg.norm(active[i].position - active[j].position)
+                if dist < 3 * active[i].base_radius:
+                    active[i].apply_contact_inhibition(active[j].position)
+                    active[j].apply_contact_inhibition(active[i].position)
+
     def _fix_overlap(self, cell_a, cell_b, factor=0.0):
         """Resolve overlap between two cells using centroid-based repulsion.
 
