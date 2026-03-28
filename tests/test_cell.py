@@ -188,6 +188,74 @@ def test_polarity_in_state():
     print("PASS: test_polarity_in_state")
 
 
+def test_adhesion_grows_with_amplitude():
+    """Verify adhesion strength grows when filopodia have high amplitude."""
+    cell = CellWM([100, 100], radius=10.0, num_filo=4)
+    cell.amplitudes[:] = 5.0  # high amplitude
+    cell.adhesion_strength[:] = 0.0
+    cell.update_adhesions(substrate_stiffness=1.0)
+    assert np.all(cell.adhesion_strength > 0), \
+        "Adhesion should grow with high amplitude"
+    print("PASS: test_adhesion_grows_with_amplitude")
+
+
+def test_adhesion_decays_without_amplitude():
+    """Verify adhesion strength decays when filopodia retract."""
+    cell = CellWM([100, 100], radius=10.0, num_filo=4)
+    cell.adhesion_strength[:] = 0.8
+    cell.adhesion_lifetime[:] = 10
+    cell.amplitudes[:] = 0.01  # very low amplitude (below 0.05 * base_radius = 0.5)
+    cell.update_adhesions(substrate_stiffness=1.0)
+    # Retracted filopodia should have adhesion reset to 0
+    assert np.all(cell.adhesion_strength == 0), \
+        "Adhesion should reset for retracted filopodia"
+    assert np.all(cell.adhesion_lifetime == 0), \
+        "Adhesion lifetime should reset for retracted filopodia"
+    print("PASS: test_adhesion_decays_without_amplitude")
+
+
+def test_adhesion_affects_velocity():
+    """Verify that adhesion strength modulates cell velocity magnitude."""
+    cell1 = CellWM([100, 100], radius=10.0, num_filo=4)
+    cell1.angles = np.array([0.0, 0.1, -0.1, 0.05])  # clustered to +x
+    cell1.amplitudes[:] = 3.0
+    cell1.adhesion_strength[:] = 0.0  # no adhesion -> weight = 0.1
+    cell1.estimate_velocity()
+    v_low = np.linalg.norm(cell1.velocity)
+
+    cell2 = CellWM([100, 100], radius=10.0, num_filo=4)
+    cell2.angles = np.array([0.0, 0.1, -0.1, 0.05])
+    cell2.amplitudes[:] = 3.0
+    cell2.adhesion_strength[:] = 1.0  # full adhesion -> weight = 1.1
+    cell2.estimate_velocity()
+    v_high = np.linalg.norm(cell2.velocity)
+
+    assert v_high > v_low, \
+        f"Higher adhesion should give higher velocity: {v_high} vs {v_low}"
+    print("PASS: test_adhesion_affects_velocity")
+
+
+def test_adhesion_in_state():
+    """Verify adhesion_strength is included in serialized state."""
+    cell = CellWM([100, 100], radius=10.0, num_filo=4)
+    state = cell.get_state()
+    assert 'adhesion_strength' in state, "State should include adhesion_strength"
+    assert len(state['adhesion_strength']) == 4
+    print("PASS: test_adhesion_in_state")
+
+
+def test_adhesion_clipped_to_unit():
+    """Verify adhesion strength stays in [0, 1]."""
+    cell = CellWM([100, 100], radius=10.0, num_filo=4)
+    cell.amplitudes[:] = 10.0  # very high
+    cell.adhesion_strength[:] = 0.99
+    for _ in range(50):
+        cell.update_adhesions(substrate_stiffness=5.0)
+    assert np.all(cell.adhesion_strength <= 1.0), "Adhesion should be clipped to 1.0"
+    assert np.all(cell.adhesion_strength >= 0.0), "Adhesion should be non-negative"
+    print("PASS: test_adhesion_clipped_to_unit")
+
+
 if __name__ == "__main__":
     test_cell_creation()
     test_contour_bounds()
@@ -203,4 +271,9 @@ if __name__ == "__main__":
     test_contact_inhibition()
     test_cil_no_effect_when_far()
     test_polarity_in_state()
+    test_adhesion_grows_with_amplitude()
+    test_adhesion_decays_without_amplitude()
+    test_adhesion_affects_velocity()
+    test_adhesion_in_state()
+    test_adhesion_clipped_to_unit()
     print("\nAll cell tests passed!")

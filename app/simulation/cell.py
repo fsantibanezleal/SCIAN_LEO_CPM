@@ -154,6 +154,10 @@ class CellWM:
         self.polarity = np.array([np.cos(self.preferred_direction),
                                    np.sin(self.preferred_direction)])
 
+        # Focal adhesion state per filopodium
+        self.adhesion_strength = np.zeros(num_filo)  # maturation level [0, 1]
+        self.adhesion_lifetime = np.zeros(num_filo, dtype=int)  # steps since formation
+
         # Membrane contour
         self.contour = np.zeros((num_contour, 2), dtype=np.float64)
         self._create_contour()
@@ -269,6 +273,49 @@ class CellWM:
         self.angles += steps
         self.angles = (self.angles + np.pi) % (2 * np.pi) - np.pi
 
+    def update_adhesions(self, substrate_stiffness=1.0):
+        """Update focal adhesion dynamics.
+
+        ===== MODEL =====
+
+        Focal adhesions (FAs) form at filopodial tips and mature under
+        mechanical tension. Mature FAs generate stronger traction forces,
+        creating a positive feedback loop:
+
+            tension -> FA growth -> more traction -> more tension
+
+        On stiffer substrates, this loop is stronger (Rens & Merks 2020).
+
+        FA maturation:
+            dA/dt = k_growth * stiffness * amplitude_j - k_decay * A_j
+
+        where:
+            A_j = adhesion strength of filopodium j
+            k_growth = maturation rate (0.05 per step)
+            k_decay = turnover rate (0.02 per step)
+            amplitude_j = filopodium protrusion height
+
+        FA-modulated velocity:
+            v = V0 * Sum_j (A_j * amplitude_j) * (cos theta_j, sin theta_j)
+
+        Adhesions amplify the contribution of filopodia on stiff substrate.
+        """
+        k_growth = 0.05
+        k_decay = 0.02
+
+        # Maturation: grows with protrusion amplitude * substrate stiffness
+        growth = k_growth * substrate_stiffness * self.amplitudes / (self.base_radius * 0.3)
+        decay = k_decay * self.adhesion_strength
+
+        self.adhesion_strength += growth - decay
+        self.adhesion_strength = np.clip(self.adhesion_strength, 0, 1)
+        self.adhesion_lifetime += 1
+
+        # Reset adhesions on filopodia that retracted (low amplitude)
+        retracted = self.amplitudes < self.base_radius * 0.05
+        self.adhesion_strength[retracted] = 0
+        self.adhesion_lifetime[retracted] = 0
+
     def update_shape(self):
         """Relax membrane shape toward the ideal Gaussian envelope.
 
@@ -324,16 +371,21 @@ class CellWM:
         self.contour[:, 1] = self.position[1] + new_r * np.sin(thetas)
 
     def estimate_velocity(self):
-        """Estimate cell velocity from active filopodial forces.
+        """Estimate cell velocity from adhesion-weighted filopodial propulsion.
 
         ===== PHYSICAL MODEL =====
 
         Cell motility is driven by actin polymerization at filopodial tips
         generating protrusive forces. Each filopodium contributes a traction
-        force proportional to its amplitude (protrusion length), directed
-        radially outward at its angular position:
+        force proportional to its amplitude (protrusion length) weighted by
+        its focal adhesion strength, directed radially outward:
 
-            v = V0 * Sum_j Aj * (cos theta_j, sin theta_j)
+            v = V0 * Sum_j (A_j + 0.1) * amplitude_j * (cos theta_j, sin theta_j)
+
+        The (A_j + 0.1) term ensures some motility even without mature FAs.
+        Mature focal adhesions amplify the contribution of each filopodium,
+        modeling the biological observation that stronger adhesions generate
+        more traction force.
 
         This is a self-propelled particle model where shape asymmetry drives
         motion. When filopodia are clustered on one side, the cell migrates
@@ -359,9 +411,10 @@ class CellWM:
         using amplitudes as weights, which gives physically meaningful motility.
         """
         # Each filopodium exerts a protrusive force proportional to its amplitude,
-        # directed radially outward at its angular position
-        force_x = np.sum(self.amplitudes * np.cos(self.angles))
-        force_y = np.sum(self.amplitudes * np.sin(self.angles))
+        # weighted by focal adhesion strength (A_j + 0.1 baseline)
+        weights = (self.adhesion_strength + 0.1) * self.amplitudes
+        force_x = np.sum(weights * np.cos(self.angles))
+        force_y = np.sum(weights * np.sin(self.angles))
 
         # Scale by velocity factor to get displacement per step
         self.velocity = self.velocity_scale * np.array([force_x, force_y])
@@ -403,6 +456,7 @@ class CellWM:
         """
         self.update_angles(stiffness_gradient=mechanotaxis_gradient)
         self.update_shape()
+        self.update_adhesions()
         self.estimate_velocity()
         self.update_position()
         self.compute_energy()
@@ -498,4 +552,5 @@ class CellWM:
             "energy": getattr(self, '_current_energy', 0),
             "area": getattr(self, '_current_area', 0),
             "perimeter": getattr(self, '_current_perimeter', 0),
+            "adhesion_strength": self.adhesion_strength.tolist(),
         }
