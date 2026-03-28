@@ -150,6 +150,10 @@ class CellWM:
         self._current_area = 0.0
         self._current_perimeter = 0.0
 
+        # Cell polarity: unit vector defining preferred protrusion direction
+        self.polarity = np.array([np.cos(self.preferred_direction),
+                                   np.sin(self.preferred_direction)])
+
         # Membrane contour
         self.contour = np.zeros((num_contour, 2), dtype=np.float64)
         self._create_contour()
@@ -447,13 +451,42 @@ class CellWM:
         self._current_energy = energy
         return energy
 
+    def apply_contact_inhibition(self, other_position):
+        """Contact Inhibition of Locomotion (CIL).
+
+        When two cells collide, they repolarize AWAY from each other.
+        This is a key mechanism in collective cell migration:
+        cells at the cluster edge polarize outward, while interior
+        cells have random polarity (Mayor & Carmona-Fontaine, 2010).
+
+        The repolarization rotates the polarity vector away from
+        the contact direction by a fraction (CIL strength):
+
+            contact_dir = normalize(other - self)
+            polarity_new = normalize(polarity - cil_strength * contact_dir)
+        """
+        contact_dir = other_position - self.position
+        dist = np.linalg.norm(contact_dir)
+        if dist < 1e-10 or dist > 3 * self.base_radius:
+            return
+        contact_dir /= dist
+
+        cil_strength = 0.3
+        new_pol = self.polarity - cil_strength * contact_dir
+        norm = np.linalg.norm(new_pol)
+        if norm > 1e-10:
+            self.polarity = new_pol / norm
+
+        # Update preferred direction to match new polarity
+        self.preferred_direction = np.arctan2(self.polarity[1], self.polarity[0])
+
     def get_state(self):
         """Return serializable state for WebSocket transmission.
 
         Returns:
             Dictionary containing position, contour, velocity, active status,
-            and base radius. All numpy arrays are converted to Python lists
-            for JSON serialization.
+            polarity, and base radius. All numpy arrays are converted to
+            Python lists for JSON serialization.
         """
         return {
             "position": self.position.tolist(),
@@ -461,6 +494,7 @@ class CellWM:
             "velocity": self.velocity.tolist(),
             "active": self.active,
             "radius": self.base_radius,
+            "polarity": self.polarity.tolist(),
             "energy": getattr(self, '_current_energy', 0),
             "area": getattr(self, '_current_area', 0),
             "perimeter": getattr(self, '_current_perimeter', 0),
