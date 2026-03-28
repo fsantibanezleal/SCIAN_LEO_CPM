@@ -163,10 +163,17 @@ class AgentsSystem:
             return
 
         # Step 1: Update each cell (with optional stiffness gradient for durotaxis)
+        # Cells near the DEB boundary detach from EVL mechanotaxis to allow
+        # horizontal spreading and cluster formation (issue #28).
         for cell in self.cells:
             if cell.active:
-                gradient = env.get_stiffness_gradient(cell.position) if hasattr(env, 'get_stiffness_gradient') else None
-                cell.simulation_step(mechanotaxis_gradient=gradient)
+                near_deb = env.deb_enabled and (cell.position[1] > env.deb_position - 3 * cell.base_radius)
+                if not near_deb:
+                    gradient = env.get_stiffness_gradient(cell.position) if hasattr(env, 'get_stiffness_gradient') else None
+                    cell.simulation_step(mechanotaxis_gradient=gradient)
+                else:
+                    # Near DEB: cell is free from EVL, only stochastic motion
+                    cell.simulation_step(mechanotaxis_gradient=None)
 
         # Step 2: Resolve collisions (two-pass)
         self._resolve_collisions()
@@ -273,8 +280,9 @@ class AgentsSystem:
             cell.position[0] = np.clip(cell.position[0], r, env.width - r)
             cell.position[1] = np.clip(cell.position[1], r, env.height - r)
 
-            # EVL boundary (upper)
-            if env.evl_enabled and cell.position[1] < env.evl_position:
+            # EVL boundary (upper) — only for cells NOT near DEB (issue #28)
+            near_deb = env.deb_enabled and (cell.position[1] > env.deb_position - 3 * r)
+            if env.evl_enabled and cell.position[1] < env.evl_position and not near_deb:
                 cell.position[1] = env.evl_position + r
 
             # DEB boundary (lower)
