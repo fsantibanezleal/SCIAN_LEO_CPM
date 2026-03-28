@@ -47,6 +47,10 @@ The application provides a dark-themed interface with a simulation canvas on the
 
 ![App Screenshot](docs/svg/app_screenshot.svg)
 
+## Frontend
+
+![Frontend](docs/png/frontend.png)
+
 ---
 
 ## Features
