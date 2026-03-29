@@ -10,6 +10,20 @@ An interactive web application that models the collective migration of Dorsal Fo
 
 Understanding how cells migrate collectively during embryonic development is fundamental to developmental biology. During zebrafish gastrulation, Dorsal Forerunner Cells (DFCs) form a cohesive cluster that migrates toward the vegetal pole, forming Kupffer's vesicle — the left-right symmetry organizer. How individual cell behaviors (filopodial protrusion, adhesion, mechanotaxis) give rise to collective migration remains an open question.
 
+![Biological Context](docs/svg/biological_context.svg)
+
+---
+
+## KPIs & Metrics
+
+| Metric | Target | Current |
+|--------|--------|---------|
+| Cell filopodia model | Gaussian envelope with persistence | 4 filopodia, τ∈[5,20] steps |
+| Durotaxis response | Directional bias toward stiffness | sin(θ_grad−θ_j) torque model |
+| Collision resolution | Two-pass (soft+hard) | O(n²), <1ms for 24 cells |
+| Adhesion model | Differential (Steinberg 1963) | Vectorized NumPy broadcasting |
+| Test coverage | Comprehensive | 19 tests passing |
+
 ---
 
 ## Mathematical Model
