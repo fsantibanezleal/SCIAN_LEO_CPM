@@ -4,7 +4,85 @@
 
 An interactive web application that models the collective migration of Dorsal Forerunner Cells (DFCs) during Kupffer's vesicle formation in zebrafish embryos. Cells are represented as deformable bodies with Gaussian filopodia-driven motility, moving between two advancing tissue boundaries (EVL and DEB) in real time.
 
+---
+
+## Motivation & Problem
+
+Understanding how cells migrate collectively during embryonic development is fundamental to developmental biology. During zebrafish gastrulation, Dorsal Forerunner Cells (DFCs) form a cohesive cluster that migrates toward the vegetal pole, forming Kupffer's vesicle — the left-right symmetry organizer. How individual cell behaviors (filopodial protrusion, adhesion, mechanotaxis) give rise to collective migration remains an open question.
+
+---
+
+## Mathematical Model
+
+### Cell Membrane Shape (Gaussian Filopodia)
+
+The cell boundary radius at angle theta is the superposition of a base radius and filopodium Gaussian peaks:
+
+```
+R(theta) = max_j { R_0 + A_j * exp(-(theta - theta_j)^2 / (2 * W_j^2)) }
+```
+
+where `R_0` is the resting radius, `A_j` is filopodium amplitude, `theta_j` is the angular position of filopodium *j*, and `W_j` is the Gaussian width.
+
+### Cell Velocity (Filopodia-Driven Motility)
+
+Directed migration arises from an asymmetric filopodium distribution:
+
+```
+v = V_0 * Sum_j (A_j + 0.1) * A_j * (cos theta_j, sin theta_j)
+```
+
+Larger, more extended filopodia contribute more to the net velocity vector.
+
+### Hamiltonian (Area + Perimeter Constraints)
+
+The total energy of a cell constrains it to a target area `A_0` and target perimeter `P_0`:
+
+```
+H = lambda_A * (A - A_0)^2 + lambda_P * (P - P_0)^2
+```
+
+where `lambda_A` and `lambda_P` are Lagrange multiplier-like stiffness coefficients.
+
+---
+
+## Cell Model
+
+Each cell is a 2D deformable body whose membrane is the envelope of multiple Gaussian peaks in polar coordinates. Filopodia extend the boundary, break symmetry, and drive cell motion.
+
+![Cell Model](docs/svg/cell_model.svg)
+
+---
+
+## Application Screenshot
+
+The application provides a dark-themed interface with a simulation canvas on the left and interactive controls on the right.
+
+![App Screenshot](docs/svg/app_screenshot.svg)
+
+## Frontend
+
+![Frontend](docs/png/frontend.png)
+
+---
+
+## Architecture
+
 ![Architecture](docs/svg/architecture.svg)
+
+---
+
+## Features
+
+- **Deformable cell model** -- Gaussian filopodia create realistic protrusions with elastic membrane dynamics
+- **Real-time visualization** -- HTML5 Canvas 2D rendering at 10-50 FPS with per-cell color coding
+- **WebSocket streaming** -- low-latency bidirectional communication between server and browser
+- **Interactive controls** -- sliders and buttons for cell count, radius, filopodia, velocity, and more
+- **Tissue boundary dynamics** -- EVL epiboly front with 6-stage adhesion model and DEB convergence margin
+- **Two-pass collision resolution** -- forward soft pass + backward hard pass prevents overlap and oscillation
+- **REST API** -- full simulation control via HTTP with automatic Swagger/ReDoc documentation
+- **Cell proliferation** -- configurable 8-stage schedule for cell division
+- **Cross-platform** -- runs on any OS with Python 3.10+ and a modern browser
 
 ---
 
@@ -31,39 +109,17 @@ python -m uvicorn app.main:app --reload --port 8001
 
 For macOS/Linux, use `source .venv/bin/activate` instead.
 
----
+### Tests
 
-## Cell Model
+```bash
+# Run all tests with pytest
+python -m pytest tests/ -v
 
-Each cell is a 2D deformable body whose membrane is the envelope of multiple Gaussian peaks in polar coordinates. Filopodia extend the boundary, break symmetry, and drive cell motion.
-
-![Cell Model](docs/svg/cell_model.svg)
-
----
-
-## Application Screenshot
-
-The application provides a dark-themed interface with a simulation canvas on the left and interactive controls on the right.
-
-![App Screenshot](docs/svg/app_screenshot.svg)
-
-## Frontend
-
-![Frontend](docs/png/frontend.png)
-
----
-
-## Features
-
-- **Deformable cell model** -- Gaussian filopodia create realistic protrusions with elastic membrane dynamics
-- **Real-time visualization** -- HTML5 Canvas 2D rendering at 10-50 FPS with per-cell color coding
-- **WebSocket streaming** -- low-latency bidirectional communication between server and browser
-- **Interactive controls** -- sliders and buttons for cell count, radius, filopodia, velocity, and more
-- **Tissue boundary dynamics** -- EVL epiboly front with 6-stage adhesion model and DEB convergence margin
-- **Two-pass collision resolution** -- forward soft pass + backward hard pass prevents overlap and oscillation
-- **REST API** -- full simulation control via HTTP with automatic Swagger/ReDoc documentation
-- **Cell proliferation** -- configurable 8-stage schedule for cell division
-- **Cross-platform** -- runs on any OS with Python 3.10+ and a modern browser
+# Or run individually
+python tests/test_cell.py
+python tests/test_agents.py
+python tests/test_simulation.py
+```
 
 ---
 
@@ -162,17 +218,9 @@ curl -X POST http://localhost:8001/api/simulation/step
 
 ---
 
-## Tests
+## Port
 
-```bash
-# Run all tests with pytest
-python -m pytest tests/ -v
-
-# Or run individually
-python tests/test_cell.py
-python tests/test_agents.py
-python tests/test_simulation.py
-```
+**8001** -- http://localhost:8001
 
 ---
 
@@ -185,46 +233,6 @@ python tests/test_simulation.py
 | [Development History](docs/development_history.md) | Project origins (C++/CLI 2014), migration to Python, changelog |
 | [References](docs/references.md) | Key publications and software dependencies |
 | [User Guide](docs/user_guide.md) | Installation, UI walkthrough, API examples, troubleshooting |
-
----
-
-## Mathematical Model
-
-### Cell Membrane Shape (Gaussian Filopodia)
-
-The cell boundary radius at angle theta is the superposition of a base radius and filopodium Gaussian peaks:
-
-```
-R(theta) = max_j { R_0 + A_j * exp(-(theta - theta_j)^2 / (2 * W_j^2)) }
-```
-
-where `R_0` is the resting radius, `A_j` is filopodium amplitude, `theta_j` is the angular position of filopodium *j*, and `W_j` is the Gaussian width.
-
-### Cell Velocity (Filopodia-Driven Motility)
-
-Directed migration arises from an asymmetric filopodium distribution:
-
-```
-v = V_0 * Sum_j (A_j + 0.1) * A_j * (cos theta_j, sin theta_j)
-```
-
-Larger, more extended filopodia contribute more to the net velocity vector.
-
-### Hamiltonian (Area + Perimeter Constraints)
-
-The total energy of a cell constrains it to a target area `A_0` and target perimeter `P_0`:
-
-```
-H = lambda_A * (A - A_0)^2 + lambda_P * (P - P_0)^2
-```
-
-where `lambda_A` and `lambda_P` are Lagrange multiplier-like stiffness coefficients.
-
----
-
-## Port
-
-**8001** -- http://localhost:8001
 
 ---
 
