@@ -23,19 +23,27 @@ Understanding how cells migrate collectively during embryonic development is fun
 | Parameter exploration | Interactive — adjust any parameter in real-time vs recompile C++ |
 | Research reproducibility | Python + open source vs proprietary Visual Studio 2012 toolchain |
 
-## Project Metrics & Status
+## Cell Model
 
-| Metric | Status |
-|--------|--------|
-| Tests | 19 passing |
-| Cell behaviors | 5 (filopodia, adhesion, CIL, durotaxis, Hertwig division) |
-| Collision algorithm | Two-pass O(n²), <1ms for 24 cells |
-| Vectorization | NumPy broadcasting for adhesion, contour generation |
-| Frontend | HTML5 Canvas + WebSocket real-time streaming |
+Each cell is a 2D deformable body whose membrane is the envelope of multiple Gaussian peaks in polar coordinates. Filopodia extend the boundary, break symmetry, and drive cell motion.
+
+![Cell Model](docs/svg/cell_model.svg)
 
 ---
 
-## Mathematical Model
+## Application Screenshot
+
+The application provides a dark-themed interface with a simulation canvas on the left and interactive controls on the right.
+
+![App Screenshot](docs/svg/app_screenshot.svg)
+
+## Frontend
+
+![Frontend](docs/png/frontend.png)
+
+---
+
+## Technical Approach — Cell Dynamics Model
 
 ### Cell Shape — Gaussian Filopodia Envelope
 Each cell's boundary represents membrane protrusions driven by actin polymerization. The shape is the envelope of multiple Gaussian peaks, each modeling a filopodium:
@@ -75,26 +83,6 @@ The **sin** function creates a restoring torque: filopodia aligned with the stif
 
 ---
 
-## Cell Model
-
-Each cell is a 2D deformable body whose membrane is the envelope of multiple Gaussian peaks in polar coordinates. Filopodia extend the boundary, break symmetry, and drive cell motion.
-
-![Cell Model](docs/svg/cell_model.svg)
-
----
-
-## Application Screenshot
-
-The application provides a dark-themed interface with a simulation canvas on the left and interactive controls on the right.
-
-![App Screenshot](docs/svg/app_screenshot.svg)
-
-## Frontend
-
-![Frontend](docs/png/frontend.png)
-
----
-
 ## Architecture
 
 ![Architecture](docs/svg/architecture.svg)
@@ -112,6 +100,16 @@ The application provides a dark-themed interface with a simulation canvas on the
 - **REST API** -- full simulation control via HTTP with automatic Swagger/ReDoc documentation
 - **Cell proliferation** -- configurable 8-stage schedule for cell division
 - **Cross-platform** -- runs on any OS with Python 3.10+ and a modern browser
+
+## Project Metrics & Status
+
+| Metric | Status |
+|--------|--------|
+| Tests | 19 passing |
+| Cell behaviors | 5 (filopodia, adhesion, CIL, durotaxis, Hertwig division) |
+| Collision algorithm | Two-pass O(n²), <1ms for 24 cells |
+| Vectorization | NumPy broadcasting for adhesion, contour generation |
+| Frontend | HTML5 Canvas + WebSocket real-time streaming |
 
 ---
 
