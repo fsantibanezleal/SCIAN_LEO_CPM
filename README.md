@@ -71,40 +71,55 @@ The application provides a dark-themed interface with a simulation canvas on the
 
 ```
 SCIAN_LEO_CPM/
-├── app/                           # Application code
+├── app/
+│   ├── __init__.py
 │   ├── main.py                    # FastAPI entry point, REST + WebSocket endpoints
 │   ├── config.py                  # Default configuration (Pydantic models)
 │   ├── simulation/                # Core simulation engine
+│   │   ├── __init__.py
 │   │   ├── cell.py                # CellWM: deformable cell with Gaussian filopodia
 │   │   ├── agents.py              # AgentsSystem: population, collisions, proliferation
 │   │   ├── environment.py         # EnvironmentSystem: domain, EVL/DEB boundaries
 │   │   └── math_utils.py          # Vector math, angle normalization helpers
-│   ├── api/                       # API layer (routes, WebSocket docs)
+│   ├── api/
+│   │   ├── __init__.py
+│   │   └── websocket.py           # WebSocket endpoint and docs
 │   └── static/                    # Browser frontend
 │       ├── index.html             # Single-page application
 │       ├── css/style.css          # Dark-theme stylesheet
-│       └── js/                    # JavaScript modules
+│       └── js/
 │           ├── app.js             # Main orchestrator
 │           ├── renderer.js        # Canvas 2D rendering
 │           ├── controls.js        # UI control bindings
 │           └── websocket.js       # WebSocket client with auto-reconnect
-├── tests/                         # Test suite
+├── tests/
+│   ├── __init__.py
 │   ├── test_cell.py               # CellWM unit tests
 │   ├── test_agents.py             # AgentsSystem unit tests
 │   └── test_simulation.py         # Integration tests
-├── docs/                          # Documentation
+├── notebooks/
+│   └── parameter_exploration.py   # Parameter sweep and analysis scripts
+├── docs/
 │   ├── architecture.md            # System design, API protocol, data flow
 │   ├── biological_model.md        # Cell model math, collision algorithm, boundaries
 │   ├── development_history.md     # Changelog, C++ to Python migration history
 │   ├── references.md              # Publications and software references
 │   ├── user_guide.md              # Installation, usage, troubleshooting
-│   └── svg/                       # Diagrams
+│   ├── png/
+│   │   └── frontend.png           # Frontend screenshot
+│   └── svg/
 │       ├── architecture.svg       # System architecture
 │       ├── cell_model.svg         # Gaussian filopodia concept
 │       ├── simulation_flow.svg    # Simulation step pipeline
 │       ├── biological_context.svg # Zebrafish embryo cross-section
-│       └── app_screenshot.svg     # Application interface
+│       ├── app_screenshot.svg     # Application interface
+│       ├── comparison_table.svg   # Model comparison table
+│       ├── durotaxis_model.svg    # Durotaxis model diagram
+│       └── velocity_comparison.svg # Velocity comparison diagram
 ├── legacy/                        # Previous C++/CLI codebase (2014-2024)
+├── build.spec                     # PyInstaller spec file
+├── Build_PyInstaller.ps1          # PowerShell build script
+├── run_app.py                     # Uvicorn launcher with auto-browser
 ├── requirements.txt               # Python dependencies
 └── README.md                      # This file
 ```
@@ -173,12 +188,53 @@ python tests/test_simulation.py
 
 ---
 
+## Mathematical Model
+
+### Cell Membrane Shape (Gaussian Filopodia)
+
+The cell boundary radius at angle theta is the superposition of a base radius and filopodium Gaussian peaks:
+
+```
+R(theta) = max_j { R_0 + A_j * exp(-(theta - theta_j)^2 / (2 * W_j^2)) }
+```
+
+where `R_0` is the resting radius, `A_j` is filopodium amplitude, `theta_j` is the angular position of filopodium *j*, and `W_j` is the Gaussian width.
+
+### Cell Velocity (Filopodia-Driven Motility)
+
+Directed migration arises from an asymmetric filopodium distribution:
+
+```
+v = V_0 * Sum_j (A_j + 0.1) * A_j * (cos theta_j, sin theta_j)
+```
+
+Larger, more extended filopodia contribute more to the net velocity vector.
+
+### Hamiltonian (Area + Perimeter Constraints)
+
+The total energy of a cell constrains it to a target area `A_0` and target perimeter `P_0`:
+
+```
+H = lambda_A * (A - A_0)^2 + lambda_P * (P - P_0)^2
+```
+
+where `lambda_A` and `lambda_P` are Lagrange multiplier-like stiffness coefficients.
+
+---
+
+## Port
+
+**8001** -- http://localhost:8001
+
+---
+
 ## References
 
 - Graner & Glazier (1992). Simulation of biological cell sorting using a two-dimensional extended Potts model. *Physical Review Letters*, 69(13).
 - Wortel & Textor (2021). Artistoo. *eLife*, 10:e61288.
 - Oteiza et al. (2008). Origin and shaping of the laterality organ in zebrafish. *Development*, 135(16).
 - Ablooglu et al. (2021). Apical contacts stemming from incomplete delamination. *eLife*, 10:e66495.
+- Rieu et al. (2000). Diffusion and deformations of single Hydra cells in cellular aggregates. *Biophysical Journal*, 79(4).
 
 See [docs/references.md](docs/references.md) for the full annotated reference list.
 
