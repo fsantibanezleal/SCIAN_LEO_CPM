@@ -28,35 +28,41 @@ Understanding how cells migrate collectively during embryonic development is fun
 
 ## Mathematical Model
 
-### Cell Membrane Shape (Gaussian Filopodia)
-
-The cell boundary radius at angle theta is the superposition of a base radius and filopodium Gaussian peaks:
-
-```
-R(theta) = max_j { R_0 + A_j * exp(-(theta - theta_j)^2 / (2 * W_j^2)) }
-```
-
-where `R_0` is the resting radius, `A_j` is filopodium amplitude, `theta_j` is the angular position of filopodium *j*, and `W_j` is the Gaussian width.
-
-### Cell Velocity (Filopodia-Driven Motility)
-
-Directed migration arises from an asymmetric filopodium distribution:
+### Cell Shape — Gaussian Filopodia Envelope
+Each cell's boundary represents membrane protrusions driven by actin polymerization. The shape is the envelope of multiple Gaussian peaks, each modeling a filopodium:
 
 ```
-v = V_0 * Sum_j (A_j + 0.1) * A_j * (cos theta_j, sin theta_j)
+R(θ) = max_j { R₀ + Aⱼ · exp(-(θ - θⱼ)² / (2Wⱼ²)) }
 ```
 
-Larger, more extended filopodia contribute more to the net velocity vector.
+where **R₀** is the base cell radius (resting shape), **Aⱼ** is the protrusion height of filopodium j, **θⱼ** its angular position, and **Wⱼ** its Gaussian width. The `max` operator creates an irregular boundary — more filopodia produce more complex cell shapes, consistent with migratory cell morphology.
 
-### Hamiltonian (Area + Perimeter Constraints)
-
-The total energy of a cell constrains it to a target area `A_0` and target perimeter `P_0`:
+### Migration — Filopodia-Weighted Propulsion
+Cells move by generating traction forces at filopodial tips. The velocity is the vector sum of all filopodial contributions, weighted by adhesion maturation:
 
 ```
-H = lambda_A * (A - A_0)^2 + lambda_P * (P - P_0)^2
+v = V₀ · Σⱼ (adhesionⱼ + 0.1) · Aⱼ · (cos θⱼ, sin θⱼ)
 ```
 
-where `lambda_A` and `lambda_P` are Lagrange multiplier-like stiffness coefficients.
+where **V₀** is the velocity scale and **adhesionⱼ ∈ [0,1]** reflects focal adhesion maturation. The (0.1) baseline ensures motility even without mature adhesions. Filopodia clustered on one side produce directed migration.
+
+### Energy Monitoring — Hamiltonian
+The cell shape energy penalizes deviations from target area and perimeter:
+
+```
+H = λ_A · (A − A₀)² + λ_P · (P − P₀)²
+```
+
+where **A₀ = πR₀²** and **P₀ = 2πR₀** are the resting area and perimeter. This monitors cell health — high energy indicates extreme deformation.
+
+### Durotaxis — Substrate Stiffness Sensing
+Filopodia rotate toward stiffer substrate via a sinusoidal torque:
+
+```
+Δθⱼ = α · |∇E| · sin(θ_gradient − θⱼ)
+```
+
+The **sin** function creates a restoring torque: filopodia aligned with the stiffness gradient (∇E) feel no torque; perpendicular ones feel maximum rotation. This models focal adhesion reinforcement on stiffer substrates.
 
 ---
 
