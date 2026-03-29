@@ -14,15 +14,24 @@ Understanding how cells migrate collectively during embryonic development is fun
 
 ---
 
-## KPIs & Metrics
+## KPIs — Impact & Value
 
-| Metric | Target | Current |
-|--------|--------|---------|
-| Cell filopodia model | Gaussian envelope with persistence | 4 filopodia, τ∈[5,20] steps |
-| Durotaxis response | Directional bias toward stiffness | sin(θ_grad−θ_j) torque model |
-| Collision resolution | Two-pass (soft+hard) | O(n²), <1ms for 24 cells |
-| Adhesion model | Differential (Steinberg 1963) | Vectorized NumPy broadcasting |
-| Test coverage | Comprehensive | 19 tests passing |
+| KPI | Impact |
+|-----|--------|
+| Simulation accessibility | Replaces C++/CLI Windows-only app with cross-platform web browser |
+| Biological fidelity | Models 5 cell behaviors (filopodia, adhesion, CIL, durotaxis, division) in one framework |
+| Parameter exploration | Interactive — adjust any parameter in real-time vs recompile C++ |
+| Research reproducibility | Python + open source vs proprietary Visual Studio 2012 toolchain |
+
+## Project Metrics & Status
+
+| Metric | Status |
+|--------|--------|
+| Tests | 19 passing |
+| Cell behaviors | 5 (filopodia, adhesion, CIL, durotaxis, Hertwig division) |
+| Collision algorithm | Two-pass O(n²), <1ms for 24 cells |
+| Vectorization | NumPy broadcasting for adhesion, contour generation |
+| Frontend | HTML5 Canvas + WebSocket real-time streaming |
 
 ---
 
