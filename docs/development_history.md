@@ -70,7 +70,7 @@ Added explicit documentation that this project is NOT a classical Cellular Potts
 
 ### Architecture Diagram
 
-> See `docs/diagrams/simulation_flow.svg` for visual reference.
+> See `docs/svg/simulation_flow.svg` for visual reference.
 
 ```
 +-----------------------------------------------------+
@@ -164,7 +164,7 @@ The cell shape is defined by a radial envelope of Gaussian filopodia:
 R(θ) = max_j{R₀ + Aⱼ·exp(-(θ-θⱼ)²/(2Wⱼ²))}
 ```
 
-> See `docs/diagrams/cell_model.svg` and `docs/diagrams/architecture.svg` for visual reference.
+> See `docs/svg/cell_model.svg` and `docs/svg/architecture.svg` for visual reference.
 
 ### Features
 
