@@ -203,9 +203,23 @@ SCIAN_LEO_CPM/
 ├── build.spec                     # PyInstaller spec file
 ├── Build_PyInstaller.ps1          # PowerShell build script
 ├── run_app.py                     # Uvicorn launcher with auto-browser
+├── passenger_wsgi.py              # cPanel/Passenger ASGI entry point
 ├── requirements.txt               # Python dependencies
 └── README.md                      # This file
 ```
+
+---
+
+## Deployment
+
+| Target | Entry point | Notes |
+|--------|-------------|-------|
+| Local dev | `python -m uvicorn app.main:app --reload --port 8001` | Auto-reload on file change |
+| Production (single worker) | `uvicorn app.main:app --host 0.0.0.0 --port 8001 --workers 1` | State is in-process — single worker only |
+| cPanel shared hosting | `passenger_wsgi.py` with `application` symbol | WebSocket requires `Upgrade`/`Connection` headers forwarded |
+| Docker | See Dockerfile snippet in [docs/architecture.md](docs/architecture.md) | Provided as a template, not included in repo |
+
+See [Deployment Options](docs/architecture.md#deployment-options) in the architecture doc for details.
 
 ---
 

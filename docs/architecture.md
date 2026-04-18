@@ -224,6 +224,30 @@ COPY . .
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8001"]
 ```
 
+### cPanel / Passenger (shared hosting)
+
+The repository includes a `passenger_wsgi.py` entry point that exposes the FastAPI ASGI application under the name `application`, which is the symbol Passenger looks up by default:
+
+```python
+# passenger_wsgi.py
+import sys, os
+sys.path.insert(0, os.path.dirname(__file__))
+from app.main import app as application
+```
+
+To deploy under cPanel with Passenger:
+
+1. Create a Python application in cPanel pointing at the repository root.
+2. Set the application startup file to `passenger_wsgi.py` and the application entry point to `application`.
+3. In the application's virtual environment, run `pip install -r requirements.txt`.
+4. Restart the Python application from cPanel.
+
+Notes specific to Passenger:
+
+- Passenger spawns a fresh worker per request pool. Because the simulation state lives in a process-local Python object, long-running WebSocket sessions require a single persistent worker. If cPanel is configured with multiple workers, only one of them will see a given simulation state.
+- The `/ws/simulation` endpoint needs WebSocket support at the reverse proxy layer (LiteSpeed handles this transparently; Apache with mod_passenger needs the `Upgrade`/`Connection` headers forwarded).
+- If the hosting provider restricts outbound ports or WebSocket upgrades, the application gracefully degrades to REST `step` mode, which uses plain HTTP POST requests.
+
 ---
 
 ## Performance Considerations
