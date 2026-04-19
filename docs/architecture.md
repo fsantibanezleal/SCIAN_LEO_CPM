@@ -211,18 +211,24 @@ uvicorn app.main:app --host 0.0.0.0 --port 8001 --workers 1
 
 Because the simulation state is stored in a global Python dictionary, multi-worker deployment is not supported. Each worker would have its own independent simulation state, leading to inconsistent behavior. For production use, run a single worker behind a reverse proxy (e.g., Nginx) if TLS or load balancing is needed.
 
-### Docker (optional)
+### Docker
 
-A Dockerfile is not included but would be straightforward:
+The repository ships a production-ready `Dockerfile` and `.dockerignore` at the
+root. The image is based on `python:3.12-slim`, installs `requirements.txt`,
+copies only the runtime surface (`app/`, `run_app.py`), exposes port 8001, and
+declares a `HEALTHCHECK` that hits `/api/health`.
 
-```dockerfile
-FROM python:3.12-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8001"]
+```bash
+docker build -t scian-leo-cpm:latest .
+docker run --rm -p 8001:8001 scian-leo-cpm:latest
+# Then open http://localhost:8001
 ```
+
+The `.dockerignore` excludes `legacy/`, `tests/`, `notebooks/`, `docs/`,
+`.venv/`, `.git/`, and editor caches so the image stays small. Because
+`simulation_state` is an in-process singleton, the `CMD` runs `uvicorn`
+with `--workers 1`; scale horizontally by running multiple containers
+behind a reverse proxy only if each container is assigned its own session.
 
 ### cPanel / Passenger (shared hosting)
 
