@@ -26,14 +26,19 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from typing import Optional
 
+from . import __version__
+from .api.health import router as health_router
 from .simulation.agents import AgentsSystem
 from .simulation.environment import EnvironmentSystem
 
 app = FastAPI(
     title="SCIAN LEO CPM",
     description="Cellular Potts Model simulator for zebrafish embryonic development",
-    version="2.0.0",
+    version=__version__,
 )
+
+# System-level routes (health checks). Tagged "System" in Swagger.
+app.include_router(health_router)
 
 # Serve static files
 static_dir = Path(__file__).parent / "static"
