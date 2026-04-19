@@ -105,7 +105,7 @@ The **sin** function creates a restoring torque: filopodia aligned with the stif
 
 | Metric | Status |
 |--------|--------|
-| Tests | 19 passing |
+| Tests | 30 passing |
 | Cell behaviors | 5 (filopodia, adhesion, CIL, durotaxis, Hertwig division) |
 | Collision algorithm | Two-pass O(n²), <1ms for 24 cells |
 | Vectorization | NumPy broadcasting for adhesion, contour generation |
@@ -166,6 +166,7 @@ SCIAN_LEO_CPM/
 │   │   └── math_utils.py          # Vector math, angle normalization helpers
 │   ├── api/
 │   │   ├── __init__.py
+│   │   ├── health.py              # /api/health liveness probe
 │   │   └── websocket.py           # WebSocket endpoint and docs
 │   └── static/                    # Browser frontend
 │       ├── index.html             # Single-page application
@@ -204,6 +205,8 @@ SCIAN_LEO_CPM/
 ├── Build_PyInstaller.ps1          # PowerShell build script
 ├── run_app.py                     # Uvicorn launcher with auto-browser
 ├── passenger_wsgi.py              # cPanel/Passenger ASGI entry point
+├── Dockerfile                     # Python 3.12-slim image, serves :8001 with HEALTHCHECK
+├── .dockerignore                  # Prunes legacy/, tests/, notebooks/, .venv/
 ├── requirements.txt               # Python dependencies
 └── README.md                      # This file
 ```
@@ -217,7 +220,7 @@ SCIAN_LEO_CPM/
 | Local dev | `python -m uvicorn app.main:app --reload --port 8001` | Auto-reload on file change |
 | Production (single worker) | `uvicorn app.main:app --host 0.0.0.0 --port 8001 --workers 1` | State is in-process — single worker only |
 | cPanel shared hosting | `passenger_wsgi.py` with `application` symbol | WebSocket requires `Upgrade`/`Connection` headers forwarded |
-| Docker | See Dockerfile snippet in [docs/architecture.md](docs/architecture.md) | Provided as a template, not included in repo |
+| Docker | `docker build -t scian-leo-cpm .` then `docker run --rm -p 8001:8001 scian-leo-cpm` | Uses `Dockerfile` + `.dockerignore` at repo root; `HEALTHCHECK` probes `/api/health` |
 
 See [Deployment Options](docs/architecture.md#deployment-options) in the architecture doc for details.
 
@@ -235,6 +238,7 @@ The server automatically generates interactive API documentation:
 | Method | Endpoint                   | Description                          |
 |--------|----------------------------|--------------------------------------|
 | GET    | `/`                        | Serve the web application            |
+| GET    | `/api/health`              | Liveness probe — `{status, version, sim_initialized}` for load balancers / Docker |
 | POST   | `/api/simulation/init`     | Initialize simulation with config    |
 | POST   | `/api/simulation/start`    | Start continuous simulation          |
 | POST   | `/api/simulation/stop`     | Pause simulation                     |

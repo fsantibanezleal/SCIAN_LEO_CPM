@@ -1,0 +1,53 @@
+# Keep the image slim: exclude dev/test assets, VCS metadata, and large
+# legacy artifacts that are not needed at runtime.
+
+# VCS and CI
+.git
+.github
+.gitignore
+.gitattributes
+
+# Python virtual envs and caches
+.venv
+venv
+env
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache
+.mypy_cache
+.ruff_cache
+.coverage
+htmlcov
+
+# Editor / OS cruft
+.vscode
+.idea
+.claude
+*.swp
+.DS_Store
+Thumbs.db
+
+# Test, notebook, and build artifacts
+tests
+notebooks
+build
+dist
+*.egg-info
+
+# Documentation (not needed at runtime)
+docs
+README.md
+LICENSE
+
+# Legacy C++/CLI codebase (pre-2024) -- not used by the ASGI app
+legacy
+
+# PyInstaller spec/helpers
+build.spec
+Build_PyInstaller.ps1
+
+# Container infra (avoid recursive copy)
+Dockerfile
+.dockerignore
