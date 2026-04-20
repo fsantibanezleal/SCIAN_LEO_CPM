@@ -230,6 +230,121 @@ The `.dockerignore` excludes `legacy/`, `tests/`, `notebooks/`, `docs/`,
 with `--workers 1`; scale horizontally by running multiple containers
 behind a reverse proxy only if each container is assigned its own session.
 
+### systemd + Nginx (bare-metal VPS)
+
+For a bare-metal or VPS deployment (e.g., a Hetzner Cloud node), run the ASGI
+app under a dedicated systemd service and place Nginx in front of it to
+terminate TLS and forward WebSocket upgrades. This is the canonical pattern
+used across the `fasl-work.com` stack.
+
+**1. systemd unit.** Save the following as `/etc/systemd/system/scian-leo-cpm.service`, replacing `youruser`, the repository path, and the virtualenv path with values appropriate to the host:
+
+```ini
+[Unit]
+Description=SCIAN LEO CPM - Cell Population Model simulator
+After=network.target
+
+[Service]
+Type=simple
+User=youruser
+Group=youruser
+WorkingDirectory=/srv/scian-leo-cpm
+Environment="PATH=/srv/scian-leo-cpm/.venv/bin:/usr/bin:/bin"
+ExecStart=/srv/scian-leo-cpm/.venv/bin/uvicorn app.main:app \
+    --host 127.0.0.1 --port 8001 --workers 1
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Then enable and start:
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable --now scian-leo-cpm.service
+sudo systemctl status scian-leo-cpm.service
+```
+
+Note the `--workers 1` constraint: the in-process `simulation_state`
+singleton is the same invariant called out in the Docker and Passenger
+subsections above. Scale horizontally only by provisioning additional
+instances each bound to their own session, not by raising `--workers`.
+
+**2. Nginx reverse proxy with WebSocket upgrade.** Drop the following into `/etc/nginx/sites-available/scian-leo-cpm` and symlink into `sites-enabled/`:
+
+```nginx
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    ''      close;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name cpm.example.com;
+
+    ssl_certificate     /etc/letsencrypt/live/cpm.example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/cpm.example.com/privkey.pem;
+
+    # Regular HTTP traffic (UI, /api/*)
+    location / {
+        proxy_pass         http://127.0.0.1:8001;
+        proxy_http_version 1.1;
+        proxy_set_header   Host              $host;
+        proxy_set_header   X-Real-IP         $remote_addr;
+        proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+    }
+
+    # WebSocket upgrade for /ws/simulation
+    location /ws/ {
+        proxy_pass         http://127.0.0.1:8001;
+        proxy_http_version 1.1;
+        proxy_set_header   Upgrade           $http_upgrade;
+        proxy_set_header   Connection        $connection_upgrade;
+        proxy_set_header   Host              $host;
+        proxy_set_header   X-Real-IP         $remote_addr;
+        proxy_read_timeout 3600s;
+        proxy_send_timeout 3600s;
+    }
+}
+
+server {
+    listen 80;
+    server_name cpm.example.com;
+    return 301 https://$host$request_uri;
+}
+```
+
+The `/ws/` block is the load-bearing piece: without the `Upgrade` /
+`Connection` headers, the browser's WebSocket connection to
+`/ws/simulation` downgrades to REST `step` mode (see the Passenger
+subsection for the fallback path).
+
+**3. Logs and rotation.** By default, uvicorn writes access + error logs to
+stdout, which systemd captures into the journal. Inspect with:
+
+```bash
+sudo journalctl -u scian-leo-cpm.service -f
+```
+
+journald handles rotation automatically under `/var/log/journal`. If the
+operator prefers file-based logs, add `StandardOutput=append:/var/log/scian-leo-cpm.log`
+(and `StandardError=append:/var/log/scian-leo-cpm.err.log`) to the `[Service]`
+block, then create `/etc/logrotate.d/scian-leo-cpm`:
+
+```
+/var/log/scian-leo-cpm.log /var/log/scian-leo-cpm.err.log {
+    weekly
+    rotate 8
+    compress
+    missingok
+    notifempty
+    copytruncate
+}
+```
+
 ### cPanel / Passenger (shared hosting)
 
 The repository includes a `passenger_wsgi.py` entry point that exposes the FastAPI ASGI application under the name `application`, which is the symbol Passenger looks up by default:
