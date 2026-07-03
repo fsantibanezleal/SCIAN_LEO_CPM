@@ -1,5 +1,8 @@
 # SCIAN LEO CPM
 
+[![License](https://img.shields.io/github/license/fsantibanezleal/SCIAN_LEO_CPM)](LICENSE)
+[![Live demo](https://img.shields.io/badge/demo-live-2ea44f)](https://cpm.fasl-work.com)
+
 **Cellular Potts Model simulator for zebrafish embryonic cell migration.**
 
 An interactive web application that models the collective migration of Dorsal Forerunner Cells (DFCs) during Kupffer's vesicle formation in zebrafish embryos. Cells are represented as deformable bodies with Gaussian filopodia-driven motility, moving between two advancing tissue boundaries (EVL and DEB) in real time.
